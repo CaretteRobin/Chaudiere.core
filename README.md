@@ -1,5 +1,10 @@
 # LaChaudièreAgenda.core
-## Membres : CARETTE Robin, OUDER Nathan,ANDRIEU Paul,BLONBOU Mathys,LAMBERT Valentino
+## Membres :  
+- ## CARETTE Robin, 
+- ## OUDER Nathan,
+- ## ANDRIEU Paul,
+- ## BLONBOU Mathys,
+- ## LAMBERT Valentino
 
 ## Fonctionnalités
 
@@ -21,7 +26,7 @@
 
 * **API JSON publique**
 
-  1. Récupérer la liste des catégories
+  1. Récupérer la liste des catégories 
 
      * **Endpoint** : `GET /api/categories`
      * Retourne la liste de toutes les catégories au format JSON
