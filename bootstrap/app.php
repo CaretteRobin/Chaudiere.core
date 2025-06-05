@@ -2,29 +2,43 @@
 
 use Slim\Factory\AppFactory;
 use Dotenv\Dotenv;
+use Slim\Views\Twig;
+use Slim\Views\TwigMiddleware;
+use Twig\TwigFunction;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-// 1. Charger .env
+// Charger .env
 $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 
-// 2. Configurer le container avec bindings
+// Configurer le container avec bindings
 $container = require __DIR__ . '/../config/container.php';
 AppFactory::setContainer($container);
 
-// 3. Créer l'application
+// Créer l'application
 $app = AppFactory::create();
 
-// 4. Ajouter le middleware pour parser les body JSON/form
+// Ajouter le middleware pour parser les body JSON/form
 $app->addBodyParsingMiddleware();
 
-// 5. Ajouter gestionnaire d’erreurs par défaut
+// Ajouter gestionnaire d’erreurs par défaut
 $app->addErrorMiddleware(true, true, true);
 
-// 6. Charger les routes
+// Charger Twig
+// Création de l’instance Twig
+$twig = Twig::create(__DIR__ . '/../webui/Views', ['cache' => false]);
+
+// Ajout du middleware Twig à l’application Slim
+$app->add(TwigMiddleware::create($app, $twig));
+$twig->getEnvironment()->addFunction(new TwigFunction('base_url', static function () {
+    $scriptDir = dirname($_SERVER['SCRIPT_NAME']);
+    return $scriptDir === '/' ? '' : $scriptDir;
+}));
+
+// Charger les routes
 (require __DIR__ . '/../routes/web.php')($app);
 (require __DIR__ . '/../routes/api.php')($app);
 
-// 7. Retourner l’application configurée
+// Retourner l’application configurée
 return $app;
