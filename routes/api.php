@@ -1,6 +1,7 @@
 <?php
 
 use LaChaudiere\webui\actions\Event\GetAllEventsAction;
+use LaChaudiere\webui\actions\Event\GetEventsByCategoryAction;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\App;
 use Slim\Http\Interfaces\ResponseInterface;
@@ -14,5 +15,8 @@ return function (App $app) {
         });
 
         $group->get('/events', GetAllEventsAction::class);
+        $group->get('/events/category/{categoryId}', GetEventsByCategoryAction::class);
+
     });
 };
+
