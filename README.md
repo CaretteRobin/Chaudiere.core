@@ -1,10 +1,10 @@
 # LaChaudièreAgenda.core
 ## Membres :  
-- ## CARETTE Robin, 
-- ## OUDER Nathan,
-- ## ANDRIEU Paul,
-- ## BLONBOU Mathys,
-- ## LAMBERT Valentino
+- CARETTE Robin, 
+- OUDER Nathan,
+- ANDRIEU Paul,
+- BLONBOU Mathys,
+- LAMBERT Valentino
 
 ## Fonctionnalités
 
