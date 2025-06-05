@@ -2,6 +2,7 @@
 
 use LaChaudiere\webui\actions\Event\GetAllEventsAction;
 use LaChaudiere\webui\actions\Event\GetEventsByCategoryAction;
+use LaChaudiere\webui\actions\Event\GetEventByIdAction;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\App;
 use Slim\Http\Interfaces\ResponseInterface;
@@ -14,9 +15,11 @@ return function (App $app) {
             return $response->withHeader('Content-Type', 'application/json');
         });
 
-        $group->get('/events', GetAllEventsAction::class);
-        $group->get('/events/category/{categoryId}', GetEventsByCategoryAction::class);
+        $group->group('/events', function (RouteCollectorProxy $group) {
+            $group->get('', GetAllEventsAction::class);
+            $group->get('/{id}', GetEventByIdAction::class);
+            $group->get('/category/{categoryId}', GetEventsByCategoryAction::class);
+        });
 
     });
 };
-
