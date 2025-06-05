@@ -6,17 +6,19 @@ use LaChaudiere\core\domain\entities\User;
 use LaChaudiere\core\application\exceptions\CategoryNotFoundException;
 use LaChaudiere\core\application\exceptions\UserNotFoundException;
 use Exception;
+use LaChaudiereAgenda\core\application\exceptions\CategoryExceptions\GetCategoryByIdNotFoundException;
+use LaChaudiereAgenda\core\application\exceptions\EventExceptions\GetAllEventsFailedException;
 
 class CreateEvent
 {
     public function execute(array $data): Event
     {
         if (!isset($data['title'], $data['category_id'], $data['created_by'])) {
-            throw new Exception("Missing required fields for creating event");
+            throw new GetAllEventsFailedException();
         }
 
         if (!Category::find($data['category_id'])) {
-            throw new CategoryNotFoundException($data['category_id']);
+            throw new getCategoryByIdNotFoundException($data['category_id']);
         }
 
         if (!User::find($data['created_by'])) {
