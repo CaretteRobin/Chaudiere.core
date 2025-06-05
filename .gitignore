@@ -1,0 +1,195 @@
+# ==============================================
+# Fichiers et dossiers générés par le système
+# ==============================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+.nfs*
+
+# ==============================================
+# Fichiers et dossiers spécifiques à l'IDE / Éditeur
+# ==============================================
+
+# PhpStorm / IntelliJ
+.idea/
+*.iml
+*.iws
+out/
+
+# Visual Studio Code
+.vscode/
+
+# NetBeans
+nbproject/private/
+nbbuild/
+nbdist/
+nbdist/*
+/nbproject/var/private/
+
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
+
+# Vim / NeoVim swapfiles, backups et sessions
+*.swp
+*.swo
+*.swn
+Session.vim
+.netrwhist
+
+# Emacs autosave
+*~ 
+\#*\#
+.\#*
+
+# ==============================================
+# Fichiers de log, rapport d’erreurs et caches
+# ==============================================
+
+# Logs d'application
+/logs/
+/var/log/
+*.log
+
+# Caches PHP (APCU, opcache…)
+*.cache
+*.opcache
+
+# Caches de framework (par exemple, Symfony, Laravel)
+cache/
+var/cache/
+bootstrap/cache/
+
+# Rapports de test et couverture
+coverage/
+coverage.xml
+*.cover
+.phpunit.result.cache
+phpunit.xml*
+phpunit.cache
+
+# Sessions (php sessions)
+/sessions/
+/tmp/
+
+# ==============================================
+# Dépendances et bibliothèques externes
+# ==============================================
+
+# Composer (dossier vendor, fichiers de lock parfois)
+vendor/
+composer.phar
+composer.lock
+
+# Si vous archivez votre dépendance localement (exemple : composer local)
+# *.zip
+# *.tar.gz
+
+# Node.js / npm (si utilisé pour les assets front-end)
+node_modules/
+npm-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# Bower (rarement utilisé)
+bower_components/
+
+# ==============================================
+# Fichiers de configuration sensibles / variables d’environnement
+# ==============================================
+
+# Fichiers d’environnement
+.env
+.env.*
+.env.local
+.env.development.local
+.env.test.local
+.env.prod.local
+
+# Clés SSH, certificats
+*.pem
+*.key
+*.crt
+
+# Fichier de configuration Apache / Nginx local
+.htaccess.local
+nginx.conf.local
+apache.conf.local
+
+# ==============================================
+# Spécifique aux frameworks PHP courants
+# (décommentez si vous utilisez l’un d’eux)
+# ==============================================
+
+# ----- Laravel -----
+/bootstrap/cache/*      
+/storage/*
+!/storage/.gitignore
+!/bootstrap/cache/.gitignore
+/vendor/
+.env
+Homestead ou Vagrant
+Homestead.yaml
+.vagrant/
+
+# ----- Symfony -----
+/var/
+!/var/.gitignore
+/vendor/
+/.phpunit.result.cache
+/node_modules/
+.env.local
+.env.test.local
+/public/build/
+
+# ==============================================
+# Fichiers générés lors des builds / releases
+# ==============================================
+
+# Packages compressés
+*.zip
+*.tar.gz
+*.rar
+
+# Archive divers
+*.tgz
+
+# Exécutables / binaires
+*.exe
+*.dll
+*.so
+*.dylib
+
+# ==============================================
+# Ignorer les fichiers d’exportation depuis un IDE
+# ==============================================
+
+# Eclipse
+.metadata/
+*.bak
+*.tmp
+*.local
+# IntelliJ
+out/
+
+# ==============================================
+# Résumé des patterns principaux :
+# ==============================================
+#  • Dossiers OS (macOS, Windows, Linux temporaire)
+#  • Dossiers IDE/éditeur (.idea, .vscode, etc.)
+#  • Dossiers de dépendances (vendor/, node_modules/, bower_components/)
+#  • Fichiers d’environnement (.env)
+#  • Logs et rapports (logs/, coverage/, *.log, etc.)
+#  • Caches de framework (var/cache/, bootstrap/cache/, etc.)
+#  • Fichiers sensibles (clés, certificats, .pem, .key, etc.)
