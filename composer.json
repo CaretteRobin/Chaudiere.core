@@ -14,7 +14,7 @@
     },
     "autoload": {
         "psr-4": {
-            "LaChaudiere\\core\\": "app/",
+            "LaChaudiere\\core\\": "core/",
             "LaChaudiere\\webui\\": "webui/",
             "LaChaudiere\\infra\\": "infra/"
         }

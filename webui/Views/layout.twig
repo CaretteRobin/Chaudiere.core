@@ -1,0 +1,56 @@
+{# src/Views/templates/layout.twig #}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Gift App{% endblock %}</title>
+    <link type="text/tailwindcss" href="{{ base_url() }}/styles/main.css"/>
+    {% block styles %}{% endblock %}
+</head>
+<body class="bg-gray-100 min-h-screen">
+<header class="bg-gray-800 text-white shadow-md">
+    {% include 'partials/header.twig' %}
+</header>
+
+{% if flash.message is defined and flash.message is not empty %}
+    <div id="flash-message" class="fixed top-5 left-1/2 transform -translate-x-1/2 p-4 rounded-lg shadow-lg z-50 opacity-0 transition-opacity duration-500
+        {% if flash.type == 'error' %}bg-red-500{%
+        elseif flash.type == 'success' %}bg-green-500{%
+        else %}bg-blue-500{% endif %} text-white">
+        {{ flash.message }}
+    </div>
+
+    <script>
+        (function() {
+            const flashMessage = document.getElementById('flash-message');
+            if (flashMessage) {
+                // Afficher le message
+                setTimeout(() => flashMessage.style.opacity = '1', 100);
+
+                // Cacher et supprimer après 5 secondes
+                setTimeout(() => {
+                    flashMessage.style.opacity = '0';
+                    flashMessage.addEventListener('transitionend', () => {
+                        flashMessage.remove();
+                    });
+                }, 5000);
+            }
+        })();
+    </script>
+{% endif %}
+
+
+<main class="min-h-screen w-screen">
+    {% block content %}{% endblock %}
+</main>
+
+<footer class="bg-gray-800 text-white">
+    {% include 'partials/footer.twig' %}
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+{#<script src="{{ base_url() }}/assets/js/app.js"></script>#}
+{% block scripts %}{% endblock %}
+</body>
+</html>

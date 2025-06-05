@@ -1,6 +1,6 @@
 <?php
 
-namespace LaChaudiere\core\application\interface;
+namespace LaChaudiere\core\application\interfaces;
 
 use LaChaudiere\core\domain\entities\Category;
 

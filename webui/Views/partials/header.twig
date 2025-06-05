@@ -1,0 +1,30 @@
+<div class="container mx-auto px-4 py-8 flex justify-between items-center">
+    <div>
+        <a href="{{ url_for('home') }}" class="text-2xl font-bold">Gift App</a>
+    </div>
+
+    <nav>
+        <ul class="flex space-x-6">
+            <li><a href="{{ url_for('home') }}" class="hover:text-gray-300">Accueil</a></li>
+
+            {% if user %}
+{#                <li>#}
+{#                    <a href="{{ url_for('profil') }}" class="hover:text-gray-300">#}
+{#                        Mon Profil#}
+{#                    </a>#}
+{#                </li>#}
+                <li>
+                    <a href="{{ url_for('logout') }}" class="hover:text-gray-300">
+                        Déconnexion
+                    </a>
+                </li>
+            {% else %}
+{#                <li>#}
+{#                    <a href="{{ url_for('auth_page') }}" class="hover:text-gray-300">#}
+{#                        Connexion / Inscription#}
+{#                    </a>#}
+{#                </li>#}
+            {% endif %}
+        </ul>
+    </nav>
+</div>

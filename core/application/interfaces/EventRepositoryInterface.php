@@ -1,5 +1,7 @@
 <?php
 
+namespace LaChaudiere\core\application\interfaces;
+
 use LaChaudiere\core\domain\entities\Event;
 
 interface EventRepositoryInterface

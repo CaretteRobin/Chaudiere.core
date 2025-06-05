@@ -1,0 +1,19 @@
+{# src/Views/templates/error.twig #}
+{% extends "layout.twig" %}
+
+{% block title %}Erreur {{ code }} - Gift App{% endblock %}
+
+{% block content %}
+    <div class="flex justify-center items-center h-min-[80vh] gap-12 flex-col p-12">
+{#        <div>#}
+            <div>
+                <h1 class="text-8xl">{{ code }}</h1>
+                <div>{{ message }}</div>
+            </div>
+            {% if errorDetails %}<pre class="text-sm text-gray-500">{{ errorDetails }}</pre>{% endif %}
+            <div>
+                <a class="hover:underline" href="{{ url_for('home') }}">Retour à l'accueil</a>
+            </div>
+{#        </div>#}
+    </div>
+{% endblock %}

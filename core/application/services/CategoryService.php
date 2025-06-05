@@ -1,6 +1,6 @@
 <?php
 
-namespace LaChaudiere\core\application\service;
+namespace LaChaudiere\core\application\services;
 
 use LaChaudiere\core\application\interface\CategoryRepositoryInterface;
 use LaChaudiere\core\application\usecase\Category\CreateCategory;
