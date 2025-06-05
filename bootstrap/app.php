@@ -8,21 +8,24 @@ use Twig\TwigFunction;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-// Charger .env
+// 1. Charger .env
 $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
-$dotenv->load();
+$dotenv->safeLoad(); // safeLoad() évite les erreurs si le fichier n'existe pas
 
-// Configurer le container avec bindings
+// 2. Initialiser Eloquent ORM (capsule)
+require_once __DIR__ . '/../infra/db/EloquentBootstrap.php';
+
+// 2. Configurer le container avec bindings
 $container = require __DIR__ . '/../config/container.php';
 AppFactory::setContainer($container);
 
-// Créer l'application
+// 3. Créer l'application
 $app = AppFactory::create();
 
-// Ajouter le middleware pour parser les body JSON/form
+// 4. Ajouter le middleware pour parser les body JSON/form
 $app->addBodyParsingMiddleware();
 
-// Ajouter gestionnaire d’erreurs par défaut
+// 5. Ajouter gestionnaire d’erreurs par défaut
 $app->addErrorMiddleware(true, true, true);
 
 // Charger Twig
@@ -36,9 +39,17 @@ $twig->getEnvironment()->addFunction(new TwigFunction('base_url', static functio
     return $scriptDir === '/' ? '' : $scriptDir;
 }));
 
-// Charger les routes
-(require __DIR__ . '/../routes/web.php')($app);
-(require __DIR__ . '/../routes/api.php')($app);
+// 6. Charger les routes
+$webRoutes = __DIR__ . '/../routes/web.php';
+$apiRoutes = __DIR__ . '/../routes/api.php';
 
-// Retourner l’application configurée
+if (file_exists($webRoutes)) {
+    (require $webRoutes)($app);
+}
+
+if (file_exists($apiRoutes)) {
+    (require $apiRoutes)($app);
+}
+
+// 7. Retourner l’application configurée
 return $app;

@@ -21,7 +21,8 @@ class GetAllEventsAction
     {
         $events = $this->eventService->getAllEvents();
 
-        $response->getBody()->write(json_encode($events));
+        $response->getBody()->write($events->toJson());
+
         return $response
             ->withHeader('Content-Type', 'application/json')
             ->withStatus(200);

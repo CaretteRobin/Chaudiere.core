@@ -5,6 +5,7 @@ namespace LaChaudiere\core\application\services;
 use LaChaudiere\core\domain\entities\Event;
 use LaChaudiereAgenda\core\application\exceptions\EventExceptions\GetEventByIdNotFoundException;
 use Illuminate\Database\Eloquent\Collection;
+use LaChaudiere\core\application\interfaces\EventRepositoryInterface;
 
 class EventService
 {
@@ -13,9 +14,9 @@ class EventService
     /**
      * Constructeur du service
      *
-     * @param \EventRepositoryInterface $eventRepository
+     * @param EventRepositoryInterface $eventRepository
      */
-    public function __construct(\EventRepositoryInterface $eventRepository)
+    public function __construct(EventRepositoryInterface $eventRepository)
     {
         $this->eventRepository = $eventRepository;
     }
