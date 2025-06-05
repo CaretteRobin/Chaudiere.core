@@ -1,8 +1,6 @@
 <?php
 
-use DI\Container;
 use Slim\Factory\AppFactory;
-use Slim\Middleware\BodyParsingMiddleware;
 use Dotenv\Dotenv;
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -25,7 +23,8 @@ $app->addBodyParsingMiddleware();
 $app->addErrorMiddleware(true, true, true);
 
 // 6. Charger les routes
-(require __DIR__ . '/../routes/routes.php')($app);
+(require __DIR__ . '/../routes/web.php')($app);
+(require __DIR__ . '/../routes/api.php')($app);
 
 // 7. Retourner l’application configurée
 return $app;
