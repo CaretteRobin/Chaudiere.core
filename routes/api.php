@@ -1,5 +1,6 @@
 <?php
 
+use LaChaudiere\webui\actions\Event\GetAllEventsAction;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\App;
 use Slim\Http\Interfaces\ResponseInterface;
@@ -11,5 +12,7 @@ return function (App $app) {
             $response->getBody()->write(json_encode(['message' => 'pong']));
             return $response->withHeader('Content-Type', 'application/json');
         });
+
+        $group->get('/events', GetAllEventsAction::class);
     });
 };
