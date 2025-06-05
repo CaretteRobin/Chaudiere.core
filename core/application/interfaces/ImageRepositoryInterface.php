@@ -1,6 +1,6 @@
 <?php
 
-namespace LaChaudiere\core\Application\Repository;
+namespace LaChaudiere\core\application\interfaces;
 
 interface ImageRepositoryInterface
 {

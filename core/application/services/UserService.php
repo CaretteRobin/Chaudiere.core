@@ -1,6 +1,6 @@
 <?php
 
-namespace LaChaudiere\app\Service;
+namespace LaChaudiere\core\application\services;
 
 use LaChaudiere\core\Application\UseCase\User\RegisterUser;
 use LaChaudiere\core\Application\UseCase\User\AuthenticateUser;

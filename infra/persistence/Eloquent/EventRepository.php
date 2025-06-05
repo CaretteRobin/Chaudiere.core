@@ -1,6 +1,6 @@
 <?php
 
-namespace LaChaudiere\core\infra\repositories;
+namespace LaChaudiere\infra\persistence\Eloquent;
 
 use LaChaudiere\core\domain\entities\Event;
 use Illuminate\Database\Eloquent\Collection;

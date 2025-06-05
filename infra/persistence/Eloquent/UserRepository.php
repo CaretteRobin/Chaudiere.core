@@ -1,5 +1,7 @@
 <?php
 
+namespace LaChaudiere\infra\persistence\Eloquent;
+
 use LaChaudiere\core\Domain\Entities\User;
 use LaChaudiere\core\Application\Interface\UserRepositoryInterface;
 

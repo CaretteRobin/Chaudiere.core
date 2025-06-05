@@ -1,6 +1,6 @@
 <?php
 
-namespace LaChaudiere\core\Application\Interface;
+namespace LaChaudiere\core\application\interfaces;
 
 use LaChaudiere\core\Domain\Entities\User;
 
