@@ -1,0 +1,49 @@
+version: "3.8"
+
+services:
+  chaudiere-php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www/html         
+    working_dir: /var/www/html
+    depends_on:
+      - chaudiere-db
+    networks:
+      - chaudiere.net
+
+  chaudiere-db:
+    image: bitnami/mariadb:11.4.6-debian-12-r0
+    environment:
+      ALLOW_EMPTY_PASSWORD: "no"
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MARIADB_USER: ${DB_USERNAME}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+      MARIADB_DATABASE: ${DB_DATABASE}
+    volumes:
+      - db_data:/bitnami/mariadb
+    networks:
+      - chaudiere.net
+
+  phpmyadmin:
+    image: phpmyadmin:5.2.2
+    depends_on:
+      - chaudiere-db
+    environment:
+      PMA_HOST: chaudiere-db
+      PMA_USER: ${DB_USERNAME}
+      PMA_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "8081:80"
+    networks:
+      - chaudiere.net
+
+networks:
+  chaudiere.net:
+    driver: bridge
+
+volumes:
+  db_data:

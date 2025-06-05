@@ -1,0 +1,21 @@
+{
+    "name": "lachaudiere/agenda-core",
+    "description": "Backend de LaChaudiereAgenda",
+    "type": "project",
+    "require": {
+        "slim/slim": "^4.11",
+        "slim/psr7": "^1.7",
+        "slim/twig-view": "^3.4",
+        "illuminate/database": "^12.17",
+        "vlucas/phpdotenv": "^5.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "LaChaudiere\\core\\": "app/",
+            "LaChaudiere\\webui\\": "webui/",
+            "LaChaudiere\\infra\\": "infra/"
+        }
+    },
+    "minimum-stability": "stable",
+    "license": "MIT"
+}
