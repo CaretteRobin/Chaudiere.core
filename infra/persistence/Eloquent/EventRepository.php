@@ -4,8 +4,9 @@ namespace LaChaudiere\infra\persistence\Eloquent;
 
 use LaChaudiere\core\domain\entities\Event;
 use Illuminate\Database\Eloquent\Collection;
+use LaChaudiere\core\application\interfaces\EventRepositoryInterface;
 
-class EventRepository implements \EventRepositoryInterface
+class EventRepository implements EventRepositoryInterface
 {
     /**
      * Récupère tous les événements
