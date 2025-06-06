@@ -2,7 +2,7 @@
 
 namespace LaChaudiere\infra\persistence\Eloquent;
 
-use LaChaudiere\core\application\interface\CategoryRepositoryInterface;
+use LaChaudiere\core\application\interfaces\CategoryRepositoryInterface;
 use LaChaudiere\core\domain\entities\Category;
 
 class CategoryRepository implements CategoryRepositoryInterface

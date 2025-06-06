@@ -1,8 +1,8 @@
 <?php
 
-namespace LaChaudiere\core\application\usecase\Category;
+namespace LaChaudiere\core\application\UseCase\Category;
 
-use LaChaudiere\core\application\interface\CategoryRepositoryInterface;
+use LaChaudiere\core\application\interfaces\CategoryRepositoryInterface;
 
 class DeleteCategory
 {
