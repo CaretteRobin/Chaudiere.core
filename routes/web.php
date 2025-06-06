@@ -7,8 +7,10 @@ use LaChaudiere\webui\actions\Auth\LogoutAction;
 use LaChaudiere\webui\actions\Auth\RegisterAction;
 use LaChaudiere\webui\actions\Auth\LoginAction;
 use LaChaudiere\webui\actions\Auth\ShowAuthPageAction;
+use LaChaudiere\webui\actions\Auth\ShowRegisterPageAction;
 use LaChaudiere\webui\actions\HomePageAction;
 use LaChaudiere\webui\middlewares\AuthMiddleware;
+use LaChaudiere\webui\middlewares\AuthzMiddleware;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
 
@@ -16,19 +18,12 @@ return function (App $app) {
 
     $app->get('/auth', ShowAuthPageAction::class)->setName('auth_page');
     $app->post('/login', LoginAction::class)->setName('auth_login');
-    $app->post('/register', RegisterAction::class)->setName('auth_register');
-
     $app->group('', function (RouteCollectorProxy $group): void {
-
+        $group->group('/register', function (RouteCollectorProxy $group): void {
+            $group->post('', RegisterAction::class)->setName('auth_register');
+            $group->get('', ShowRegisterPageAction::class)->setName('auth_register_page');
+        })->add(AuthzMiddleware::class);
         $group->get('/', HomePageAction::class)->setName('home');
         $group->get('/logout', LogoutAction::class)->setName('logout');
-
-
-        $group->group('/admin', function (RouteCollectorProxy $group) {
-            $group->get('/users', GetAllUsersAction::class);
-            $group->post('/users', CreateUserAction::class);
-            $group->delete('/users/{id}', DeleteUserAction::class);
-        });
     })->add(AuthMiddleware::class);
-
 };
