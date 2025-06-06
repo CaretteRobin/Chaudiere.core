@@ -14,7 +14,7 @@ use Slim\Routing\RouteCollectorProxy;
 return function (App $app) {
     $app->group('/api', function (RouteCollectorProxy $group) {
 
-        $group->group('/events', function (RouteCollectorProxy $group) {
+        $group->group('/evenements', function (RouteCollectorProxy $group) {
             $group->post('', \LaChaudiere\webui\actions\Event\CreateEventAction::class);
             $group->get('', GetAllEventsAction::class);
             $group->get('/{name}', GetEventByIdAction::class);
