@@ -28,3 +28,4 @@ class GetCategoriesAction
             'categories' => $categories
         ]);
     }
+}
