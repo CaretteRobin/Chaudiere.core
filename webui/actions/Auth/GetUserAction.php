@@ -7,8 +7,9 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use LaChaudiere\core\application\services\UserService;
 use Slim\Views\Twig;
+use LaChaudiere\infra\providers\CsrfTokenProvider;
 
-class GetAllUserAction
+class GetUserAction
 {
     private UserService $userService;
 
@@ -17,9 +18,11 @@ class GetAllUserAction
         $this->userService = $userService;
     }
 
-    public function __invoke(Request $request, Response $response): Response
+    public function __invoke(Request $request, Response $response, array $args): Response
     {
-        $users = $this->userService->getAllUsers();
+        $userId = (String)$args['id'];
+        $userSpect = $this->userService->getUserById($userId);
+        $csrfToken = CsrfTokenProvider::generate();
 
         $view = Twig::fromRequest($request);
 
@@ -31,8 +34,8 @@ class GetAllUserAction
             $params['user'] = $user;
         }
 
-        $params['users'] = $users;
-
-        return $view->render($response, 'pages/user/show_users.twig', $params);
+        $params['userSpect'] = $userSpect;
+        $params['csrf_token'] = $csrfToken;
+        return $view->render($response, 'pages/user/user.twig', $params);
     }
 }

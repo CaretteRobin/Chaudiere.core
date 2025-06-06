@@ -9,6 +9,8 @@ use LaChaudiere\webui\actions\Auth\LoginAction;
 use LaChaudiere\webui\actions\Auth\ShowAuthPageAction;
 use LaChaudiere\webui\actions\Auth\ShowRegisterPageAction;
 use LaChaudiere\webui\actions\Auth\GetAllUserAction;
+use LaChaudiere\webui\actions\Auth\GetUserAction;
+use LaChaudiere\webui\actions\Auth\UpdateUserAction;
 use LaChaudiere\webui\actions\HomePageAction;
 use LaChaudiere\webui\middlewares\AuthMiddleware;
 use LaChaudiere\webui\middlewares\AuthzMiddleware;
@@ -26,6 +28,8 @@ return function (App $app) {
         })->add(AuthzMiddleware::class);
         $group->group('', function (RouteCollectorProxy $group): void {
             $group->get('/users', GetAllUserAction::class)->setName('show_users');
+            $group->get('/users/{id}', GetUserAction::class)->setName('show_user');
+            $group->post('/users/{id}', UpdateUserAction::class)->setName('update_user');
         })->add(AuthzMiddleware::class);
         $group->get('/', HomePageAction::class)->setName('home');
         $group->get('/logout', LogoutAction::class)->setName('logout');

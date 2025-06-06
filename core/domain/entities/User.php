@@ -10,6 +10,9 @@ class User extends Model
     const ROLE_ADMIN = 'admin';
     protected $table = 'users';
     public $timestamps = false;
+    protected $primaryKey = 'id';
+    public $incrementing = false;
+    protected $keyType = 'string';
 
     protected $fillable = ['password','role','created_at'];
 

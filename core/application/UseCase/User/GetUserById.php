@@ -14,7 +14,7 @@ class GetUserById
         $this->userRepository = $userRepository;
     }
 
-    public function execute(String $id)
+    public function execute(String $id): array
     {
         $user = $this->userRepository->findById($id);
 
@@ -22,6 +22,6 @@ class GetUserById
             throw new UserNotFoundException("User with ID $id not found.");
         }
 
-        return $user;
+        return $user->toArray();
     }
 }
