@@ -11,7 +11,7 @@ class User extends Model
     protected $table = 'users';
     public $timestamps = false;
 
-    protected $fillable = ['username', 'password','role','created_at'];
+    protected $fillable = ['password','role','created_at'];
 
     public function events(): HasMany
     {

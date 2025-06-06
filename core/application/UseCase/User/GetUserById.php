@@ -7,11 +7,14 @@ use LaChaudiere\core\Domain\Exception\UserNotFoundException;
 
 class GetUserById
 {
-    public function __construct(
-        private UserRepositoryInterface $userRepository
-    ) {}
+    private UserRepositoryInterface $userRepository;
+    
+    public function __construct(UserRepositoryInterface $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
 
-    public function execute(int $id)
+    public function execute(String $id)
     {
         $user = $this->userRepository->findById($id);
 

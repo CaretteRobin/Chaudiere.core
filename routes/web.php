@@ -8,6 +8,7 @@ use LaChaudiere\webui\actions\Auth\RegisterAction;
 use LaChaudiere\webui\actions\Auth\LoginAction;
 use LaChaudiere\webui\actions\Auth\ShowAuthPageAction;
 use LaChaudiere\webui\actions\Auth\ShowRegisterPageAction;
+use LaChaudiere\webui\actions\Auth\GetAllUserAction;
 use LaChaudiere\webui\actions\HomePageAction;
 use LaChaudiere\webui\middlewares\AuthMiddleware;
 use LaChaudiere\webui\middlewares\AuthzMiddleware;
@@ -22,6 +23,9 @@ return function (App $app) {
         $group->group('/register', function (RouteCollectorProxy $group): void {
             $group->post('', RegisterAction::class)->setName('auth_register');
             $group->get('', ShowRegisterPageAction::class)->setName('auth_register_page');
+        })->add(AuthzMiddleware::class);
+        $group->group('', function (RouteCollectorProxy $group): void {
+            $group->get('/users', GetAllUserAction::class)->setName('show_users');
         })->add(AuthzMiddleware::class);
         $group->get('/', HomePageAction::class)->setName('home');
         $group->get('/logout', LogoutAction::class)->setName('logout');
