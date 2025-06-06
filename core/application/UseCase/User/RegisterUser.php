@@ -1,8 +1,8 @@
 <?php
 
-namespace LaChaudiere\core\Application\UseCase\User;
+namespace LaChaudiere\core\application\UseCase\User;
 
-use LaChaudiere\core\Application\Interface\UserRepositoryInterface;
+use LaChaudiere\core\application\interfaces\UserRepositoryInterface;
 use LaChaudiere\core\Domain\Entities\User;
 use LaChaudiere\core\Domain\Exception\UserAlreadyExistsException;
 

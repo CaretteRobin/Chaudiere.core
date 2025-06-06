@@ -1,8 +1,8 @@
 <?php
 
-namespace LaChaudiere\core\Application\UseCase;
+namespace LaChaudiere\core\Application\UseCase\Event;
 
-use LaChaudiere\core\Application\Interface\EventRepositoryInterface;
+use LaChaudiere\core\application\interfaces\EventRepositoryInterface;
 use LaChaudiere\core\Application\Exception\EventNotFoundException;
 
 class GetEventById

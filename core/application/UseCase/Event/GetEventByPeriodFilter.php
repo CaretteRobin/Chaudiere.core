@@ -5,7 +5,7 @@ namespace LaChaudiere\core\application\UseCase\Event;
 use LaChaudiere\core\application\interfaces\EventRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
-class GetAllEvent
+class GetEventByPeriodFilter
 {
     private EventRepositoryInterface $eventRepository;
 
@@ -14,8 +14,8 @@ class GetAllEvent
         $this->eventRepository = $eventRepository;
     }
 
-    public function execute(): Collection
+    public function execute(string $startDate, string $endDate): Collection
     {
-        return $this->eventRepository->getAll();
+        return $this->eventRepository->getEventByPeriodFilter($startDate, $endDate);
     }
 }
