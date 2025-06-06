@@ -1,5 +1,8 @@
 <?php
 
+use Slim\App;
+use Slim\Routing\RouteCollectorProxy;
+
 use LaChaudiere\webui\actions\Category\CreateCategoryAction;
 use LaChaudiere\webui\actions\Category\DeleteCategoryAction;
 use LaChaudiere\webui\actions\Category\GetCategoriesAction;
@@ -10,20 +13,21 @@ use LaChaudiere\webui\actions\Event\GetEventsByCategoryAction;
 use LaChaudiere\webui\actions\Event\GetEventByIdAction;
 use LaChaudiere\webui\actions\Event\UpdateEventAction;
 use Psr\Http\Message\ServerRequestInterface;
-use Slim\App;
-use Slim\Routing\RouteCollectorProxy;
 
 return function (App $app) {
     $app->group('/api', function (RouteCollectorProxy $group) {
 
+        // Routes pour les événements
         $group->group('/evenements', function (RouteCollectorProxy $group) {
             $group->post('', CreateEventAction::class);
-            $group->get('', GetAllEventsAction::class);
-            $group->get('/{id}', GetEventByIdAction::class);
+            $group->get('', GetAllEventsAction::class); // Tous les événements, avec filtre ?periode=
+            $group->get('/{name}', GetEventByIdAction::class);
+            $group->get('/category/{categoryId}', GetEventsByCategoryAction::class);
             $group->put('/{id}', UpdateEventAction::class);
             $group->delete('/{id}', DeleteEventAction::class);
-            $group->get('/category/{categoryId}', GetEventsByCategoryAction::class);
         });
+
+        // Routes pour les catégories
         $group->group('/categories', function (RouteCollectorProxy $group) {
             $group->get('/all', GetCategoriesAction::class);
             $group->get('/create/{id}', CreateCategoryAction::class);
