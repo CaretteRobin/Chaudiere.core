@@ -4,30 +4,28 @@ declare(strict_types=1);
 
 use DI\Container;
 use LaChaudiere\core\application\interfaces\AuthnServiceInterface;
+use LaChaudiere\core\application\interfaces\CategoryRepositoryInterface;
 use LaChaudiere\core\application\interfaces\EventRepositoryInterface;
 use LaChaudiere\core\application\interfaces\UserRepositoryInterface;
 use LaChaudiere\core\application\services\AuthnService;
+use LaChaudiere\core\application\services\CategoryService;
 use LaChaudiere\core\application\services\EventService;
+use LaChaudiere\core\application\UseCase\Category\CreateCategory;
+use LaChaudiere\core\application\UseCase\Category\DeleteCategory;
+use LaChaudiere\core\application\UseCase\Category\GetAllCategories;
+use LaChaudiere\core\application\UseCase\Category\GetCategoryById;
+use LaChaudiere\core\application\UseCase\Category\UpdateCategory;
+use LaChaudiere\core\application\UseCase\Event\DeleteEvent;
+use LaChaudiere\core\application\UseCase\Event\GetAllEvent;
+use LaChaudiere\core\Application\UseCase\Event\GetEventById;
+use LaChaudiere\core\application\UseCase\Event\GetEventByPeriodFilter;
 use LaChaudiere\core\application\UseCase\Event\GetEventsByCategory;
+use LaChaudiere\infra\persistence\Eloquent\CategoryRepository;
 use LaChaudiere\infra\persistence\Eloquent\EventRepository;
 use LaChaudiere\infra\persistence\Eloquent\UserRepository;
 use LaChaudiere\infra\providers\AuthProvider;
 use LaChaudiere\infra\providers\interfaces\AuthProviderInterface;
 use LaChaudiere\core\application\UseCase\Event\CreateEvent;
-use LaChaudiere\core\application\UseCase\Event\DeleteEvent;
-use LaChaudiere\core\application\UseCase\Event\GetAllEvent;
-use LaChaudiere\core\application\UseCase\Event\GetEventById;
-use LaChaudiere\core\application\UseCase\Event\GetEventByPeriodFilter;
-use LaChaudiere\core\application\services\EventService;
-use LaChaudiere\core\application\services\CategoryService;
-use LaChaudiere\infra\persistence\Eloquent\EventRepository;
-use LaChaudiere\core\application\interfaces\EventRepositoryInterface;
-use LaChaudiere\core\application\interfaces\CategoryRepositoryInterface;
-use LaChaudiere\infra\persistence\Eloquent\CategoryRepository;
-use LaChaudiere\core\application\interfaces\UserRepositoryInterface;
-use LaChaudiere\infra\persistence\Eloquent\UserRepository;
-use Slim\Views\Twig;
-use Twig\TwigFunction;
 
 $container = new Container(); 
 
@@ -74,6 +72,17 @@ $container->set(EventService::class, fn() => new EventService(
     $container->get(GetEventsByCategory::class)
 
 ));
+
+$container->set(CategoryService::class, fn() => new CategoryService(
+    $container->get(CategoryRepositoryInterface::class),
+    $container->get(CreateCategory::class),
+    $container->get(DeleteCategory::class),
+    $container->get(UpdateCategory::class),
+    $container->get(GetAllCategories::class),
+    $container->get(GetCategoryById::class),
+
+));
+
 
 
 
