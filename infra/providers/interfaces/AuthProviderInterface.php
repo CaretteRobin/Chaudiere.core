@@ -5,7 +5,6 @@ namespace LaChaudiere\infra\providers\interfaces;
 
 use LaChaudiere\core\domain\entities\User;
 
-;
 
 interface AuthProviderInterface
 {

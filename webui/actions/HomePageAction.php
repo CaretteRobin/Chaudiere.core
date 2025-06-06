@@ -12,6 +12,15 @@ class HomePageAction
     public function __invoke(Request $request, Response $response, array $args): Response
     {
         $view = Twig::fromRequest($request);
-        return $view->render($response, 'pages/home.twig');
+
+        $user = $request->getAttribute('user');
+
+        $params = [];
+
+        if ($user) {
+            $params['user'] = $user;
+        }
+
+        return $view->render($response, 'pages/home.twig', $params);
     }
 }

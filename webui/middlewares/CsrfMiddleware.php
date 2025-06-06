@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace LaChaudiere\webui\middlewares;
 
-use LaChaudiere\webui\providers\CsrfTokenProvider;
+use LaChaudiere\infra\providers\CsrfTokenProvider;
+use LaChaudiere\webui\traits\FlashRedirectTrait;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -13,6 +14,9 @@ use Slim\Psr7\Response;
 
 class CsrfMiddleware implements MiddlewareInterface
 {
+
+    use FlashRedirectTrait;
+
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $method = strtoupper($request->getMethod());
@@ -24,11 +28,13 @@ class CsrfMiddleware implements MiddlewareInterface
             try {
                 CsrfTokenProvider::check($csrfToken);
             } catch (\Exception $e) {
-                $_SESSION['flash'] = 'Erreur CSRF : ' . $e->getMessage();
-
-                return (new Response())
-                    ->withHeader('Location', '/')
-                    ->withStatus(302);
+                $response = new Response();
+                return $this->redirectWithFlash(
+                    $response,
+                    'auth',
+                    'Le token CSRF est invalide, veuillez réessayer.',
+                    'error'
+                );
             }
         }
 

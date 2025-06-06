@@ -2,13 +2,14 @@
 
 namespace LaChaudiere\core\application\UseCase\Event;
 
+use LaChaudiere\core\application\exceptions\ApplicationException;
+use LaChaudiere\core\application\exceptions\CategoryExceptions\GetCategoryByIdNotFoundException;
+use LaChaudiere\core\application\exceptions\EventExceptions\CreateEventFailedException;
 use LaChaudiere\core\application\interfaces\EventRepositoryInterface;
 use LaChaudiere\core\application\interfaces\CategoryRepositoryInterface;
 use LaChaudiere\core\application\interfaces\UserRepositoryInterface;
 use LaChaudiere\core\domain\entities\Event;
-use LaChaudiereAgenda\core\application\exceptions\CategoryExceptions\GetCategoryByIdNotFoundException;
-use LaChaudiere\core\application\exceptions\UserNotFoundException;
-use LaChaudiereAgenda\core\application\exceptions\EventExceptions\CreateEventFailedException;
+use LaChaudiere\core\domain\entities\User;
 
 class CreateEvent
 {
@@ -32,12 +33,15 @@ class CreateEvent
             throw new CreateEventFailedException();
         }
 
-        if (!$this->categoryRepository->getById($data['category_id'])) {
+        if (!$this->categoryRepository->findById($data['category_id'])) {
             throw new GetCategoryByIdNotFoundException($data['category_id']);
         }
 
-        if (!$this->userRepository->getById($data['created_by'])) {
-            throw new UserNotFoundException($data['created_by']);
+        if (!User::find($data['created_by'])) {
+            throw new ApplicationException($data['created_by']);
+        }
+        if (!$this->userRepository->findById($data['created_by'])) {
+            throw new ApplicationException($data['created_by']);
         }
 
         return $this->eventRepository->create($data);
