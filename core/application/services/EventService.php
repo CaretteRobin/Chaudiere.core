@@ -3,6 +3,7 @@
 namespace LaChaudiere\core\application\services;
 
 use Illuminate\Database\Eloquent\Collection;
+use LaChaudiere\core\application\UseCase\Event\GetEventsByCategory;
 use LaChaudiere\core\domain\entities\Event;
 use LaChaudiere\core\application\UseCase\Event\GetAllEvent;
 use LaChaudiere\core\application\UseCase\Event\GetEventById;
@@ -18,18 +19,28 @@ class EventService
     private DeleteEvent $deleteEvent;
     private GetEventByPeriodFilter $getEventByPeriodFilter;
 
+    private GetEventsByCategory $getEventsByCategory;
+
+
+
     public function __construct(
         GetAllEvent $getAllEvent,
         GetEventById $getEventById,
         CreateEvent $createEvent,
         DeleteEvent $deleteEvent,
-        GetEventByPeriodFilter $getEventByPeriodFilter
+        GetEventByPeriodFilter $getEventByPeriodFilter,
+        GetEventsByCategory $getEventsByCategory,
+
+
     ) {
         $this->getAllEvent = $getAllEvent;
         $this->getEventById = $getEventById;
         $this->createEvent = $createEvent;
         $this->deleteEvent = $deleteEvent;
         $this->getEventByPeriodFilter = $getEventByPeriodFilter;
+        $this->getEventsByCategory = $getEventsByCategory;
+
+
     }
 
     public function getAllEvent(): Collection
@@ -57,5 +68,10 @@ class EventService
     {
         return $this->getEventByPeriodFilter->execute($startDate, $endDate);
     }
+    public function getEventsByCategory(int $categoryId): array
+    {
+        return $this->getEventsByCategory->execute($categoryId);
+    }
+
 }
 

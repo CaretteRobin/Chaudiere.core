@@ -8,6 +8,7 @@ use LaChaudiere\core\application\interfaces\EventRepositoryInterface;
 use LaChaudiere\core\application\interfaces\UserRepositoryInterface;
 use LaChaudiere\core\application\services\AuthnService;
 use LaChaudiere\core\application\services\EventService;
+use LaChaudiere\core\application\UseCase\Event\GetEventsByCategory;
 use LaChaudiere\infra\persistence\Eloquent\EventRepository;
 use LaChaudiere\infra\persistence\Eloquent\UserRepository;
 use LaChaudiere\infra\providers\AuthProvider;
@@ -45,6 +46,7 @@ $container->set(CreateEvent::class, function () use ($container) {
         $container->get(UserRepositoryInterface::class),
     );
 });
+
 $container->set(DeleteEvent::class, fn() => new DeleteEvent($container->get(EventRepositoryInterface::class)));
 $container->set(GetEventByPeriodFilter::class, function () use ($container) {
     return new GetEventByPeriodFilter($container->get(EventRepositoryInterface::class));
@@ -58,6 +60,10 @@ $container->set(EventService::class, fn() => new EventService(
     $container->get(CreateEvent::class),
     $container->get(DeleteEvent::class),
     $container->get(GetEventByPeriodFilter::class),
+    $container->get(EventRepositoryInterface::class)
+
 ));
+
+
 
 return $container;

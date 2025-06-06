@@ -84,4 +84,21 @@ class EventRepository implements EventRepositoryInterface
             ->whereBetween('start_date', [$startDate, $endDate])
             ->get();
     }
+    public function getEventByCateg(int $categoryId): array
+    {
+        $events = Event::with('category')
+            ->where('category_id', $categoryId)
+            ->orderBy('start_date')
+            ->get();
+
+        return $events->map(function (Event $event) {
+            return [
+                'title'      => $event->title,
+                'start_date' => $event->start_date->format('Y-m-d'),
+                'category'   => $event->category?->name,
+                'detail_url' => '/api/evenements/' . $event->id,
+            ];
+        })->toArray();
+    }
+
 }
