@@ -20,15 +20,37 @@
                 <tbody class="bg-white divide-y divide-gray-200">
                     {% for user in users %}
                         <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ user.id }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                {% if user.id|length > 10 %}
+                                    {{ user.id|slice(0, 10) ~ '...' }}
+                                {% else %}
+                                    {{ user.id }}
+                                {% endif %}
+                            </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ user.email }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ user.role }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ user.password }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                {% if user.password|length > 10 %}
+                                    {{ user.password|slice(0, 10) ~ '...' }}
+                                {% else %}
+                                    {{ user.password }}
+                                {% endif %}
+                            </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                <a href="{{url_for('show_user',{'id':user.id})}}"
-                                   class="inline-block bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition">
-                                    Modifier
-                                </a>
+                                <div class="flex space-x-2">
+                                    <a href="{{ url_for('show_user', {'id': user.id}) }}"
+                                       class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition">
+                                        Modifier
+                                    </a>
+                                    <form method="post" action="{{ url_for('delete_user', {'id': user.id}) }}">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                                        <button type="submit"
+                                                class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition"
+                                                onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">
+                                            Supprimer
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                     {% else %}

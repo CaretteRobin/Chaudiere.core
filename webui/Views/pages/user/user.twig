@@ -117,9 +117,16 @@
         <div class="mb-6">
             <label class="block text-sm font-semibold text-gray-600 mb-1">Mot de passe :</label>
             <div id="password-display-container" class="flex items-center space-x-2">
-                <span id="password-display" class="text-gray-900 cursor-pointer hover:text-indigo-600">
+                <span
+                    id="password-display"
+                    data-full-password="{{ userSpect.password }}"
+                    class="text-gray-900 cursor-pointer hover:text-indigo-600"
+                >
                     ********
                 </span>
+                <button id="password-view-btn" class="text-indigo-600 hover:text-indigo-800 text-sm">
+                    Voir
+                </button>
                 <button id="password-edit-btn" class="text-indigo-600 hover:text-indigo-800 text-sm">
                     Modifier
                 </button>
@@ -177,7 +184,7 @@
     </div>
 </div>
 
-{# JS pour basculer l’édition inline #}
+{# JS pour basculer l’édition inline et afficher le mot de passe #}
 <script>
     // EMAIL
     const emailDisplayContainer = document.getElementById('email-display-container');
@@ -209,12 +216,22 @@
         roleDisplayContainer.classList.remove('hidden');
     });
 
-    // PASSWORD
+    // PASSWORD VIEW & EDIT
+    const passwordDisplay = document.getElementById('password-display');
+    const passwordViewBtn = document.getElementById('password-view-btn');
     const passwordDisplayContainer = document.getElementById('password-display-container');
     const passwordForm = document.getElementById('password-form');
     const passwordEditBtn = document.getElementById('password-edit-btn');
     const passwordCancelBtn = document.getElementById('password-cancel-btn');
 
+    // Afficher le mot de passe complet
+    passwordViewBtn.addEventListener('click', () => {
+        const full = passwordDisplay.getAttribute('data-full-password');
+        passwordDisplay.textContent = full;
+        passwordViewBtn.classList.add('hidden');
+    });
+
+    // Basculer vers édition
     passwordEditBtn.addEventListener('click', () => {
         passwordDisplayContainer.classList.add('hidden');
         passwordForm.classList.remove('hidden');
@@ -222,6 +239,9 @@
     passwordCancelBtn.addEventListener('click', () => {
         passwordForm.classList.add('hidden');
         passwordDisplayContainer.classList.remove('hidden');
+        // remettre le masquage
+        passwordDisplay.textContent = '********';
+        passwordViewBtn.classList.remove('hidden');
     });
 </script>
 {% endblock %}

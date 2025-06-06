@@ -1,8 +1,5 @@
 <?php
 
-use LaChaudiere\webui\actions\Admin\CreateUserAction;
-use LaChaudiere\webui\actions\Admin\DeleteUserAction;
-use LaChaudiere\webui\actions\Admin\GetAllUsersAction;
 use LaChaudiere\webui\actions\Auth\LogoutAction;
 use LaChaudiere\webui\actions\Auth\RegisterAction;
 use LaChaudiere\webui\actions\Auth\LoginAction;
@@ -11,6 +8,7 @@ use LaChaudiere\webui\actions\Auth\ShowRegisterPageAction;
 use LaChaudiere\webui\actions\Auth\GetAllUserAction;
 use LaChaudiere\webui\actions\Auth\GetUserAction;
 use LaChaudiere\webui\actions\Auth\UpdateUserAction;
+use LaChaudiere\webui\actions\Auth\DeleteUserAction;
 use LaChaudiere\webui\actions\HomePageAction;
 use LaChaudiere\webui\middlewares\AuthMiddleware;
 use LaChaudiere\webui\middlewares\AuthzMiddleware;
@@ -30,6 +28,7 @@ return function (App $app) {
             $group->get('/users', GetAllUserAction::class)->setName('show_users');
             $group->get('/users/{id}', GetUserAction::class)->setName('show_user');
             $group->post('/users/{id}', UpdateUserAction::class)->setName('update_user');
+            $group->post('/users/{id}/delete', DeleteUserAction::class)->setName('delete_user');
         })->add(AuthzMiddleware::class);
         $group->get('/', HomePageAction::class)->setName('home');
         $group->get('/logout', LogoutAction::class)->setName('logout');
