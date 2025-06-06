@@ -1,6 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 use DI\Container;
+use LaChaudiere\core\application\interfaces\AuthnServiceInterface;
+use LaChaudiere\core\application\interfaces\EventRepositoryInterface;
+use LaChaudiere\core\application\interfaces\UserRepositoryInterface;
+use LaChaudiere\core\application\services\AuthnService;
+use LaChaudiere\core\application\services\EventService;
+use LaChaudiere\core\application\UseCase\Event\GetEventsByCategory;
+use LaChaudiere\infra\persistence\Eloquent\EventRepository;
+use LaChaudiere\infra\persistence\Eloquent\UserRepository;
+use LaChaudiere\infra\providers\AuthProvider;
+use LaChaudiere\infra\providers\interfaces\AuthProviderInterface;
 use LaChaudiere\core\application\UseCase\Event\CreateEvent;
 use LaChaudiere\core\application\UseCase\Event\DeleteEvent;
 use LaChaudiere\core\application\UseCase\Event\GetAllEvent;
@@ -17,24 +29,21 @@ use LaChaudiere\infra\persistence\Eloquent\UserRepository;
 use Slim\Views\Twig;
 use Twig\TwigFunction;
 
-$container = new Container();
+$container = new Container(); 
 
 // Bind du repository
 $container->set(EventRepositoryInterface::class, fn() => new EventRepository());
 $container->set(CategoryRepositoryInterface::class, fn() => new CategoryRepository());
 $container->set(UserRepositoryInterface::class, fn() => new UserRepository());
+$container->set(EventRepositoryInterface::class, fn() => new EventRepository());
 
-// Bind du service Twig pour les vues avec la fonction base_url
-$container->set('view', function() {
-    $twig = Twig::create(__DIR__ . '/../webui/Views', ['cache' => false]);
-    $twig->getEnvironment()->addFunction(new TwigFunction('base_url', function($path = '') {
-        // Retourne le chemin relatif, à adapter si besoin
-        return $path ? '/' . ltrim($path, '/') : '/';
-    }));
-    return $twig;
+// Bind des services
+$container->set(AuthProviderInterface::class, function (Container $container) {
+    return new AuthProvider(
+        $container->get(AuthnServiceInterface::class)
+    );
 });
-
-// Bind du service catégorie
+$container->set(AuthnServiceInterface::class, fn () => new AuthnService());
 $container->set(CategoryService::class, fn() => new CategoryService(
     $container->get(CategoryRepositoryInterface::class)
 ));
@@ -49,6 +58,7 @@ $container->set(CreateEvent::class, function () use ($container) {
         $container->get(UserRepositoryInterface::class),
     );
 });
+
 $container->set(DeleteEvent::class, fn() => new DeleteEvent($container->get(EventRepositoryInterface::class)));
 $container->set(GetEventByPeriodFilter::class, function () use ($container) {
     return new GetEventByPeriodFilter($container->get(EventRepositoryInterface::class));
@@ -61,6 +71,10 @@ $container->set(EventService::class, fn() => new EventService(
     $container->get(CreateEvent::class),
     $container->get(DeleteEvent::class),
     $container->get(GetEventByPeriodFilter::class),
+    $container->get(GetEventsByCategory::class)
+
 ));
+
+
 
 return $container;

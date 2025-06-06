@@ -1,7 +1,7 @@
-INSERT INTO users (username, password, role)
+INSERT INTO users (email, password, role)
 VALUES
-('admin01', '$2y$10$z6MPHEDbscCh0cW7XsLHPuTxv/hKMdrL1eFVoDKRkzFv/yWsvKoCi', 'Admin'), -- password: admin123
-('superadmin01', '$2y$10$6f1zUd.NUR2zZj3mTklD0uC2DK6UmsfnxCwz8Hhx0/6rULpguUG7a', 'super-Admin'); -- password: super123
+('admin@example.com', '$2y$10$z6MPHEDbscCh0cW7XsLHPuTxv/hKMdrL1eFVoDKRkzFv/yWsvKoCi', 'Admin'), -- password: admin123
+('superadmin@example.com','$2y$10$6f1zUd.NUR2zZj3mTklD0uC2DK6UmsfnxCwz8Hhx0/6rULpguUG7a','super-Admin'); -- password: super123
 
 INSERT INTO categories (name)
 VALUES

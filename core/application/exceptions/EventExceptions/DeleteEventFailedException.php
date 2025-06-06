@@ -1,8 +1,8 @@
 <?php
 
-namespace LaChaudiereAgenda\core\application\exceptions\EventExceptions;
+namespace LaChaudiere\core\application\exceptions\EventExceptions;
 
-use LaChaudiereAgenda\core\application\exceptions\ApplicationException;
+use LaChaudiere\core\application\exceptions\ApplicationException;
 
 /**
  * Levée si la suppression d’un événement échoue.

@@ -1,8 +1,8 @@
 <?php
 
 namespace LaChaudiere\core\application\interfaces;
-use Illuminate\Database\Eloquent\Collection;
 
+use Illuminate\Database\Eloquent\Collection;
 use LaChaudiere\core\domain\entities\Event;
 
 interface EventRepositoryInterface
@@ -18,4 +18,7 @@ interface EventRepositoryInterface
     public function delete(int $id): bool;
 
     public function getEventByPeriodFilter(string $startDate, string $endDate): Collection;
+
+    public function getEventByCateg(int $categoryId): array;
+
 }
