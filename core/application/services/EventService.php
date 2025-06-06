@@ -172,4 +172,36 @@ class EventService
             throw new \InvalidArgumentException("Le prix doit être un nombre");
         }
     }
+
+    public function getEventsByPeriodFilter(?string $periodFilter): Collection
+    {
+        $query = Event::query();
+        $today = new \DateTimeImmutable(); // ✅ ici
+
+        if ($periodFilter) {
+            $periods = explode(',', $periodFilter);
+
+            $query->where(function ($q) use ($periods, $today) {
+                foreach ($periods as $period) {
+                    $period = trim(strtolower($period));
+                    switch ($period) {
+                        case 'passee':
+                            $q->orWhere('end_date', '<', $today);
+                            break;
+                        case 'courante':
+                            $q->orWhere(function ($sub) use ($today) {
+                                $sub->where('start_date', '<=', $today)
+                                    ->where('end_date', '>=', $today);
+                            });
+                            break;
+                        case 'futur':
+                            $q->orWhere('start_date', '>', $today);
+                            break;
+                    }
+                }
+            });
+        }
+
+        return $query->with(['category', 'author', 'images'])->get();
+    }
 }
