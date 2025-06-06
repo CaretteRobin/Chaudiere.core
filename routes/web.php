@@ -1,6 +1,5 @@
 <?php
 
-use LaChaudiere\infra\providers\CsrfTokenProvider;
 use LaChaudiere\webui\actions\Admin\CreateUserAction;
 use LaChaudiere\webui\actions\Admin\DeleteUserAction;
 use LaChaudiere\webui\actions\Admin\GetAllUsersAction;
@@ -8,14 +7,14 @@ use LaChaudiere\webui\actions\Auth\LogoutAction;
 use LaChaudiere\webui\actions\Auth\RegisterAction;
 use LaChaudiere\webui\actions\Auth\LoginAction;
 use LaChaudiere\webui\actions\Auth\ShowAuthPageAction;
+use LaChaudiere\webui\actions\Category\GetCategoriesAction;
+use LaChaudiere\webui\actions\Event\GetAllEventsAction;
 use LaChaudiere\webui\actions\HomePageAction;
+use LaChaudiere\webui\actions\Category\ShowCreateCategoryFormAction;
+use LaChaudiere\webui\actions\Category\CreateCategoryAction;
 use LaChaudiere\webui\middlewares\AuthMiddleware;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
-use LaChaudiere\core\application\services\CategoryService;
-use Slim\Views\Twig;
 
 return function (App $app) {
 
@@ -25,66 +24,28 @@ return function (App $app) {
 
     $app->group('', function (RouteCollectorProxy $group): void {
 
-//        $group->get('/', HomePageAction::class)->setName('home');
         $group->get('/logout', LogoutAction::class)->setName('logout');
 
         // Page d'accueil avec les catégories
-        $group->get('/', function (ServerRequestInterface $request, ResponseInterface $response) {
-            $view = Twig::fromRequest($request);
-            $categories = $this->get(CategoryService::class)->getAll();
-            return $view->render($response, 'pages/home.twig', [
-                'categories' => $categories
-            ]);
-        })->setName('home');
+        $group->get('/', HomePageAction::class)->setName('home');
 
         // Liste des catégories
-        $group->get('/categories', function (ServerRequestInterface $request, ResponseInterface $response) {
-            $view = Twig::fromRequest($request);
-            $categories = $this->get(CategoryService::class)->getAll();
-            return $view->render($response, 'pages/categories.twig', [
-                'categories' => $categories
-            ]);
-        });
+        $group->get('/categories', GetCategoriesAction::class);
 
         // Formulaire d’ajout de catégorie
-        $group->get('/categories/create', function (ServerRequestInterface $request, ResponseInterface $response) {
-            $view = Twig::fromRequest($request);
-            return $view->render($response, 'pages/categories_form.twig');
-        });
-
-        // Liste des événements
-        $group->get('/events', function (ServerRequestInterface $request, ResponseInterface $response) {
-            $repo = $this->get('event_repository');
-            $events = $repo->findAll();
-            $view = Twig::fromRequest($request);
-            return $view->render($response, 'pages/events.twig', [
-                'events' => $events
-            ]);
-        });
+        $group->get('/categories/create', ShowCreateCategoryFormAction::class);
 
         // Traitement du formulaire d’ajout de catégorie
-        $group->post('/categories/create', function (ServerRequestInterface $request, ResponseInterface $response) {
-           $view = Twig::fromRequest($request);
-            $data = $request->getParsedBody();
-            $name = trim($data['name'] ?? '');
-            $description = trim($data['description'] ?? '');
+        $group->post('/categories/create', CreateCategoryAction::class);
 
-            $csrfToken = CsrfTokenProvider::generate();
+        // Administration utilisateurs
+        $group->get('/admin', GetAllUsersAction::class);
+        $group->post('/admin/users/create', CreateUserAction::class);
+        $group->get('/admin/users/delete/{id}', DeleteUserAction::class)->setName('delete_user');
+        $group->get('/admin/users', GetAllUsersAction::class)->setName('admin_users');
 
-            if ($name !== '') {
-                $this->get(CategoryService::class)->createCategory($name, $description);
-                // Redirection vers la liste des catégories
-                return $response
-                    ->withHeader('Location', '/categories')
-                    ->withStatus(302);
-            }
+        // Liste des événements
+        $group->get('/events', GetAllEventsAction::class);
 
-            // Si le nom est vide, on réaffiche le formulaire avec un message d’erreur
-            return $view->render($response, 'pages/categories_form.twig', [
-                'csrf_token' => $csrfToken,
-                'error' => 'Le nom de la catégorie est requis.',
-                'old' => ['name' => $name, 'description' => $description]
-            ]);
-        });
     })->add(AuthMiddleware::class);
 };

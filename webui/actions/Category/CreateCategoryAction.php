@@ -1,13 +1,12 @@
 <?php
 
-declare(strict_types=1);
-
 namespace LaChaudiere\webui\actions\Category;
 
 use LaChaudiere\core\application\services\CategoryService;
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Exception\HttpBadRequestException;
+use LaChaudiere\infra\providers\CsrfTokenProvider;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Slim\Views\Twig;
 
 class CreateCategoryAction
 {
@@ -18,23 +17,25 @@ class CreateCategoryAction
         $this->categoryService = $categoryService;
     }
 
-    public function __invoke(Request $request, Response $response): Response
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $args = []): ResponseInterface
     {
+        $view = Twig::fromRequest($request);
         $data = $request->getParsedBody();
+        $name = trim($data['name'] ?? '');
+        $description = trim($data['description'] ?? '');
+        $csrfToken = CsrfTokenProvider::generate();
 
-        if (!isset($data['name']) || empty($data['name'])) {
-            throw new HttpBadRequestException($request, "Le nom de la catégorie est requis");
+        if ($name !== '') {
+            $this->categoryService->createCategory($name, $description);
+            return $response
+                ->withHeader('Location', '/categories')
+                ->withStatus(302);
         }
 
-        $category = $this->categoryService->create($data);
-
-        $response->getBody()->write(json_encode([
-            'success' => true,
-            'data' => $category
-        ]));
-
-        return $response
-            ->withHeader('Content-Type', 'application/json')
-            ->withStatus(201);
+        return $view->render($response, 'pages/categories_form.twig', [
+            'csrf_token' => $csrfToken,
+            'error' => 'Le nom de la catégorie est requis.',
+            'old' => ['name' => $name, 'description' => $description]
+        ]);
     }
 }
