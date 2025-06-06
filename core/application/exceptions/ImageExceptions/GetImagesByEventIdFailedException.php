@@ -1,8 +1,8 @@
 <?php
 
-namespace LaChaudiereAgenda\core\application\exceptions\ImageExceptions;
+namespace LaChaudiere\core\application\exceptions\ImageExceptions;
 
-use LaChaudiereAgenda\core\application\exceptions\ApplicationException;
+use LaChaudiere\core\application\exceptions\ApplicationException;
 
 /**
  * Levée si la récupération des images d’un événement échoue

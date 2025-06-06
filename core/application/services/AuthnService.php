@@ -4,8 +4,9 @@ namespace LaChaudiere\core\application\services;
 
 use LaChaudiere\core\application\interfaces\AuthnServiceInterface;
 use LaChaudiere\core\domain\entities\User;
-use LaChaudiereAgenda\core\application\exceptions\ApplicationException;
-use LaChaudiereAgenda\core\application\exceptions\UserExceptions\AuthenticationFailedException;
+use LaChaudiere\infra\persistence\Eloquent\UserRepository;
+use LaChaudiere\core\application\exceptions\ApplicationException;
+use LaChaudiere\core\application\exceptions\UserExceptions\AuthenticationFailedException;
 use Ramsey\Uuid\Uuid;
 
 class AuthnService implements AuthnServiceInterface
@@ -13,7 +14,10 @@ class AuthnService implements AuthnServiceInterface
     public function register(string $email, string $password): User
     {
         try {
-            if ($this->isEmailTaken($email)) {
+
+            $repo = new UserRepository();
+
+            if ($repo->findByEmail($email) !== null) {
                 throw new ApplicationException("Email déjà utilisé.");
             }
 
@@ -22,10 +26,11 @@ class AuthnService implements AuthnServiceInterface
             $user->email = $email;
             $user->password = password_hash($password, PASSWORD_DEFAULT);
             $user->role = User::ROLE_ADMIN;
-            $user->save();
+
+            $repo->save($user);
 
             return $user;
-        } catch (\Throwable $e) {
+        } catch (AuthenticationFailedException $e) {
             throw new AuthenticationFailedException();
         }
     }
@@ -33,19 +38,15 @@ class AuthnService implements AuthnServiceInterface
     public function login(string $email, string $password): User
     {
         try {
-            $user = User::where('email', $email)->first();
+            $repo = new UserRepository();
+            $user = $repo->findByEmail($email);
             if (!$user || !password_verify($password, $user->password)) {
                 throw new AuthenticationFailedException("Email ou mot de passe incorrect.");
             }
 
             return $user;
-        } catch (\Throwable $e) {
+        } catch (AuthenticationFailedException $e) {
             throw new AuthenticationFailedException();
         }
-    }
-
-    private function isEmailTaken(string $email): bool
-    {
-        return User::where('email', $email)->exists();
     }
 }

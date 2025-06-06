@@ -1,5 +1,7 @@
 <?php
 
+use LaChaudiere\webui\middlewares\FlashMessageMiddleware;
+use LaChaudiere\webui\middlewares\CsrfMiddleware;
 use Slim\Factory\AppFactory;
 use Dotenv\Dotenv;
 use Slim\Views\Twig;
@@ -33,7 +35,11 @@ $app->addErrorMiddleware(true, true, true);
 $twig = Twig::create(__DIR__ . '/../webui/Views', ['cache' => false]);
 
 // Ajout du middleware Twig à l’application Slim
+$app->add(new FlashMessageMiddleware());
+$app->add(new CsrfMiddleware());
 $app->add(TwigMiddleware::create($app, $twig));
+
+
 $twig->getEnvironment()->addFunction(new TwigFunction('base_url', static function () {
     $scriptDir = dirname($_SERVER['SCRIPT_NAME']);
     return $scriptDir === '/' ? '' : $scriptDir;

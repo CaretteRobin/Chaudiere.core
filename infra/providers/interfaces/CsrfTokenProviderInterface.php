@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace LaChaudiere\infra\providers\interfaces;
 
+use Exception;
+
 interface CsrfTokenProviderInterface
 {
     /**
@@ -18,7 +20,7 @@ interface CsrfTokenProviderInterface
      *
      * @param string|null $token Le token à vérifier
      * @return bool true si le token est valide
-     * @throws \Exception Si le token est manquant ou invalide
+     * @throws Exception Si le token est manquant ou invalide
      */
     public static function check(?string $token): bool;
 }
