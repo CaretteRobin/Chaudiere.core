@@ -2,8 +2,8 @@
 
 namespace LaChaudiere\infra\persistence\Eloquent;
 
-use LaChaudiere\core\Domain\Entities\User;
 use LaChaudiere\core\application\interfaces\UserRepositoryInterface;
+use LaChaudiere\core\domain\entities\User;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -15,6 +15,11 @@ class UserRepository implements UserRepositoryInterface
     public function findByUsername(string $username): ?User
     {
         return User::where('username', $username)->first();
+    }
+
+    public function findByEmail(string $email): ?User
+    {
+        return User::where('email', $email)->first();
     }
 
     public function save(User $user): User

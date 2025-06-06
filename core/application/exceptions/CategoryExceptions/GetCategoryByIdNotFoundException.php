@@ -1,8 +1,8 @@
 <?php
 
-namespace LaChaudiereAgenda\core\application\exceptions\CategoryExceptions;
+namespace LaChaudiere\core\application\exceptions\CategoryExceptions;
 
-use LaChaudiereAgenda\core\application\exceptions\ApplicationException;
+use LaChaudiere\core\application\exceptions\ApplicationException;
 
 /**
  * Levée si aucune catégorie n’est trouvée pour l’ID fourni.

@@ -1,8 +1,8 @@
 <?php
 
-namespace LaChaudiereAgenda\core\application\exceptions\UserExceptions;
+namespace LaChaudiere\core\application\exceptions\UserExceptions;
 
-use LaChaudiereAgenda\core\application\exceptions\ApplicationException;
+use LaChaudiere\core\application\exceptions\ApplicationException;
 
 /**
  * Levée si l’authentification échoue (identifiants Invalides).

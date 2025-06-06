@@ -24,8 +24,7 @@ DROP TABLE IF EXISTS `users`;
 --    - created_at   : date de création du compte
 CREATE TABLE `users`
 (
-    `id`         INT AUTO_INCREMENT PRIMARY KEY,
-    `username`   VARCHAR(100) NOT NULL UNIQUE,
+    `id`         CHAR(36) PRIMARY KEY,
     `password`   VARCHAR(255) NOT NULL,
     `email`      VARCHAR(255) NOT NULL UNIQUE,
     `role`       ENUM('admin','super-admin') NOT NULL DEFAULT 'admin',
@@ -39,7 +38,7 @@ CREATE TABLE `users`
 --    - name : libellé du type (ex. "concert", "expo", "conférence")
 CREATE TABLE `categories`
 (
-    `id`   INT AUTO_INCREMENT PRIMARY KEY,
+    `id`   CHAR(36) PRIMARY KEY,
     `name` VARCHAR(100) NOT NULL UNIQUE
 ) ENGINE=InnoDB
   DEFAULT CHARSET=utf8mb4
@@ -58,15 +57,15 @@ CREATE TABLE `categories`
 --    - created_at   : date de création de l’enregistrement
 CREATE TABLE `events`
 (
-    `id`          INT AUTO_INCREMENT PRIMARY KEY,
+    `id`          CHAR(36)       PRIMARY KEY,
     `title`       VARCHAR(255)   NOT NULL,
     `description` TEXT,
     `price`       DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
     `start_date`  DATE                    DEFAULT NULL,
     `end_date`    DATE                    DEFAULT NULL,
     `time`        TIME                    DEFAULT NULL,
-    `category_id` INT            NOT NULL,
-    `created_by`  INT                     DEFAULT NULL,
+    `category_id` CHAR(36)       NOT NULL,
+    `created_by`  CHAR(36)                DEFAULT NULL,
     `created_at`  TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT `fk_events_category`
@@ -90,9 +89,9 @@ CREATE TABLE `events`
 --    - event_id : référence vers events(id)
 CREATE TABLE `images`
 (
-    `id`       INT AUTO_INCREMENT PRIMARY KEY,
+    `id`       CHAR(36) PRIMARY KEY,
     `url`      VARCHAR(255) NOT NULL,
-    `event_id` INT          NOT NULL,
+    `event_id` CHAR(36)     NOT NULL,
 
     CONSTRAINT `fk_images_event`
         FOREIGN KEY (`event_id`)
