@@ -19,7 +19,10 @@ class GetAllEventsAction
 
     public function __invoke(Request $request, Response $response): Response
     {
-        $events = $this->eventService->getAllEvents();
+        $queryParams = $request->getQueryParams();
+        $periode = $queryParams['periode'] ?? null;
+
+        $events = $this->eventService->getEventsByPeriodFilter($periode);
 
         $response->getBody()->write($events->toJson());
 
