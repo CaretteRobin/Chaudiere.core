@@ -22,7 +22,13 @@ class GetAllEventsAction
         $queryParams = $request->getQueryParams();
         $periode = $queryParams['periode'] ?? null;
 
-        $events = $this->eventService->getEventsByPeriodFilter($periode);
+        if ($periode && str_contains($periode, '|')) {
+            [$startDate, $endDate] = explode('|', $periode);
+
+            $events = $this->eventService->getEventByPeriodFilter($startDate, $endDate);
+        } else {
+            $events = $this->eventService->getAllEvent();
+        }
 
         $response->getBody()->write($events->toJson());
 

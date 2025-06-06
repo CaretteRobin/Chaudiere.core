@@ -7,6 +7,7 @@ use LaChaudiere\core\Application\UseCase\User\AuthenticateUser;
 use LaChaudiere\core\Application\UseCase\User\GetUserById;
 use LaChaudiere\core\Application\UseCase\User\GetAllUsers;
 use LaChaudiere\core\Application\UseCase\User\DeleteUser;
+use LaChaudiere\core\Domain\Entities\User;
 
 class UserService
 {
@@ -38,7 +39,7 @@ class UserService
         return $this->getAllUsers->execute();
     }
 
-    public function createUser(array $data): \LaChaudiere\core\Domain\Entities\User
+    public function createUser(array $data): User
     {
         if (empty($data['username']) || empty($data['password'])) {
             throw new \InvalidArgumentException("Username and password are required.");

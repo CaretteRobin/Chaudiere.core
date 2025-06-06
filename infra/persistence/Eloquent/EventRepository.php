@@ -77,4 +77,11 @@ class EventRepository implements EventRepositoryInterface
 
         return $event->delete();
     }
+
+    public function getEventByPeriodFilter(string $startDate, string $endDate): Collection
+    {
+        return Event::with(['category', 'author', 'images'])
+            ->whereBetween('start_date', [$startDate, $endDate])
+            ->get();
+    }
 }
