@@ -2,12 +2,12 @@
 
 namespace LaChaudiere\core\application\services;
 
-use LaChaudiere\core\application\interface\CategoryRepositoryInterface;
-use LaChaudiere\core\application\usecase\Category\CreateCategory;
-use LaChaudiere\core\application\usecase\Category\DeleteCategory;
-use LaChaudiere\core\application\usecase\Category\GetAllCategories;
-use LaChaudiere\core\application\usecase\Category\GetCategoryById;
-use LaChaudiere\core\application\usecase\Category\UpdateCategory;
+use LaChaudiere\core\application\interfaces\CategoryRepositoryInterface;
+use LaChaudiere\core\application\UseCase\Category\CreateCategory;
+use LaChaudiere\core\application\UseCase\Category\DeleteCategory;
+use LaChaudiere\core\application\UseCase\Category\GetAllCategories;
+use LaChaudiere\core\application\UseCase\Category\GetCategoryById;
+use LaChaudiere\core\application\UseCase\Category\UpdateCategory;
 use LaChaudiere\core\domain\entities\Category;
 
 class CategoryService

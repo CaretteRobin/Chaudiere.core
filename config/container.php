@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 use DI\Container;
 use LaChaudiere\core\application\interface\UserRepositoryInterface;
+use LaChaudiere\core\application\interfaces\CategoryRepositoryInterface;
+use LaChaudiere\infra\persistence\Eloquent\CategoryRepository;
 use LaChaudiere\infra\persistence\Eloquent\UserRepository;
 use LaChaudiere\core\application\interface\EventRepositoryInterface;
 use LaChaudiere\infra\persistence\Eloquent\EventRepository;
@@ -19,5 +21,7 @@ $container->set(EventRepositoryInterface::class, fn() => new EventRepository());
 $container->set(EventService::class, function () use ($container) {
     return new EventService($container->get(EventRepositoryInterface::class));
 });
+
+$container->set(CategoryRepositoryInterface::class, \DI\autowire(CategoryRepository::class));
 
 return $container;
