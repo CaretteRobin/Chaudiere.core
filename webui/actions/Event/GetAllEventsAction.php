@@ -22,45 +22,44 @@ class GetAllEventsAction
         $queryParams = $request->getQueryParams();
         $periodeParam = $queryParams['periode'] ?? null;
 
+        $events = $this->eventService->getAllEvent();
+
+        // S'il y a un filtre de période, on applique le filtrage
         if ($periodeParam) {
-            $periods = explode(',', $periodeParam);
+            $periods = array_map('trim', explode(',', $periodeParam));
             $today = new \DateTimeImmutable();
             $currentMonth = (int) $today->format('n');
             $currentYear = (int) $today->format('Y');
 
-            $allEvents = $this->eventService->getAllEvent();
-
-            $filteredEvents = $allEvents->filter(function ($event) use ($periods, $currentMonth, $currentYear) {
-                $eventDate = new \DateTimeImmutable($event->start_date->toDateString());
+            $events = $events->filter(function ($event) use ($periods, $currentMonth, $currentYear) {
+                $eventDate = \DateTimeImmutable::createFromFormat('Y-m-d', $event->start_date->format('Y-m-d'));
                 $eventMonth = (int) $eventDate->format('n');
                 $eventYear = (int) $eventDate->format('Y');
 
-                if (in_array('passee', $periods)) {
-                    if ($eventYear < $currentYear || ($eventYear === $currentYear && $eventMonth < $currentMonth)) {
-                        return true;
-                    }
-                }
-
-                if (in_array('courante', $periods)) {
-                    if ($eventYear === $currentYear && $eventMonth === $currentMonth) {
-                        return true;
-                    }
-                }
-
-                if (in_array('futur', $periods)) {
-                    if ($eventYear > $currentYear || ($eventYear === $currentYear && $eventMonth > $currentMonth)) {
-                        return true;
-                    }
-                }
-
-                return false;
+                return
+                    (in_array('passee', $periods) &&
+                        ($eventYear < $currentYear || ($eventYear === $currentYear && $eventMonth < $currentMonth)))
+                    || (in_array('courante', $periods) &&
+                        ($eventYear === $currentYear && $eventMonth === $currentMonth))
+                    || (in_array('futur', $periods) &&
+                        ($eventYear > $currentYear || ($eventYear === $currentYear && $eventMonth > $currentMonth)));
             });
-
-        } else {
-            $filteredEvents = $this->eventService->getAllEvent();
         }
 
-        $response->getBody()->write($filteredEvents->toJson());
+        // Formatage final trié par date
+        $formatted = $events
+            ->sortBy('start_date')
+            ->map(function ($event) {
+                return [
+                    'title'     => $event->title,
+                    'date'      => $event->start_date,
+                    'category'  => $event->category->name ?? null,
+                    'url'       => "/api/evenements/{$event->id}",
+                ];
+            })
+            ->values();
+
+        $response->getBody()->write($formatted->toJson());
 
         return $response
             ->withHeader('Content-Type', 'application/json')
