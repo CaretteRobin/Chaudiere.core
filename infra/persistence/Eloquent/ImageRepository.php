@@ -2,7 +2,7 @@
 
 namespace LaChaudiere\infra\persistence\Eloquent;
 
-use LaChaudiere\core\Application\Repository\ImageRepositoryInterface;
+use LaChaudiere\core\application\interfaces\ImageRepositoryInterface;
 use LaChaudiere\core\domain\entities\Image;
 
 class ImageRepository implements ImageRepositoryInterface

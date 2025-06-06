@@ -1,39 +1,45 @@
 <?php
 
+namespace LaChaudiere\core\application\UseCase\Event;
+
+use LaChaudiere\core\application\interfaces\EventRepositoryInterface;
+use LaChaudiere\core\application\interfaces\CategoryRepositoryInterface;
+use LaChaudiere\core\application\interfaces\UserRepositoryInterface;
 use LaChaudiere\core\domain\entities\Event;
-use LaChaudiere\core\domain\entities\Category;
-use LaChaudiere\core\domain\entities\User;
-use LaChaudiere\core\application\exceptions\CategoryNotFoundException;
-use LaChaudiere\core\application\exceptions\UserNotFoundException;
-use Exception;
 use LaChaudiereAgenda\core\application\exceptions\CategoryExceptions\GetCategoryByIdNotFoundException;
-use LaChaudiereAgenda\core\application\exceptions\EventExceptions\GetAllEventsFailedException;
+use LaChaudiere\core\application\exceptions\UserNotFoundException;
+use LaChaudiereAgenda\core\application\exceptions\EventExceptions\CreateEventFailedException;
 
 class CreateEvent
 {
+    private EventRepositoryInterface $eventRepository;
+    private CategoryRepositoryInterface $categoryRepository;
+    private UserRepositoryInterface $userRepository;
+
+    public function __construct(
+        EventRepositoryInterface $eventRepository,
+        CategoryRepositoryInterface $categoryRepository,
+        UserRepositoryInterface $userRepository
+    ) {
+        $this->eventRepository = $eventRepository;
+        $this->categoryRepository = $categoryRepository;
+        $this->userRepository = $userRepository;
+    }
+
     public function execute(array $data): Event
     {
         if (!isset($data['title'], $data['category_id'], $data['created_by'])) {
-            throw new GetAllEventsFailedException();
+            throw new CreateEventFailedException();
         }
 
-        if (!Category::find($data['category_id'])) {
-            throw new getCategoryByIdNotFoundException($data['category_id']);
+        if (!$this->categoryRepository->getById($data['category_id'])) {
+            throw new GetCategoryByIdNotFoundException($data['category_id']);
         }
 
-        if (!User::find($data['created_by'])) {
+        if (!$this->userRepository->getById($data['created_by'])) {
             throw new UserNotFoundException($data['created_by']);
         }
 
-        return Event::create([
-            'title'       => $data['title'],
-            'description' => $data['description'] ?? null,
-            'price'       => $data['price'] ?? 0.00,
-            'start_date'  => $data['start_date'] ?? null,
-            'end_date'    => $data['end_date'] ?? null,
-            'time'        => $data['time'] ?? null,
-            'category_id' => $data['category_id'],
-            'created_by'  => $data['created_by'],
-        ]);
+        return $this->eventRepository->create($data);
     }
 }

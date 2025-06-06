@@ -1,21 +1,25 @@
 <?php
 
-namespace LaChaudiere\core\application\usecase\Event;
+namespace LaChaudiere\core\application\UseCase\Event;
 
-use LaChaudiere\core\domain\entities\Event;
-use Exception;
-use LaChaudiereAgenda\core\application\exceptions\EventExceptions\CreateEventFailedException;
+use LaChaudiere\core\application\interfaces\EventRepositoryInterface;
+use LaChaudiereAgenda\core\application\exceptions\EventExceptions\DeleteEventFailedException;
 
 class DeleteEvent
 {
+    private EventRepositoryInterface $eventRepository;
+
+    public function __construct(EventRepositoryInterface $eventRepository)
+    {
+        $this->eventRepository = $eventRepository;
+    }
+
     public function execute(int $eventId): void
     {
-        $event = Event::find($eventId);
+        $deleted = $this->eventRepository->delete($eventId);
 
-        if (!$event) {
-            throw new CreateEventFailedException();
+        if (!$deleted) {
+            throw new DeleteEventFailedException("L'événement n'a pas pu être supprimé");
         }
-
-        $event->delete();
     }
 }
