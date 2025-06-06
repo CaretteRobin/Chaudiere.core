@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Model
 {
+    const ROLE_ADMIN = 'admin';
     protected $table = 'users';
     public $timestamps = false;
 

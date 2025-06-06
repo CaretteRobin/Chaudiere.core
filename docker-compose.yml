@@ -35,7 +35,7 @@ services:
       PMA_USER: ${DB_USERNAME}
       PMA_PASSWORD: ${DB_PASSWORD}
     ports:
-      - "8081:80"
+      - "8084:80"
     networks:
       - chaudiere.net
 
