@@ -5,6 +5,7 @@ namespace LaChaudiere\infra\persistence\Eloquent;
 use LaChaudiere\core\domain\entities\Event;
 use Illuminate\Database\Eloquent\Collection;
 use LaChaudiere\core\application\interfaces\EventRepositoryInterface;
+use Illuminate\Support\Str;
 
 class EventRepository implements EventRepositoryInterface
 {
@@ -37,6 +38,7 @@ class EventRepository implements EventRepositoryInterface
      */
     public function create(array $data): Event
     {
+        $data['id'] = (string) Str::uuid();
         return Event::create($data);
     }
 

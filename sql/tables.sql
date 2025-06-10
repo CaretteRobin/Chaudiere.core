@@ -41,6 +41,7 @@ CREATE TABLE `events` (
     `time` TIME DEFAULT NULL,
     `category_id` CHAR(36) NOT NULL,
     `created_by` CHAR(36) DEFAULT NULL,
+    `is_published` BOOLEAN NOT NULL DEFAULT 0,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT `fk_events_category` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON UPDATE CASCADE ON DELETE RESTRICT,

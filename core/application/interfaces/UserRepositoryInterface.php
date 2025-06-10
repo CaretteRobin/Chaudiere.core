@@ -6,7 +6,7 @@ use LaChaudiere\core\Domain\Entities\User;
 
 interface UserRepositoryInterface
 {
-    public function findById(int $id): ?User;
+    public function findById(string $id): ?User;
 
     public function findByUsername(string $username): ?User;
 

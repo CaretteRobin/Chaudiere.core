@@ -20,6 +20,13 @@ use LaChaudiere\core\application\UseCase\Event\GetEventById;
 use LaChaudiere\core\application\UseCase\Event\GetEventByPeriodFilter;
 use LaChaudiere\core\application\interfaces\CategoryRepositoryInterface;
 use LaChaudiere\infra\persistence\Eloquent\CategoryRepository;
+use LaChaudiere\webui\actions\Event\CreateEventFormAction;
+use LaChaudiere\core\application\services\CategoryService;
+use Slim\Views\Twig;
+use Slim\Views\TwigMiddleware;
+use Slim\Routing\RouteContext;
+use Slim\Views\TwigExtension;
+use Slim\Interfaces\RouteParserInterface;
 
 $container = new Container();
 
@@ -64,6 +71,17 @@ $container->set(EventService::class, fn() => new EventService(
 
 ));
 
+// Bind de CategoryService
+$container->set(CategoryService::class, fn() => new CategoryService(
+    $container->get(CategoryRepositoryInterface::class)
+));
 
+// Bind de Twig (si pas déjà fait ailleurs)
+$container->set(Twig::class, fn() => Twig::create(__DIR__ . '/../webui/Views', ['cache' => false]));
+
+// Bind de CreateEventFormAction
+$container->set(CreateEventFormAction::class, fn() => new CreateEventFormAction(
+    $container->get(CategoryService::class)
+));
 
 return $container;
