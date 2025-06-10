@@ -26,8 +26,9 @@ CREATE TABLE `users` (
 
 -- 4) Table categories
 CREATE TABLE `categories` (
-    `id` CHAR(36) PRIMARY KEY,
-    `name` VARCHAR(100) NOT NULL UNIQUE
+                              `id` CHAR(36) PRIMARY KEY,
+                              `name` VARCHAR(100) NOT NULL UNIQUE,
+                              `description` TEXT DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 5) Table events

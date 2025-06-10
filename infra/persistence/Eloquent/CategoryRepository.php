@@ -2,6 +2,7 @@
 
 namespace LaChaudiere\infra\persistence\Eloquent;
 
+use Illuminate\Support\Str;
 use LaChaudiere\core\application\interfaces\CategoryRepositoryInterface;
 use LaChaudiere\core\domain\entities\Category;
 

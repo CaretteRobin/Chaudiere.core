@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace LaChaudiere\webui\actions\Category;
 
 use LaChaudiere\core\application\services\CategoryService;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Views\Twig;
 
 class GetCategoriesAction
 {
@@ -17,18 +20,12 @@ class GetCategoriesAction
         $this->categoryService = $categoryService;
     }
 
-    public function __invoke(Request $request, Response $response): Response
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $args = []): ResponseInterface
     {
+        $view = Twig::fromRequest($request);
         $categories = $this->categoryService->getAll();
-
-        $response->getBody()->write(json_encode([
-            'success' => true,
-            'data' => $categories,
-            'count' => count($categories)
-        ]));
-
-        return $response
-            ->withHeader('Content-Type', 'application/json')
-            ->withStatus(200);
+        return $view->render($response, 'pages/categories.twig', [
+            'categories' => $categories
+        ]);
     }
 }

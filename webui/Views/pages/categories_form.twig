@@ -1,0 +1,32 @@
+{% extends "layout.twig" %}
+
+{% block title %}Ajouter une catégorie{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-2xl font-bold mb-6 text-gray-800 text-center">Ajouter une catégorie</h1>
+    <div class="max-w-lg mx-auto bg-white rounded-lg shadow-lg p-8">
+        {% if error %}
+            <div class="mb-4 text-red-600 text-center font-semibold">{{ error }}</div>
+        {% endif %}
+        <form method="post" action="/categories/create" class="space-y-6">
+            <div>
+                <label for="name" class="block text-sm font-medium text-gray-700">Nom de la catégorie</label>
+                <input type="text" id="name" name="name" required
+                       value="{{ old.name|default('') }}"
+                       class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+            <div>
+                <label for="description" class="block text-sm font-medium text-gray-700">Description (Markdown stocké)</label>
+                <textarea id="description" name="description" rows="5"
+                          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">{{ old.description|default('') }}</textarea>
+            </div>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+            <button type="submit"
+                    class="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition">
+                Créer la catégorie
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

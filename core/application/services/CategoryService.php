@@ -1,7 +1,7 @@
 <?php
 
 namespace LaChaudiere\core\application\services;
-
+use Illuminate\Support\Str;
 use LaChaudiere\core\application\interfaces\CategoryRepositoryInterface;
 use LaChaudiere\core\application\UseCase\Category\CreateCategory;
 use LaChaudiere\core\application\UseCase\Category\DeleteCategory;

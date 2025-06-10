@@ -1,16 +1,19 @@
 <?php
 
-declare(strict_types=1);
-
 namespace LaChaudiere\webui\actions\Category;
 
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use LaChaudiere\core\application\services\CategoryService;
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Exception\HttpBadRequestException;
+use LaChaudiere\infra\providers\CsrfTokenProvider;
+use LaChaudiere\webui\traits\FlashRedirectTrait;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Slim\Views\Twig;
 
 class CreateCategoryAction
 {
+    use FlashRedirectTrait;
     private CategoryService $categoryService;
 
     public function __construct(CategoryService $categoryService)
@@ -18,23 +21,36 @@ class CreateCategoryAction
         $this->categoryService = $categoryService;
     }
 
-    public function __invoke(Request $request, Response $response): Response
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $args = []): ResponseInterface
     {
+//        $view = Twig::fromRequest($request);
         $data = $request->getParsedBody();
 
-        if (!isset($data['name']) || empty($data['name'])) {
-            throw new HttpBadRequestException($request, "Le nom de la catégorie est requis");
+        $name = trim($data['name'] ?? '');
+
+        $categoryData = [
+            'id' => Str::uuid()->toString(),
+            'name' => $name,
+            'description' => $data['description'] ?? '',
+        ];
+
+        if ($name !== '') {
+            $this->categoryService->create($categoryData);
+
+            return $this->redirectWithFlash(
+                $response,
+                '',
+                'La catégorie a été créée avec succès.',
+                'success'
+            );
+
         }
 
-        $category = $this->categoryService->create($data);
-
-        $response->getBody()->write(json_encode([
-            'success' => true,
-            'data' => $category
-        ]));
-
-        return $response
-            ->withHeader('Content-Type', 'application/json')
-            ->withStatus(201);
+        return $this->redirectWithFlash(
+            $response,
+            '',
+            'Le nom de la catégorie ne peut pas être vide.',
+            'error'
+        );
     }
 }
