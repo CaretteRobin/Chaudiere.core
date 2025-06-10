@@ -27,7 +27,7 @@ return function (App $app) {
 
         // Routes pour les catégories
         $group->group('/categories', function (RouteCollectorProxy $group) {
-            $group->get('/all', GetCategoriesAction::class);
+            $group->get('', GetCategoriesAction::class);
             $group->get('/create/{id}', CreateCategoryAction::class);
             $group->get('/delete/{id}', DeleteCategoryAction::class);
             $group->get('/{id}', GetEventsByCategoryIdAction::class);
