@@ -71,7 +71,6 @@ $container->set(EventService::class, fn() => new EventService(
     $container->get(GetEventByPeriodFilter::class),
     $container->get(GetEventsByCategory::class),
     $container->get(GetPublishedEvent::class)
-    $container->get(GetEventsSorted::class)
 
 ));
 
