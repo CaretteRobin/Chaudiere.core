@@ -1,9 +1,9 @@
 <?php
 
-namespace LaChaudiere\core\Application\UseCase\Event;
+namespace LaChaudiere\core\application\UseCase\Event;
 
+use LaChaudiere\core\application\exceptions\EventExceptions\GetEventByIdNotFoundException;
 use LaChaudiere\core\application\interfaces\EventRepositoryInterface;
-use LaChaudiere\core\Application\Exception\EventNotFoundException;
 
 class GetEventById
 {
@@ -14,7 +14,7 @@ class GetEventById
         $event = $this->eventRepository->findById($id);
 
         if (!$event) {
-            throw new EventNotFoundException($id);
+            throw new GetEventByIdNotFoundException($id);
         }
 
         return $event;
