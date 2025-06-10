@@ -26,8 +26,9 @@ CREATE TABLE `users` (
 
 -- 4) Table categories
 CREATE TABLE `categories` (
-    `id` CHAR(36) PRIMARY KEY,
-    `name` VARCHAR(100) NOT NULL UNIQUE
+                              `id` CHAR(36) PRIMARY KEY,
+                              `name` VARCHAR(100) NOT NULL UNIQUE,
+                              `description` TEXT DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 5) Table events
@@ -59,7 +60,7 @@ CREATE TABLE `images` (
 
 -- 7) Insertion des utilisateurs
 INSERT INTO `users` (`id`, `password`, `email`, `role`, `created_at`) VALUES
-('7518ff26-e3c3-42a6-9e55-a732a5e6d3aa', '$2y$10$.KuWiwwGXSM7vJZALi.r0OnSqbLckxnGk2b0uJFXE5yIU9DRBHSnW', 'supderadmin@example.com', 'super-admin', '2025-06-06 09:39:30'),
+('7518ff26-e3c3-42a6-9e55-a732a5e6d3aa', '$2y$10$.KuWiwwGXSM7vJZALi.r0OnSqbLckxnGk2b0uJFXE5yIU9DRBHSnW', 'superadmin@example.com', 'super-admin', '2025-06-06 09:39:30'),
 ('d4447e5d-ab66-4dfc-9c52-89cd383816bc', '$2y$10$.KuWiwwGXSM7vJZALi.r0OnSqbLckxnGk2b0uJFXE5yIU9DRBHSnW', 'admin@example.com', 'admin', '2025-06-06 09:39:30');
 
 -- 8) Insertion des catégories

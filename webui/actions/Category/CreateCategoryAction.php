@@ -30,7 +30,8 @@ class CreateCategoryAction
 
         $categoryData = [
             'id' => Str::uuid()->toString(),
-            'name' => $name
+            'name' => $name,
+            'description' => $data['description'] ?? '',
         ];
 
         if ($name !== '') {
