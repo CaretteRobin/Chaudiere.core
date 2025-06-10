@@ -20,8 +20,6 @@ class CategoryRepository implements CategoryRepositoryInterface
 
     public function create(array $data): Category
     {
-        $data['id'] = Str::uuid()->toString();
-
         return Category::create($data);
     }
 

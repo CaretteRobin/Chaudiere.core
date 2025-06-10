@@ -42,15 +42,6 @@ class CategoryService
         return $this->createCategory->execute($data);
     }
 
-    public function createCategory(string $name, string $description): Category
-    {
-
-        return $this->create([
-            'name' => $name,
-            'description' => $description,
-        ]);
-    }
-
     public function update(int $id, array $data): ?Category
     {
         return $this->updateCategory->execute($id, $data);

@@ -20,8 +20,17 @@ class HomePageAction
     {
         $view = Twig::fromRequest($request);
         $categories = $this->categoryService->getAll();
-        return $view->render($response, 'pages/home.twig', [
-            'categories' => $categories
-        ]);
+
+        $user = $request->getAttribute('user');
+
+        $params = [];
+
+        if ($user) {
+            $params['user'] = $user;
+        }
+
+        $params['categories'] = $categories;
+
+        return $view->render($response, 'pages/home.twig', $params);
     }
 }

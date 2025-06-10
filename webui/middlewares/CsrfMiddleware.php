@@ -31,7 +31,7 @@ class CsrfMiddleware implements MiddlewareInterface
                 $response = new Response();
                 return $this->redirectWithFlash(
                     $response,
-                    'auth',
+                    '',
                     'Le token CSRF est invalide, veuillez réessayer.',
                     'error'
                 );

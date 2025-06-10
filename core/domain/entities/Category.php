@@ -13,5 +13,5 @@ class Category extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
-    protected $fillable = ['name', 'description'];
+    protected $fillable = ['id', 'name'];
 }

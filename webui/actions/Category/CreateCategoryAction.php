@@ -2,6 +2,8 @@
 
 namespace LaChaudiere\webui\actions\Category;
 
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use LaChaudiere\core\application\services\CategoryService;
 use LaChaudiere\infra\providers\CsrfTokenProvider;
 use LaChaudiere\webui\traits\FlashRedirectTrait;
@@ -23,15 +25,20 @@ class CreateCategoryAction
     {
 //        $view = Twig::fromRequest($request);
         $data = $request->getParsedBody();
+
         $name = trim($data['name'] ?? '');
-        $description = trim($data['description'] ?? '');
+
+        $categoryData = [
+            'id' => Str::uuid()->toString(),
+            'name' => $name
+        ];
 
         if ($name !== '') {
-            $this->categoryService->createCategory($name, $description);
+            $this->categoryService->create($categoryData);
 
             return $this->redirectWithFlash(
                 $response,
-                'categories',
+                '',
                 'La catégorie a été créée avec succès.',
                 'success'
             );
@@ -40,7 +47,7 @@ class CreateCategoryAction
 
         return $this->redirectWithFlash(
             $response,
-            'categories',
+            '',
             'Le nom de la catégorie ne peut pas être vide.',
             'error'
         );
