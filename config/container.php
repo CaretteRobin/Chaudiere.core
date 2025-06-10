@@ -9,6 +9,7 @@ use LaChaudiere\core\application\interfaces\UserRepositoryInterface;
 use LaChaudiere\core\application\services\AuthnService;
 use LaChaudiere\core\application\services\EventService;
 use LaChaudiere\core\application\UseCase\Event\GetEventsByCategory;
+use LaChaudiere\core\application\UseCase\Event\GetEventsSorted;
 use LaChaudiere\infra\persistence\Eloquent\EventRepository;
 use LaChaudiere\infra\persistence\Eloquent\UserRepository;
 use LaChaudiere\infra\providers\AuthProvider;
@@ -20,6 +21,13 @@ use LaChaudiere\core\application\UseCase\Event\GetEventById;
 use LaChaudiere\core\application\UseCase\Event\GetEventByPeriodFilter;
 use LaChaudiere\core\application\interfaces\CategoryRepositoryInterface;
 use LaChaudiere\infra\persistence\Eloquent\CategoryRepository;
+use LaChaudiere\webui\actions\Event\CreateEventFormAction;
+use LaChaudiere\core\application\services\CategoryService;
+use Slim\Views\Twig;
+use Slim\Views\TwigMiddleware;
+use Slim\Routing\RouteContext;
+use Slim\Views\TwigExtension;
+use Slim\Interfaces\RouteParserInterface;
 
 $container = new Container();
 
@@ -53,17 +61,29 @@ $container->set(GetEventByPeriodFilter::class, function () use ($container) {
 });
 
 
-// Bind du service
+// Bind du service                                                                                                                                                                                                                                                                                                                  
 $container->set(EventService::class, fn() => new EventService(
     $container->get(GetAllEvent::class),
     $container->get(GetEventById::class),
     $container->get(CreateEvent::class),
     $container->get(DeleteEvent::class),
     $container->get(GetEventByPeriodFilter::class),
-    $container->get(GetEventsByCategory::class)
+    $container->get(GetEventsByCategory::class),
+    $container->get(GetEventsSorted::class)
 
 ));
 
+// Bind de CategoryService
+$container->set(CategoryService::class, fn() => new CategoryService(
+    $container->get(CategoryRepositoryInterface::class)
+));
 
+// Bind de Twig (si pas déjà fait ailleurs)
+$container->set(Twig::class, fn() => Twig::create(__DIR__ . '/../webui/Views', ['cache' => false]));
+
+// Bind de CreateEventFormAction
+$container->set(CreateEventFormAction::class, fn() => new CreateEventFormAction(
+    $container->get(CategoryService::class)
+));
 
 return $container;

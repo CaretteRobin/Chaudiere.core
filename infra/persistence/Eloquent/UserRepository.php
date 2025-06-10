@@ -7,7 +7,7 @@ use LaChaudiere\core\domain\entities\User;
 
 class UserRepository implements UserRepositoryInterface
 {
-    public function findById(String $id): ?User
+    public function findById(string $id): ?User
     {
         return User::find($id);
     }

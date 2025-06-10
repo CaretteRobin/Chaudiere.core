@@ -10,6 +10,9 @@ use LaChaudiere\webui\actions\Auth\GetUserAction;
 use LaChaudiere\webui\actions\Auth\UpdateUserAction;
 use LaChaudiere\webui\actions\Auth\DeleteUserAction;
 use LaChaudiere\webui\actions\HomePageAction;
+use LaChaudiere\webui\actions\Event\CreateEventFormAction;
+use LaChaudiere\webui\actions\Event\HandleCreateEventAction;
+use LaChaudiere\webui\actions\Event\ListEventsAction;
 use LaChaudiere\webui\middlewares\AuthMiddleware;
 use LaChaudiere\webui\middlewares\AuthzMiddleware;
 use Slim\App;
@@ -32,5 +35,9 @@ return function (App $app) {
         })->add(AuthzMiddleware::class);
         $group->get('/', HomePageAction::class)->setName('home');
         $group->get('/logout', LogoutAction::class)->setName('logout');
+        $group->get('/evenements/create', CreateEventFormAction::class)->setName('events.create.form');
+        $group->post('/evenements/create', HandleCreateEventAction::class)->setName('events.create.handle');
+        $group->get('/evenements', ListEventsAction::class)->setName('evenements.list');
+
     })->add(AuthMiddleware::class);
 };
