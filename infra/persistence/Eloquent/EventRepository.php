@@ -5,6 +5,7 @@ namespace LaChaudiere\infra\persistence\Eloquent;
 use LaChaudiere\core\domain\entities\Event;
 use Illuminate\Database\Eloquent\Collection;
 use LaChaudiere\core\application\interfaces\EventRepositoryInterface;
+use Illuminate\Support\Str;
 
 class EventRepository implements EventRepositoryInterface
 {
@@ -16,6 +17,11 @@ class EventRepository implements EventRepositoryInterface
     public function getAll(): Collection
     {
         return Event::with(['category', 'author', 'images'])->get();
+    }
+
+    public function getPublished(): Collection
+    {
+        return Event::where('is_published', true)->with('category')->get();
     }
 
     /**
@@ -37,6 +43,7 @@ class EventRepository implements EventRepositoryInterface
      */
     public function create(array $data): Event
     {
+        $data['id'] = (string) Str::uuid();
         return Event::create($data);
     }
 
@@ -100,5 +107,11 @@ class EventRepository implements EventRepositoryInterface
             ];
         })->toArray();
     }
+
+    public function findById(int $id): ?Event
+    {
+        return Event::find($id);
+    }
+
 
 }
