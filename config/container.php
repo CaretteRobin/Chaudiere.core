@@ -21,6 +21,7 @@ use LaChaudiere\core\application\UseCase\Event\GetEventByPeriodFilter;
 use LaChaudiere\core\application\interfaces\CategoryRepositoryInterface;
 use LaChaudiere\infra\persistence\Eloquent\CategoryRepository;
 use LaChaudiere\webui\actions\Event\CreateEventFormAction;
+use LaChaudiere\core\application\UseCase\Event\GetPublishedEvent;
 use LaChaudiere\core\application\services\CategoryService;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
@@ -67,7 +68,8 @@ $container->set(EventService::class, fn() => new EventService(
     $container->get(CreateEvent::class),
     $container->get(DeleteEvent::class),
     $container->get(GetEventByPeriodFilter::class),
-    $container->get(GetEventsByCategory::class)
+    $container->get(GetEventsByCategory::class),
+    $container->get(GetPublishedEvent::class)
 
 ));
 

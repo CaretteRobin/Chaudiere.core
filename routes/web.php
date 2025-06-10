@@ -37,7 +37,6 @@ return function (App $app) {
         $group->post('/evenements/create', HandleCreateEventAction::class)->setName('events.create.handle');
         $group->get('/evenements', ListEventsAction::class)->setName('evenements.list');
 
-
     })->add(AuthMiddleware::class);
 
 };

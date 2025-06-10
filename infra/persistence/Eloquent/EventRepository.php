@@ -19,6 +19,11 @@ class EventRepository implements EventRepositoryInterface
         return Event::with(['category', 'author', 'images'])->get();
     }
 
+    public function getPublished(): Collection
+    {
+        return Event::where('is_published', true)->with('category')->get();
+    }
+
     /**
      * Récupère un événement par son ID
      *
