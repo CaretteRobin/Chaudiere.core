@@ -2,30 +2,45 @@
 
 namespace LaChaudiere\webui\actions\Event;
 
+use LaChaudiere\core\application\services\CategoryService;
 use LaChaudiere\core\application\services\EventService;
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Slim\Views\Twig;
 
 class ListEventsAction
 {
     private EventService $eventService;
+    private CategoryService $categoryService;
+    private Twig $view;
 
-    public function __construct(EventService $eventService)
+    public function __construct(EventService $eventService, CategoryService $categoryService, Twig $view)
     {
         $this->eventService = $eventService;
+        $this->categoryService = $categoryService;
+        $this->view = $view;
     }
 
-    public function __invoke(Request $request, Response $response): Response
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
+
         $view = Twig::fromRequest($request);
 
-        $events = $this->eventService->getAllEvent();
-        $user = $request->getAttribute('user');
+        $queryParams = $request->getQueryParams();
+        $categoryId = $queryParams['category'] ?? null;
+
+        $categories = $this->categoryService->getAll();
+
+        if ($categoryId) {
+            $events = $this->eventService->getEventsByCategorySortedByDateAsc((int)$categoryId);
+        } else {
+            $events = $this->eventService->getAllEventsSortedByDateAsc();
+        }
 
         return $view->render($response, 'events/list.twig', [
             'events' => $events,
-            'user'   => $user,
+            'categories' => $categories,
+            'selectedCategory' => $categoryId
         ]);
     }
 }

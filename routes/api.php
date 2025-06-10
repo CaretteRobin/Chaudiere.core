@@ -7,7 +7,6 @@ use Slim\Routing\RouteCollectorProxy;
 use LaChaudiere\webui\actions\Category\CreateCategoryAction;
 use LaChaudiere\webui\actions\Category\DeleteCategoryAction;
 use LaChaudiere\webui\actions\Category\GetCategoriesAction;
-use LaChaudiere\webui\actions\Event\CreateEventAction;
 use LaChaudiere\webui\actions\Event\DeleteEventAction;
 use LaChaudiere\webui\actions\Event\GetAllEventsAction;
 use LaChaudiere\webui\actions\Event\GetEventsByCategAction;
