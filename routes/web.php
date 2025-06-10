@@ -41,13 +41,6 @@ return function (App $app) {
             $group->post('', RegisterAction::class)->setName('auth_register');
         });
 
-        // Routes administration
-        $group->group('/admin', function (RouteCollectorProxy $group) {
-            $group->get('/users', GetAllUsersAction::class)->setName('admin_users');
-            $group->post('/users', CreateUserAction::class);
-            $group->delete('/users/{id}', DeleteUserAction::class)->setName('delete_user');
-        })->add(AuthzMiddleware::class);
-
         // Routes événements
         $group->group('/evenements', function (RouteCollectorProxy $group) {
             $group->get('', ListEventsAction::class)->setName('evenements.list');
