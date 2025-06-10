@@ -4,6 +4,7 @@ namespace LaChaudiere\core\application\services;
 
 use Illuminate\Database\Eloquent\Collection;
 use LaChaudiere\core\application\UseCase\Event\GetEventsByCategory;
+use LaChaudiere\core\application\UseCase\Event\GetEventsSorted;
 use LaChaudiere\core\domain\entities\Event;
 use LaChaudiere\core\application\UseCase\Event\GetAllEvent;
 use LaChaudiere\core\application\UseCase\Event\GetEventById;
@@ -20,6 +21,8 @@ class EventService
     private GetEventByPeriodFilter $getEventByPeriodFilter;
 
     private GetEventsByCategory $getEventsByCategory;
+    private GetEventsSorted $getEventsSorted;
+
 
 
 
@@ -30,6 +33,8 @@ class EventService
         DeleteEvent $deleteEvent,
         GetEventByPeriodFilter $getEventByPeriodFilter,
         GetEventsByCategory $getEventsByCategory,
+        GetEventsSorted $getEventsSorted
+
 
 
     ) {
@@ -39,6 +44,7 @@ class EventService
         $this->deleteEvent = $deleteEvent;
         $this->getEventByPeriodFilter = $getEventByPeriodFilter;
         $this->getEventsByCategory = $getEventsByCategory;
+        $this->getEventsSorted = $getEventsSorted;
 
 
     }
@@ -72,6 +78,12 @@ class EventService
     {
         return $this->getEventsByCategory->execute($categoryId);
     }
+
+    public function getSorted(?string $sort): \Illuminate\Database\Eloquent\Collection
+    {
+        return $this->getEventsSorted->execute($sort);
+    }
+
 
 }
 
