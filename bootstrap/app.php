@@ -1,5 +1,6 @@
 <?php
 
+use LaChaudiere\webui\middlewares\CorsMiddleware;
 use LaChaudiere\webui\middlewares\FlashMessageMiddleware;
 use LaChaudiere\webui\middlewares\CsrfMiddleware;
 use Slim\Factory\AppFactory;
@@ -36,6 +37,7 @@ $twig = Twig::create(__DIR__ . '/../webui/Views', ['cache' => false]);
 
 // Ajout du middleware Twig à l’application Slim
 $app->add(new FlashMessageMiddleware());
+$app->add(new CorsMiddleware());
 $app->add(new CsrfMiddleware());
 $app->add(TwigMiddleware::create($app, $twig));
 
