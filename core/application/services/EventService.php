@@ -90,6 +90,17 @@ class EventService
         return $this->getEventsSorted->execute($sort);
     }
 
+    public function getAllEventsSortedByDateAsc(): Collection
+    {
+        return $this->getAllEvent->execute('date-asc');
+    }
+
+    public function getEventsByCategorySortedByDateAsc(int $categoryId): array
+    {
+        return $this->getEventsByCategory->execute($categoryId, 'date-asc');
+
+    }
+
 
 }
 

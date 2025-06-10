@@ -1,6 +1,5 @@
 <?php
 
-use LaChaudiere\webui\actions\Admin\CreateUserAction;
 use LaChaudiere\webui\actions\Admin\DeleteUserAction;
 use LaChaudiere\webui\actions\Admin\GetAllUsersAction;
 use LaChaudiere\webui\actions\Auth\GetAllUserAction;
@@ -11,6 +10,7 @@ use LaChaudiere\webui\actions\Auth\LoginAction;
 use LaChaudiere\webui\actions\Auth\ShowAuthPageAction;
 use LaChaudiere\webui\actions\Auth\ShowRegisterPageAction;
 use LaChaudiere\webui\actions\Auth\UpdateUserAction;
+use LaChaudiere\webui\actions\Event\ListEventAction;
 use LaChaudiere\webui\actions\Category\CreateCategoryAction;
 use LaChaudiere\webui\actions\Category\DeleteCategoryAction;
 use LaChaudiere\webui\actions\Category\GetCategoriesAction;
@@ -43,9 +43,11 @@ return function (App $app) {
 
         // Routes événements
         $group->group('/evenements', function (RouteCollectorProxy $group) {
-            $group->get('', ListEventsAction::class)->setName('evenements.list');
+            $group->get('', ListEventsAction::class)->setName('event.list');
+            $group->get('/events[/{categoryId}]', ListEventsAction::class)->setName('event.list');
             $group->get('/create', CreateEventFormAction::class)->setName('events.create.form');
             $group->post('/create', HandleCreateEventAction::class)->setName('events.create.handle');
+            $group->get('/{categoryId}', ListEventsAction::class)->setName('event.list');
         });
 
         // Routes catégories
