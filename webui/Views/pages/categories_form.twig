@@ -9,7 +9,7 @@
         {% if error %}
             <div class="mb-4 text-red-600 text-center font-semibold">{{ error }}</div>
         {% endif %}
-        <form method="POST" action="/categories/create" class="space-y-6">
+        <form method="post" action="/categories/create" class="space-y-6">
             <div>
                 <label for="name" class="block text-sm font-medium text-gray-700">Nom de la catégorie</label>
                 <input type="text" id="name" name="name" required

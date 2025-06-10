@@ -3,17 +3,15 @@
 namespace LaChaudiere\core\domain\entities;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
     protected $table = 'categories';
     public $timestamps = false;
 
-    protected $fillable = ['name'];
+    protected $primaryKey = 'id';
+    public $incrementing = false;
+    protected $keyType = 'string';
 
-    public function events(): HasMany
-    {
-        return $this->hasMany(Event::class, 'category_id', 'id');
-    }
+    protected $fillable = ['name', 'description'];
 }

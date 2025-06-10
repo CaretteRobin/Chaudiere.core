@@ -2,6 +2,7 @@
 
 namespace LaChaudiere\infra\persistence\Eloquent;
 
+use Illuminate\Support\Str;
 use LaChaudiere\core\application\interfaces\CategoryRepositoryInterface;
 use LaChaudiere\core\domain\entities\Category;
 
@@ -19,6 +20,8 @@ class CategoryRepository implements CategoryRepositoryInterface
 
     public function create(array $data): Category
     {
+        $data['id'] = Str::uuid()->toString();
+
         return Category::create($data);
     }
 
