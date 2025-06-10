@@ -22,6 +22,7 @@ use LaChaudiere\core\application\UseCase\Event\GetEventByPeriodFilter;
 use LaChaudiere\core\application\interfaces\CategoryRepositoryInterface;
 use LaChaudiere\infra\persistence\Eloquent\CategoryRepository;
 use LaChaudiere\webui\actions\Event\CreateEventFormAction;
+use LaChaudiere\core\application\UseCase\Event\GetPublishedEvent;
 use LaChaudiere\core\application\services\CategoryService;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
@@ -44,10 +45,6 @@ $container->set(AuthProviderInterface::class, function (Container $container) {
     );
 });
 $container->set(AuthnServiceInterface::class, fn () => new AuthnService());
-$container->set(CategoryService::class, fn() => new CategoryService(
-    $container->get(CategoryRepositoryInterface::class)
-));
-
 // Bind des use cases
 $container->set(GetAllEvent::class, fn() => new GetAllEvent($container->get(EventRepositoryInterface::class)));
 $container->set(GetEventById::class, fn() => new GetEventById($container->get(EventRepositoryInterface::class)));
@@ -72,10 +69,18 @@ $container->set(EventService::class, fn() => new EventService(
     $container->get(CreateEvent::class),
     $container->get(DeleteEvent::class),
     $container->get(GetEventByPeriodFilter::class),
-    $container->get(GetEventsByCategory::class)
+    $container->get(GetEventsByCategory::class),
+    $container->get(GetPublishedEvent::class)
 
 ));
 
+// Bind de CategoryService
+$container->set(CategoryService::class, fn() => new CategoryService(
+    $container->get(CategoryRepositoryInterface::class)
+));
+
+// Bind de Twig (si pas déjà fait ailleurs)
+$container->set(Twig::class, fn() => Twig::create(__DIR__ . '/../webui/Views', ['cache' => false]));
 
 // Bind de CreateEventFormAction
 $container->set(CreateEventFormAction::class, fn() => new CreateEventFormAction(

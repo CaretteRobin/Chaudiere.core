@@ -21,11 +21,8 @@ return function (App $app) {
 
         // Routes pour les événements
         $group->group('/evenements', function (RouteCollectorProxy $group) {
-            $group->post('', CreateEventAction::class);
             $group->get('', GetSortedEventsAction::class); // Tous les événements, avec filtre ?sort=...
-            $group->get('/{name}', GetEventByIdAction::class);
-            $group->put('/{id}', UpdateEventAction::class);
-            $group->delete('/{id}', DeleteEventAction::class);
+            $group->get('/{id}', GetEventByIdAction::class);
         });
 
         // Routes pour les catégories
