@@ -61,7 +61,6 @@ $container->set(EventService::class, fn() => new EventService(
     $container->get(DeleteEvent::class),
     $container->get(GetEventByPeriodFilter::class),
     $container->get(GetEventsByCategory::class)
-
 ));
 
 
