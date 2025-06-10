@@ -12,11 +12,6 @@ class UserRepository implements UserRepositoryInterface
         return User::find($id);
     }
 
-    public function findByUsername(string $username): ?User
-    {
-        return User::where('username', $username)->first();
-    }
-
     public function findByEmail(string $email): ?User
     {
         return User::where('email', $email)->first();
@@ -26,5 +21,31 @@ class UserRepository implements UserRepositoryInterface
     {
         $user->save();
         return $user;
+    }
+
+    public function delete(string $id): bool
+    {
+        $user = User::find($id);
+        if ($user) {
+            return $user->delete();
+        }
+        return false;
+    }
+
+    public function findAll(): array
+    {
+        return User::all()->toArray();
+    }
+
+    public function update(string $id, array $data): bool
+    {
+        $user = User::find($id);
+        if ($user) {
+            foreach ($data as $key => $value) {
+                $user->$key = $value;
+            }
+            return $user->save();
+        }
+        return false;
     }
 }

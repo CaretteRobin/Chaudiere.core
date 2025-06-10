@@ -9,6 +9,7 @@ use LaChaudiere\core\application\interfaces\UserRepositoryInterface;
 use LaChaudiere\core\application\services\AuthnService;
 use LaChaudiere\core\application\services\EventService;
 use LaChaudiere\core\application\UseCase\Event\GetEventsByCategory;
+use LaChaudiere\core\application\UseCase\Event\GetEventsSorted;
 use LaChaudiere\infra\persistence\Eloquent\EventRepository;
 use LaChaudiere\infra\persistence\Eloquent\UserRepository;
 use LaChaudiere\infra\providers\AuthProvider;
@@ -61,7 +62,7 @@ $container->set(GetEventByPeriodFilter::class, function () use ($container) {
 });
 
 
-// Bind du service
+// Bind du service                                                                                                                                                                                                                                                                                                                  
 $container->set(EventService::class, fn() => new EventService(
     $container->get(GetAllEvent::class),
     $container->get(GetEventById::class),
@@ -70,6 +71,7 @@ $container->set(EventService::class, fn() => new EventService(
     $container->get(GetEventByPeriodFilter::class),
     $container->get(GetEventsByCategory::class),
     $container->get(GetPublishedEvent::class)
+    $container->get(GetEventsSorted::class)
 
 ));
 

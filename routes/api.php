@@ -1,5 +1,6 @@
 <?php
 
+use LaChaudiere\webui\actions\Event\GetSortedEventsAction;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
 
@@ -21,9 +22,8 @@ return function (App $app) {
         // Routes pour les événements
         $group->group('/evenements', function (RouteCollectorProxy $group) {
             $group->post('', CreateEventAction::class);
-            $group->get('', GetAllEventsAction::class); // Tous les événements, avec filtre ?periode=
+            $group->get('', GetSortedEventsAction::class); // Tous les événements, avec filtre ?sort=...
             $group->get('/{name}', GetEventByIdAction::class);
-            $group->get('/category/{categoryId}', GetEventsByCategoryAction::class);
             $group->put('/{id}', UpdateEventAction::class);
             $group->delete('/{id}', DeleteEventAction::class);
         });
