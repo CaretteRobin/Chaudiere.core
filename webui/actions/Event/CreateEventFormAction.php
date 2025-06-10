@@ -24,11 +24,13 @@ class CreateEventFormAction
         $csrf = CsrfTokenProvider::generate();
 
         $categories = $this->categoryService->getAll();
+        $user = $request->getAttribute('user');
 
 
         return $view->render($response, 'events/create.twig', [
             'categories' => $categories,
             'csrf_token' => $csrf,
+            'user'   => $user,
         ]);
     }
 }
