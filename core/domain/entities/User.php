@@ -12,16 +12,11 @@ class User extends Model
 
     protected $table = 'users';
     public $timestamps = false;
+    protected $primaryKey = 'id';
     public $incrementing = false;
     protected $keyType = 'string';
 
-    protected $fillable = [
-        'id',
-        'email',
-        'password',
-        'role',
-        'created_at',
-    ];
+    protected $fillable = ['password','role','created_at'];
 
     protected $casts = [
         'created_at' => 'datetime',

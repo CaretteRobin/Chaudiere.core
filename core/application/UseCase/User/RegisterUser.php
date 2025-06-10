@@ -12,16 +12,16 @@ class RegisterUser
         private UserRepositoryInterface $userRepository
     ) {}
 
-    public function execute(string $username, string $plainPassword, string $role = 'user'): User
+    public function execute(string $id, string $plainPassword, string $role = 'user'): User
     {
-        if ($this->userRepository->findByUsername($username)) {
-            throw new UserAlreadyExistsException("User with username '$username' already exists.");
+        if ($this->userRepository->findById($id)) {
+            throw new UserAlreadyExistsException("User with username '$id' already exists.");
         }
 
         $hashedPassword = password_hash($plainPassword, PASSWORD_BCRYPT);
 
         $user = new User([
-            'username' => $username,
+            'id' => $id,
             'password' => $hashedPassword,
             'role' => $role,
             'created_at' => now()

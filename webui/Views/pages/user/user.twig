@@ -1,0 +1,247 @@
+{% extends "layout.twig" %}
+
+{% block title %}Détails de l’utilisateur - LaChaudiere App{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8 max-w-2xl">
+    <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">
+        Détails de l’utilisateur #{{ userSpect.id }}
+    </h1>
+
+    <div class="bg-white shadow-lg rounded-lg p-6">
+        {# EMAIL #}
+        <div class="mb-6">
+            <label class="block text-sm font-semibold text-gray-600 mb-1">Email :</label>
+            <div id="email-display-container" class="flex items-center space-x-2">
+                <span id="email-display" class="text-gray-900 cursor-pointer hover:text-indigo-600">
+                    {{ userSpect.email }}
+                </span>
+                <button id="email-edit-btn" class="text-indigo-600 hover:text-indigo-800 text-sm">
+                    Modifier
+                </button>
+            </div>
+            <form
+                id="email-form"
+                method="POST"
+                action="{{ url_for('update_user', { id: userSpect.id }) }}"
+                class="hidden space-x-2"
+            >
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                <input 
+                    type="email" 
+                    name="email" 
+                    id="email-input" 
+                    value="{{ userSpect.email }}" 
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+                    required
+                >
+                <button
+                    type="submit"
+                    name="field"
+                    value="email"
+                    class="bg-indigo-600 text-white px-3 py-1 rounded-md hover:bg-indigo-700 transition text-sm"
+                >
+                    Enregistrer
+                </button>
+                <button
+                    type="button"
+                    id="email-cancel-btn"
+                    class="text-gray-500 hover:text-gray-700 text-sm"
+                >
+                    Annuler
+                </button>
+            </form>
+        </div>
+
+        {# ROLE #}
+        <div class="mb-6">
+            <label class="block text-sm font-semibold text-gray-600 mb-1">Rôle :</label>
+            <div id="role-display-container" class="flex items-center space-x-2">
+                <span id="role-display" class="text-gray-900 cursor-pointer hover:text-indigo-600">
+                    {{ userSpect.role }}
+                </span>
+                <button id="role-edit-btn" class="text-indigo-600 hover:text-indigo-800 text-sm">
+                    Modifier
+                </button>
+            </div>
+            <form
+                id="role-form"
+                method="POST"
+                action="{{ url_for('update_user', { id: userSpect.id }) }}"
+                class="hidden mt-2 space-y-2"
+            >
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                <div class="flex items-center space-x-4">
+                    <label class="inline-flex items-center">
+                        <input 
+                            type="radio" 
+                            name="role" 
+                            value="admin" 
+                            {% if userSpect.role == 'admin' %}checked{% endif %}
+                            class="form-radio text-indigo-600"
+                        >
+                        <span class="ml-2 text-gray-700 text-sm">Admin</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input 
+                            type="radio" 
+                            name="role" 
+                            value="super-admin" 
+                            {% if userSpect.role == 'super-admin' %}checked{% endif %}
+                            class="form-radio text-indigo-600"
+                        >
+                        <span class="ml-2 text-gray-700 text-sm">Super-admin</span>
+                    </label>
+                </div>
+                <div class="flex space-x-2">
+                    <button
+                        type="submit"
+                        name="field"
+                        value="role"
+                        class="bg-indigo-600 text-white px-3 py-1 rounded-md hover:bg-indigo-700 transition text-sm"
+                    >
+                        Enregistrer
+                    </button>
+                    <button
+                        type="button"
+                        id="role-cancel-btn"
+                        class="text-gray-500 hover:text-gray-700 text-sm"
+                    >
+                        Annuler
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        {# MOT DE PASSE #}
+        <div class="mb-6">
+            <label class="block text-sm font-semibold text-gray-600 mb-1">Mot de passe :</label>
+            <div id="password-display-container" class="flex items-center space-x-2">
+                <span
+                    id="password-display"
+                    data-full-password="{{ userSpect.password }}"
+                    class="text-gray-900 cursor-pointer hover:text-indigo-600"
+                >
+                    ********
+                </span>
+                <button id="password-view-btn" class="text-indigo-600 hover:text-indigo-800 text-sm">
+                    Voir
+                </button>
+                <button id="password-edit-btn" class="text-indigo-600 hover:text-indigo-800 text-sm">
+                    Modifier
+                </button>
+            </div>
+            <form
+                id="password-form"
+                method="POST"
+                action="{{ url_for('update_user', { id: userSpect.id }) }}"
+                class="hidden space-y-2 mt-2"
+            >
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                <input 
+                    type="password" 
+                    name="password" 
+                    id="password-input" 
+                    placeholder="Nouveau mot de passe"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+                    required
+                >
+                <input 
+                    type="password" 
+                    name="cpassword" 
+                    id="cpassword-input" 
+                    placeholder="Confirmez nouveau mot de passe"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+                    required
+                >
+                <div class="flex space-x-2">
+                    <button
+                        type="submit"
+                        name="field"
+                        value="password"
+                        class="bg-indigo-600 text-white px-3 py-1 rounded-md hover:bg-indigo-700 transition text-sm"
+                    >
+                        Enregistrer
+                    </button>
+                    <button
+                        type="button"
+                        id="password-cancel-btn"
+                        class="text-gray-500 hover:text-gray-700 text-sm"
+                    >
+                        Annuler
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        {# DATE DE CRÉATION #}
+        <div class="mb-6">
+            <label class="block text-sm font-semibold text-gray-600 mb-1">Créé le :</label>
+            <div class="text-gray-900 text-sm">
+                {{ userSpect.created_at|date("d/m/Y H:i") }}
+            </div>
+        </div>
+    </div>
+</div>
+
+{# JS pour basculer l’édition inline et afficher le mot de passe #}
+<script>
+    // EMAIL
+    const emailDisplayContainer = document.getElementById('email-display-container');
+    const emailForm = document.getElementById('email-form');
+    const emailEditBtn = document.getElementById('email-edit-btn');
+    const emailCancelBtn = document.getElementById('email-cancel-btn');
+
+    emailEditBtn.addEventListener('click', () => {
+        emailDisplayContainer.classList.add('hidden');
+        emailForm.classList.remove('hidden');
+    });
+    emailCancelBtn.addEventListener('click', () => {
+        emailForm.classList.add('hidden');
+        emailDisplayContainer.classList.remove('hidden');
+    });
+
+    // ROLE
+    const roleDisplayContainer = document.getElementById('role-display-container');
+    const roleForm = document.getElementById('role-form');
+    const roleEditBtn = document.getElementById('role-edit-btn');
+    const roleCancelBtn = document.getElementById('role-cancel-btn');
+
+    roleEditBtn.addEventListener('click', () => {
+        roleDisplayContainer.classList.add('hidden');
+        roleForm.classList.remove('hidden');
+    });
+    roleCancelBtn.addEventListener('click', () => {
+        roleForm.classList.add('hidden');
+        roleDisplayContainer.classList.remove('hidden');
+    });
+
+    // PASSWORD VIEW & EDIT
+    const passwordDisplay = document.getElementById('password-display');
+    const passwordViewBtn = document.getElementById('password-view-btn');
+    const passwordDisplayContainer = document.getElementById('password-display-container');
+    const passwordForm = document.getElementById('password-form');
+    const passwordEditBtn = document.getElementById('password-edit-btn');
+    const passwordCancelBtn = document.getElementById('password-cancel-btn');
+
+    // Afficher le mot de passe complet
+    passwordViewBtn.addEventListener('click', () => {
+        const full = passwordDisplay.getAttribute('data-full-password');
+        passwordDisplay.textContent = full;
+        passwordViewBtn.classList.add('hidden');
+    });
+
+    // Basculer vers édition
+    passwordEditBtn.addEventListener('click', () => {
+        passwordDisplayContainer.classList.add('hidden');
+        passwordForm.classList.remove('hidden');
+    });
+    passwordCancelBtn.addEventListener('click', () => {
+        passwordForm.classList.add('hidden');
+        passwordDisplayContainer.classList.remove('hidden');
+        // remettre le masquage
+        passwordDisplay.textContent = '********';
+        passwordViewBtn.classList.remove('hidden');
+    });
+</script>
+{% endblock %}
