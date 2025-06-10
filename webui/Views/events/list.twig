@@ -1,0 +1,42 @@
+{% extends "layout.twig" %}
+
+{% block title %}Liste des événements{% endblock %}
+
+{% block content %}
+<div class="container mx-auto py-8">
+    <h1 class="text-2xl font-bold mb-6">Liste des événements</h1>
+
+    {% if events is not empty %}
+        <table class="w-full border">
+            <thead class="bg-gray-100">
+                <tr>
+                    <th class="p-2 text-left">Titre</th>
+                    <th class="p-2 text-left">Date</th>
+                    <th class="p-2 text-left">Catégorie</th>
+                    <th class="p-2 text-left">Créé par</th>
+                    <th class="p-2 text-left">Publié</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in events %}
+                    <tr class="border-t">
+                        <td class="p-2">{{ event.title }}</td>
+                        <td class="p-2">{{ event.start_date|date('d/m/Y') }}</td>
+                        <td class="p-2">{{ event.category.name ?? 'N/A' }}</td>
+                        <td class="p-2">{{ event.user.email ?? 'N/A' }}</td>
+                        <td class="p-2">
+                            {% if event.is_published %}
+                                ✅
+                            {% else %}
+                                ❌
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Aucun événement pour le moment.</p>
+    {% endif %}
+</div>
+{% endblock %}
