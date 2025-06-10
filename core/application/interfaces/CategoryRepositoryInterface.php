@@ -8,7 +8,7 @@ interface CategoryRepositoryInterface
 {
     public function getAll(): array;
 
-    public function findById(int $id): ?Category;
+    public function findById(string $id): ?Category;
 
     public function create(array $data): Category;
 

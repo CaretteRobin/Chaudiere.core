@@ -34,7 +34,7 @@ class EventService
         DeleteEvent $deleteEvent,
         GetEventByPeriodFilter $getEventByPeriodFilter,
         GetEventsByCategory $getEventsByCategory,
-        GetPublishedEvent $getPublishedEvent
+        GetPublishedEvent $getPublishedEvent,
         GetEventsSorted $getEventsSorted
 
     ) {

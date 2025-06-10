@@ -13,7 +13,6 @@
                     <th class="p-2 text-left">Titre</th>
                     <th class="p-2 text-left">Date</th>
                     <th class="p-2 text-left">Catégorie</th>
-                    <th class="p-2 text-left">Créé par</th>
                     <th class="p-2 text-left">Publié</th>
                 </tr>
             </thead>
@@ -23,7 +22,6 @@
                         <td class="p-2">{{ event.title }}</td>
                         <td class="p-2">{{ event.start_date|date('d/m/Y') }}</td>
                         <td class="p-2">{{ event.category.name ?? 'N/A' }}</td>
-                        <td class="p-2">{{ event.user.email ?? 'N/A' }}</td>
                         <td class="p-2">
                             {% if event.is_published %}
                                 ✅
