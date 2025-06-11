@@ -13,7 +13,7 @@ class GetEventsByCategory
         $this->eventRepository = $eventRepository;
     }
 
-    public function execute(int $categoryId): array
+    public function execute(string $categoryId): array
     {
         return $this->eventRepository->getEventByCateg($categoryId);
     }

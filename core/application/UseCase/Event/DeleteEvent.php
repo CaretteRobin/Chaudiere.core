@@ -14,7 +14,7 @@ class DeleteEvent
         $this->eventRepository = $eventRepository;
     }
 
-    public function execute(int $eventId): void
+    public function execute(string $eventId): void
     {
         $deleted = $this->eventRepository->delete($eventId);
 

@@ -6,7 +6,8 @@ use Slim\Routing\RouteCollectorProxy;
 
 use LaChaudiere\webui\actions\Category\CreateCategoryAction;
 use LaChaudiere\webui\actions\Category\DeleteCategoryAction;
-use LaChaudiere\webui\actions\Category\GetCategoriesAction;
+use LaChaudiere\webui\actions\Category\GetCategoryAction;
+use LaChaudiere\webui\actions\Category\GetAllCategoryAction;
 use LaChaudiere\webui\actions\Event\DeleteEventAction;
 use LaChaudiere\webui\actions\Event\GetAllEventsAction;
 use LaChaudiere\webui\actions\Event\GetEventsByCategAction;
@@ -26,7 +27,7 @@ return function (App $app) {
 
         // Routes pour les catégories
         $group->group('/categories', function (RouteCollectorProxy $group) {
-            $group->get('', GetCategoriesAction::class);
+            $group->get('', GetAllCategoryAction::class);
             $group->get('/create/{id}', CreateCategoryAction::class);
             $group->get('/delete/{id}', DeleteCategoryAction::class);
             $group->get('/{id}', GetEventsByCategoryIdAction::class);

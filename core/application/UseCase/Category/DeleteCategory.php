@@ -13,7 +13,7 @@ class DeleteCategory
         $this->repository = $repository;
     }
 
-    public function execute(int $id): bool
+    public function execute(string $id): bool
     {
         return $this->repository->delete($id);
     }

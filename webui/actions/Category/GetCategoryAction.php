@@ -11,7 +11,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\Twig;
 
-class GetCategoriesAction
+class GetCategoryAction
 {
     private CategoryService $categoryService;
 

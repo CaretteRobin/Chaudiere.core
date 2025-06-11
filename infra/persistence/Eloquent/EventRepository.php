@@ -30,7 +30,7 @@ class EventRepository implements EventRepositoryInterface
      * @param int $id
      * @return Event|null
      */
-    public function getById(int $id): ?Event
+    public function getById(string $id): ?Event
     {
         return Event::with(['category', 'author', 'images'])->find($id);
     }
@@ -54,7 +54,7 @@ class EventRepository implements EventRepositoryInterface
      * @param array $data
      * @return Event|null
      */
-    public function update(int $id, array $data): ?Event
+    public function update(string $id, array $data): ?Event
     {
         $event = $this->getById($id);
 
@@ -74,7 +74,7 @@ class EventRepository implements EventRepositoryInterface
      * @param int $id
      * @return bool
      */
-    public function delete(int $id): bool
+    public function delete(string $id): bool
     {
         $event = $this->getById($id);
 
@@ -91,7 +91,7 @@ class EventRepository implements EventRepositoryInterface
             ->whereBetween('start_date', [$startDate, $endDate])
             ->get();
     }
-    public function getEventByCateg(int $categoryId): array
+    public function getEventByCateg(string $categoryId): array
     {
         $events = Event::with('category')
             ->where('category_id', $categoryId)

@@ -70,7 +70,7 @@ class EventService
         return $this->createEvent->execute($data);
     }
 
-    public function deleteEvent(int $id): bool
+    public function deleteEvent(string $id): bool
     {
         $this->deleteEvent->execute($id);
         return true;
@@ -80,7 +80,7 @@ class EventService
     {
         return $this->getEventByPeriodFilter->execute($startDate, $endDate);
     }
-    public function getEventsByCategory(int $categoryId): array
+    public function getEventsByCategory(string $categoryId): array
     {
         return $this->getEventsByCategory->execute($categoryId);
     }
@@ -95,12 +95,9 @@ class EventService
         return $this->getAllEvent->execute('date-asc');
     }
 
-    public function getEventsByCategorySortedByDateAsc(int $categoryId): array
+    public function getEventsByCategorySortedByDateAsc(string $categoryId): array
     {
         return $this->getEventsByCategory->execute($categoryId, 'date-asc');
 
     }
-
-
 }
-

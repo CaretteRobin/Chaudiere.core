@@ -9,7 +9,7 @@ class GetImagesByEventId
 {
     public function __construct(private ImageRepositoryInterface $imageRepository) {}
 
-    public function execute(int $eventId): array
+    public function execute(string $eventId): array
     {
         try {
             return $this->imageRepository->getImagesByEventId($eventId);

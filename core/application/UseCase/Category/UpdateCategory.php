@@ -14,7 +14,7 @@ class UpdateCategory
         $this->repository = $repository;
     }
 
-    public function execute(int $id, array $data): ?Category
+    public function execute(string $id, array $data): ?Category
     {
         return $this->repository->update($id, $data);
     }
