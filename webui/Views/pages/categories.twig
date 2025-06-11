@@ -1,25 +1,26 @@
 {% extends "layout.twig" %}
 
-{% block title %}Catégories - LaChaudiereAgenda{% endblock %}
+{% block title %}Catégories – LaChaudière Agenda{% endblock %}
 
 {% block content %}
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 m-72">
+<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 font-sans">
+    <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-xl p-8">
+        <h1 class="text-3xl font-bold text-purple-700 mb-6 text-center">Liste des catégories</h1>
 
-        <!-- Bloc Catégories -->
-        <div class="bg-white rounded-lg shadow-lg p-8">
-            <h2 class="text-2xl font-semibold mb-6 text-gray-700">Liste des catégories</h2>
-            <ul>
+        {% if categories is not empty %}
+            <ul class="space-y-4">
                 {% for cat in categories %}
-                    <li class="mb-4 p-4 border rounded">
-                        <strong class="block text-lg text-indigo-700">{{ cat.name|e }}</strong>
+                    <li class="border rounded-lg p-4 hover:shadow transition">
+                        <div class="text-lg font-semibold text-purple-800">{{ cat.name|e }}</div>
                         {% if cat.description %}
+                            <div class="text-sm text-gray-600 mt-1 whitespace-pre-line">{{ cat.description|e }}</div>
                         {% endif %}
-                        <div class="text-gray-500 mt-2" style="white-space: pre-line;">{{ cat.description|e }}</div>
                     </li>
-                {% else %}
-                    <li class="text-gray-400">Aucune catégorie enregistrée.</li>
                 {% endfor %}
             </ul>
-        </div>
+        {% else %}
+            <p class="text-gray-500 text-center">Aucune catégorie enregistrée.</p>
+        {% endif %}
     </div>
+</div>
 {% endblock %}
