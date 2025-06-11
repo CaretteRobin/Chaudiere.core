@@ -22,9 +22,7 @@ class GetAllCategoryAction
         $categories = $this->categoryService->getAll();
 
         $response->getBody()->write(json_encode([
-            'success' => true,
             'data' => $categories,
-            'count' => count($categories)
         ]));
 
         return $response
