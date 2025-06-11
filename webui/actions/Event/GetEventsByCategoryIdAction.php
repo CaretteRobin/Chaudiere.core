@@ -43,11 +43,7 @@ class GetEventsByCategoryIdAction
         $events = $this->eventService->getEventsByCategory($categoryId);
 
         // Préparation et envoi de la réponse au format JSON
-        $response->getBody()->write(json_encode([
-            'success' => true,
-            'data' => $events,
-            'count' => count($events)
-        ]));
+        $response->getBody()->write(json_encode($events));
 
         return $response->withHeader('Content-Type', 'application/json');
     }
