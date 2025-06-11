@@ -2,10 +2,10 @@
 
 namespace LaChaudiere\core\application\UseCase\Event;
 
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Collection;
 use LaChaudiere\core\application\interfaces\EventRepositoryInterface;
 
-class GetEventsSorted
+class GetAllEventsSortedByDateAsc
 {
     private EventRepositoryInterface $eventRepository;
 
@@ -14,8 +14,8 @@ class GetEventsSorted
         $this->eventRepository = $eventRepository;
     }
 
-    public function execute(?string $sort): Collection
+    public function execute(): Collection
     {
-        return $this->eventRepository->getSortedEvents($sort);
+        return $this->eventRepository->getAllSortedByDateAsc();
     }
 }

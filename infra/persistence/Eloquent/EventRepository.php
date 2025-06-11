@@ -57,14 +57,6 @@ class EventRepository implements EventRepositoryInterface
         return $event->delete();
     }
 
-    public function getEventByPeriodFilter(string $startDate, string $endDate): Collection
-    {
-        return Event::with(['category', 'author', 'images'])
-            ->whereBetween('start_date', [$startDate, $endDate])
-            ->get();
-    }
-
-
     public function getEventByCateg(string $categoryId): Collection
     {
         return Event::with(['category'])
@@ -76,5 +68,84 @@ class EventRepository implements EventRepositoryInterface
     public function findById(string $id): ?Event
     {
         return Event::with(['category', 'author', 'images'])->find($id);
+    }
+
+    public function getSortedEvents(?string $sort): Collection
+    {
+        $query = Event::with(['category', 'author', 'images']);
+
+        switch ($sort) {
+            case 'date-asc':
+                $query->orderBy('start_date', 'asc');
+                break;
+            case 'date-desc':
+                $query->orderBy('start_date', 'desc');
+                break;
+            case 'titre':
+                $query->orderBy('title', 'asc');
+                break;
+            case 'categorie':
+                // Fallback: tri en PHP car relation (non trivial en SQL sans join)
+                return $query->get()->sortBy(function ($event) {
+                    return $event->category->name ?? '';
+                });
+            default:
+                $query->orderBy('start_date', 'asc');
+        }
+
+        return $query->get();
+    }
+
+    public function findByTitle(string $title): ?Event
+    {
+        return $this->createQueryBuilder('e')
+            ->leftJoin('e.category', 'c')
+            ->addSelect('c')
+            ->where('e.title = :title')
+            ->setParameter('title', $title)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function findByCategoryName(string $name): Collection
+    {
+        return $this->createQueryBuilder('e')
+            ->leftJoin('e.category', 'c')
+            ->addSelect('c')
+            ->where('c.name = :name')
+            ->setParameter('name', $name)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getEventsBeforeDate($date): Collection
+    {
+        return Event::with(['category', 'author', 'images'])
+            ->where('start_date', '<', $date)
+            ->orderBy('start_date', 'asc')
+            ->get();
+    }
+
+    public function getEventsAfterDate($date): Collection
+    {
+        return Event::with(['category', 'author', 'images'])
+            ->where('start_date', '>', $date)
+            ->orderBy('start_date', 'asc')
+            ->get();
+    }
+
+    public function getEventsFromDateRange($start, $end): Collection
+    {
+        return Event::with(['category', 'author', 'images'])
+            ->whereBetween('start_date', [$start, $end])
+            ->orderBy('start_date', 'asc')
+            ->get();
+    }
+
+    public function getAllSortedByDateAsc(): Collection
+    {
+        return Event::with(['category', 'author', 'images'])
+            ->orderBy('start_date', 'asc')
+            ->get();
     }
 }
