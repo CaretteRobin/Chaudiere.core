@@ -148,4 +148,13 @@ class EventRepository implements EventRepositoryInterface
             ->orderBy('start_date', 'asc')
             ->get();
     }
+
+    public function togglePublish(string $id): bool
+    {
+        $event = $this->getById($id);
+        if (!$event) return false;
+
+        $event->is_published = !$event->is_published;
+        return $event->save();
+    }
 }

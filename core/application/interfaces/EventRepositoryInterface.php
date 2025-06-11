@@ -34,4 +34,6 @@ interface EventRepositoryInterface
     public function getEventsFromDateRange($start, $end): Collection;
 
     public function getAllSortedByDateAsc(): Collection;
+
+    public function togglePublish(string $id): bool;
 }

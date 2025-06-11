@@ -16,6 +16,7 @@ use LaChaudiere\core\application\UseCase\Event\GetEventsByCategoryName;
 use LaChaudiere\core\application\UseCase\Event\GetEventsByPeriod;
 use LaChaudiere\core\application\UseCase\Event\GetAllEventsSortedByDateAsc;
 use LaChaudiere\core\application\UseCase\Event\GetPublishedAndSortedEvents;
+use LaChaudiere\core\application\UseCase\Event\TogglePublishEvent;
 
 class EventService
 {
@@ -31,6 +32,7 @@ class EventService
     private GetEventsByPeriod $getEventsByPeriod;
     private GetAllEventsSortedByDateAsc $getAllEventsSortedByDateAsc;
     private GetPublishedAndSortedEvents $getPublishedAndSortedEvents;
+    private TogglePublishEvent $togglePublishEvent;
 
 
     public function __construct(
@@ -45,7 +47,8 @@ class EventService
         GetEventsByCategoryName $getEventsByCategoryName,
         GetEventsByPeriod $getEventsByPeriod,
         GetAllEventsSortedByDateAsc $getAllEventsSortedByDateAsc,
-        GetPublishedAndSortedEvents $getPublishedAndSortedEvents
+        GetPublishedAndSortedEvents $getPublishedAndSortedEvents,
+        TogglePublishEvent $togglePublishEvent
 
     ) {
         $this->getAllEvent = $getAllEvent;
@@ -60,6 +63,7 @@ class EventService
         $this->getEventsByPeriod = $getEventsByPeriod;
         $this->getAllEventsSortedByDateAsc = $getAllEventsSortedByDateAsc;
         $this->getPublishedAndSortedEvents = $getPublishedAndSortedEvents;
+        $this->togglePublishEvent = $togglePublishEvent;
 
     }
 
@@ -128,5 +132,10 @@ class EventService
     public function getPublishedAndSorted(?string $sort): Collection
     {
         return $this->getPublishedAndSortedEvents->execute($sort);
+    }
+
+    public function togglePublishEvent(string $eventId): bool
+    {
+        return $this->togglePublishEvent->execute($eventId);
     }
 }
