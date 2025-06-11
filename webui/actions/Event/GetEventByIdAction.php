@@ -26,7 +26,7 @@ class GetEventByIdAction
             throw new HttpNotFoundException($request, "Event not found");
         }
 
-        $response->getBody()->write(json_encode($event));
+        $response->getBody()->write($event->toJson());
         return $response
             ->withHeader('Content-Type', 'application/json')
             ->withStatus(200);

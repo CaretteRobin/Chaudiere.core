@@ -22,6 +22,8 @@ class User extends Model
         'created_at' => 'datetime',
     ];
 
+    protected $hidden = ['password'];
+
     public function events(): HasMany
     {
         return $this->hasMany(Event::class, 'created_by', 'id');
