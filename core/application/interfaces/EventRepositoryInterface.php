@@ -19,6 +19,6 @@ interface EventRepositoryInterface
 
     public function getEventByPeriodFilter(string $startDate, string $endDate): Collection;
 
-    public function getEventByCateg(string $categoryId): array;
+    public function getEventByCateg(string $categoryId): Collection;
 
 }
