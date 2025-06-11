@@ -108,7 +108,7 @@ class EventRepository implements EventRepositoryInterface
         })->toArray();
     }
 
-    public function findById(int $id): ?Event
+    public function findById(string $id): ?Event
     {
         return Event::find($id);
     }

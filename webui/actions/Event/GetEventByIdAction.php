@@ -18,7 +18,7 @@ class GetEventByIdAction
 
     public function __invoke(Request $request, Response $response, array $args): Response
     {
-        $id = (int) $args['id'] ?? 0;
+        $id = (string) $args['id'];
 
         $event = $this->eventService->getEventById($id);
 
