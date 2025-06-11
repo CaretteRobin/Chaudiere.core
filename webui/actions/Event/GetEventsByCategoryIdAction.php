@@ -32,7 +32,7 @@ class GetEventsByCategoryIdAction
     public function __invoke(Request $request, Response $response, array $args): Response
     {
         // Récupération de l'ID de la catégorie depuis les arguments de la route
-        $categoryId = isset($args['categoryId']) ? (int)$args['categoryId'] : null;
+        $categoryId = $args['id'] ?? null;
 
         // Vérification de la présence de l'ID de catégorie
         if (!$categoryId) {
