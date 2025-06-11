@@ -92,10 +92,12 @@ class EventService
 
     public function getAllEventsSortedByDateAsc(): Collection
     {
-        return $this->getAllEvent->execute('date-asc');
+        return Event::with(['category', 'author', 'images'])
+            ->orderBy('start_date')
+            ->get();
     }
 
-    public function getEventsByCategorySortedByDateAsc(string $categoryId): array
+    public function getEventsByCategorySortedByDateAsc(string $categoryId): Collection
     {
         return $this->getEventsByCategory->execute($categoryId, 'date-asc');
 

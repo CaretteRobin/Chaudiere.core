@@ -1,6 +1,7 @@
 <?php
 
 namespace LaChaudiere\core\application\UseCase\Event;
+use Illuminate\Support\Collection;
 
 use LaChaudiere\core\application\interfaces\EventRepositoryInterface;
 
@@ -13,7 +14,7 @@ class GetEventsByCategory
         $this->eventRepository = $eventRepository;
     }
 
-    public function execute(string $categoryId): array
+    public function execute(string $categoryId): Collection
     {
         return $this->eventRepository->getEventByCateg($categoryId);
     }

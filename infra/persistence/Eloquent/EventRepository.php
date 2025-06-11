@@ -9,11 +9,7 @@ use Illuminate\Support\Str;
 
 class EventRepository implements EventRepositoryInterface
 {
-    /**
-     * Récupère tous les événements
-     *
-     * @return Collection
-     */
+
     public function getAll(): Collection
     {
         return Event::with(['category', 'author', 'images'])->get();
@@ -24,36 +20,18 @@ class EventRepository implements EventRepositoryInterface
         return Event::where('is_published', true)->with('category')->get();
     }
 
-    /**
-     * Récupère un événement par son ID
-     *
-     * @param int $id
-     * @return Event|null
-     */
+
     public function getById(string $id): ?Event
     {
         return Event::with(['category', 'author', 'images'])->find($id);
     }
 
-    /**
-     * Crée un nouvel événement
-     *
-     * @param array $data
-     * @return Event
-     */
     public function create(array $data): Event
     {
         $data['id'] = (string) Str::uuid();
         return Event::create($data);
     }
 
-    /**
-     * Met à jour un événement existant
-     *
-     * @param int $id
-     * @param array $data
-     * @return Event|null
-     */
     public function update(string $id, array $data): ?Event
     {
         $event = $this->getById($id);
@@ -68,12 +46,6 @@ class EventRepository implements EventRepositoryInterface
         return $event;
     }
 
-    /**
-     * Supprime un événement
-     *
-     * @param int $id
-     * @return bool
-     */
     public function delete(string $id): bool
     {
         $event = $this->getById($id);
@@ -91,27 +63,18 @@ class EventRepository implements EventRepositoryInterface
             ->whereBetween('start_date', [$startDate, $endDate])
             ->get();
     }
-    public function getEventByCateg(string $categoryId): array
+
+
+    public function getEventByCateg(string $categoryId): Collection
     {
-        $events = Event::with('category')
+        return Event::with(['category'])
             ->where('category_id', $categoryId)
             ->orderBy('start_date')
             ->get();
-
-        return $events->map(function (Event $event) {
-            return [
-                'title'      => $event->title,
-                'start_date' => $event->start_date->format('Y-m-d'),
-                'category'   => $event->category?->name,
-                'detail_url' => '/api/evenements/' . $event->id,
-            ];
-        })->toArray();
     }
 
     public function findById(string $id): ?Event
     {
-        return Event::find($id);
+        return Event::with(['category', 'author', 'images'])->find($id);
     }
-
-
 }
