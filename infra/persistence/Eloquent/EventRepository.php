@@ -98,24 +98,19 @@ class EventRepository implements EventRepositoryInterface
 
     public function findByTitle(string $title): ?Event
     {
-        return $this->createQueryBuilder('e')
-            ->leftJoin('e.category', 'c')
-            ->addSelect('c')
-            ->where('e.title = :title')
-            ->setParameter('title', $title)
-            ->getQuery()
-            ->getOneOrNullResult();
+        return Event::with(['category', 'author', 'images'])
+            ->where('title', $title)
+            ->first();
     }
+
 
     public function findByCategoryName(string $name): Collection
     {
-        return $this->createQueryBuilder('e')
-            ->leftJoin('e.category', 'c')
-            ->addSelect('c')
-            ->where('c.name = :name')
-            ->setParameter('name', $name)
-            ->getQuery()
-            ->getResult();
+        return Event::whereHas('category', function ($query) use ($name) {
+                $query->where('name', $name);
+            })
+            ->with(['category', 'author', 'images'])
+            ->get();
     }
 
     public function getEventsBeforeDate($date): Collection
