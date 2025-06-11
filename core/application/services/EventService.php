@@ -10,8 +10,11 @@ use LaChaudiere\core\application\UseCase\Event\GetAllEvent;
 use LaChaudiere\core\application\UseCase\Event\GetEventById;
 use LaChaudiere\core\application\UseCase\Event\CreateEvent;
 use LaChaudiere\core\application\UseCase\Event\DeleteEvent;
-use LaChaudiere\core\application\UseCase\Event\GetEventByPeriodFilter;
 use LaChaudiere\core\application\UseCase\Event\GetPublishedEvent;
+use LaChaudiere\core\application\UseCase\Event\GetEventByTitle;
+use LaChaudiere\core\application\UseCase\Event\GetEventsByCategoryName;
+use LaChaudiere\core\application\UseCase\Event\GetEventsByPeriod;
+use LaChaudiere\core\application\UseCase\Event\GetAllEventsSortedByDateAsc;
 
 class EventService
 {
@@ -19,12 +22,13 @@ class EventService
     private GetEventById $getEventById;
     private CreateEvent $createEvent;
     private DeleteEvent $deleteEvent;
-    private GetEventByPeriodFilter $getEventByPeriodFilter;
     private GetPublishedEvent $getPublishedEvent;
     private GetEventsByCategory $getEventsByCategory;
     private GetEventsSorted $getEventsSorted;
-
-
+    private GetEventByTitle $getEventByTitle;
+    private GetEventsByCategoryName $getEventsByCategoryName;
+    private GetEventsByPeriod $getEventsByPeriod;
+    private GetAllEventsSortedByDateAsc $getAllEventsSortedByDateAsc;
 
 
     public function __construct(
@@ -32,21 +36,26 @@ class EventService
         GetEventById $getEventById,
         CreateEvent $createEvent,
         DeleteEvent $deleteEvent,
-        GetEventByPeriodFilter $getEventByPeriodFilter,
         GetEventsByCategory $getEventsByCategory,
         GetPublishedEvent $getPublishedEvent,
-        GetEventsSorted $getEventsSorted
+        GetEventsSorted $getEventsSorted,
+        GetEventByTitle $getEventByTitle,
+        GetEventsByCategoryName $getEventsByCategoryName,
+        GetEventsByPeriod $getEventsByPeriod,
+        GetAllEventsSortedByDateAsc $getAllEventsSortedByDateAsc,
 
     ) {
         $this->getAllEvent = $getAllEvent;
         $this->getEventById = $getEventById;
         $this->createEvent = $createEvent;
         $this->deleteEvent = $deleteEvent;
-        $this->getEventByPeriodFilter = $getEventByPeriodFilter;
         $this->getEventsByCategory = $getEventsByCategory;
         $this->getPublishedEvent = $getPublishedEvent;
         $this->getEventsSorted = $getEventsSorted;
-
+        $this->getEventByTitle = $getEventByTitle;
+        $this->getEventsByCategoryName = $getEventsByCategoryName;
+        $this->getEventsByPeriod = $getEventsByPeriod;
+        $this->getAllEventsSortedByDateAsc = $getAllEventsSortedByDateAsc;
 
     }
 
@@ -76,10 +85,6 @@ class EventService
         return true;
     }
 
-    public function getEventByPeriodFilter(string $startDate, string $endDate): Collection
-    {
-        return $this->getEventByPeriodFilter->execute($startDate, $endDate);
-    }
     public function getEventsByCategory(string $categoryId): Collection
     {
         return $this->getEventsByCategory->execute($categoryId);
@@ -92,14 +97,27 @@ class EventService
 
     public function getAllEventsSortedByDateAsc(): Collection
     {
-        return Event::with(['category', 'author', 'images'])
-            ->orderBy('start_date')
-            ->get();
+        return $this->getAllEventsSortedByDateAsc->execute();
     }
 
     public function getEventsByCategorySortedByDateAsc(string $categoryId): Collection
     {
         return $this->getEventsByCategory->execute($categoryId, 'date-asc');
 
+    }
+
+    public function getEventByTitle(string $title): ?Event
+    {
+        return $this->getEventByTitle->execute($title);
+    }
+
+    public function getEventsByCategoryName(string $name): Collection
+    {
+        return $this->getEventsByCategoryName->execute($name);
+    }
+
+    public function getEventsByPeriod(string $periode): Collection
+    {
+        return $this->getEventsByPeriod->execute($periode);
     }
 }

@@ -3,9 +3,8 @@
 namespace LaChaudiere\core\application\UseCase\Event;
 
 use LaChaudiere\core\application\interfaces\EventRepositoryInterface;
-use Illuminate\Database\Eloquent\Collection;
 
-class GetEventByPeriodFilter
+class GetEventsByCategoryName
 {
     private EventRepositoryInterface $eventRepository;
 
@@ -14,8 +13,8 @@ class GetEventByPeriodFilter
         $this->eventRepository = $eventRepository;
     }
 
-    public function execute(string $startDate, string $endDate): Collection
+    public function execute(string $name): Collection
     {
-        return $this->eventRepository->getEventByPeriodFilter($startDate, $endDate);
+        return $this->eventRepository->findByCategoryName($name);
     }
 }

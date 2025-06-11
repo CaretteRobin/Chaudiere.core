@@ -18,11 +18,14 @@ use LaChaudiere\core\application\UseCase\Event\CreateEvent;
 use LaChaudiere\core\application\UseCase\Event\DeleteEvent;
 use LaChaudiere\core\application\UseCase\Event\GetAllEvent;
 use LaChaudiere\core\application\UseCase\Event\GetEventById;
-use LaChaudiere\core\application\UseCase\Event\GetEventByPeriodFilter;
+use LaChaudiere\core\application\UseCase\Event\GetPublishedEvent;
+use LaChaudiere\core\application\UseCase\Event\GetEventByTitle;
+use LaChaudiere\core\application\UseCase\Event\GetEventsByCategoryName;
+use LaChaudiere\core\application\UseCase\Event\GetEventsByPeriod;
+use LaChaudiere\core\application\UseCase\Event\GetAllEventsSortedByDateAsc;
 use LaChaudiere\core\application\interfaces\CategoryRepositoryInterface;
 use LaChaudiere\infra\persistence\Eloquent\CategoryRepository;
 use LaChaudiere\webui\actions\Event\CreateEventFormAction;
-use LaChaudiere\core\application\UseCase\Event\GetPublishedEvent;
 use LaChaudiere\core\application\services\CategoryService;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
@@ -68,10 +71,13 @@ $container->set(EventService::class, fn() => new EventService(
     $container->get(GetEventById::class),
     $container->get(CreateEvent::class),
     $container->get(DeleteEvent::class),
-    $container->get(GetEventByPeriodFilter::class),
     $container->get(GetEventsByCategory::class),
     $container->get(GetPublishedEvent::class),
-    $container->get(GetEventsSorted::class)
+    $container->get(GetEventsSorted::class),
+    $container->get(GetEventByTitle::class),
+    $container->get(GetEventsByCategoryName::class),
+    $container->get(GetEventsByPeriod::class),
+    $container->get(GetAllEventsSortedByDateAsc::class)
 
 ));
 
