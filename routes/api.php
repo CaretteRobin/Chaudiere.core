@@ -1,20 +1,13 @@
 <?php
 
+use LaChaudiere\webui\actions\Category\GetCategoryByIdAction;
 use LaChaudiere\webui\actions\Event\GetSortedEventsAction;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
 
-use LaChaudiere\webui\actions\Category\CreateCategoryAction;
-use LaChaudiere\webui\actions\Category\DeleteCategoryAction;
-use LaChaudiere\webui\actions\Category\GetCategoryAction;
 use LaChaudiere\webui\actions\Category\GetAllCategoryAction;
-use LaChaudiere\webui\actions\Event\DeleteEventAction;
-use LaChaudiere\webui\actions\Event\GetAllEventsAction;
-use LaChaudiere\webui\actions\Event\GetEventsByCategAction;
 use LaChaudiere\webui\actions\Event\GetEventsByCategoryIdAction;
 use LaChaudiere\webui\actions\Event\GetEventByIdAction;
-use LaChaudiere\webui\actions\Event\UpdateEventAction;
-use Psr\Http\Message\ServerRequestInterface;
 
 return function (App $app) {
     $app->group('/api', function (RouteCollectorProxy $group) {
@@ -28,9 +21,8 @@ return function (App $app) {
         // Routes pour les catégories
         $group->group('/categories', function (RouteCollectorProxy $group) {
             $group->get('', GetAllCategoryAction::class);
-            $group->get('/create/{id}', CreateCategoryAction::class);
-            $group->get('/delete/{id}', DeleteCategoryAction::class);
-            $group->get('/{id}', GetEventsByCategoryIdAction::class);
+            $group->get('/{id}', GetCategoryByIdAction::class);
+            $group->get('/{id}/evenements', GetEventsByCategoryIdAction::class);
         });
 
     });
