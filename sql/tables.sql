@@ -26,9 +26,9 @@ CREATE TABLE `users` (
 
 -- 4) Table categories
 CREATE TABLE `categories` (
-                              `id` CHAR(36) PRIMARY KEY,
-                              `name` VARCHAR(100) NOT NULL UNIQUE,
-                              `description` TEXT DEFAULT NULL
+    `id` CHAR(36) PRIMARY KEY,
+    `name` VARCHAR(100) NOT NULL UNIQUE,
+    `description` TEXT DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 5) Table events
@@ -64,10 +64,10 @@ INSERT INTO `users` (`id`, `password`, `email`, `role`, `created_at`) VALUES
 ('d4447e5d-ab66-4dfc-9c52-89cd383816bc', '$2y$10$.KuWiwwGXSM7vJZALi.r0OnSqbLckxnGk2b0uJFXE5yIU9DRBHSnW', 'admin@example.com', 'admin', '2025-06-06 09:39:30');
 
 -- 8) Insertion des catégories
-INSERT INTO `categories` (`id`, `name`) VALUES
-('d87ce908-039d-4989-bfbe-55211de45d85', 'Concert'),
-('61392df6-6bd1-4d7b-aeda-520b55171c53', 'Exposition'),
-('acc63b80-b9f7-4fb8-8e8a-66582eabb203', 'Conférence');
+INSERT INTO `categories` (`id`, `name`, `description`) VALUES
+('d87ce908-039d-4989-bfbe-55211de45d85', 'Concert', 'Événements musicaux en direct, allant des concerts de rock aux performances acoustiques.'),
+('61392df6-6bd1-4d7b-aeda-520b55171c53', 'Exposition', 'Expositions d’art, de photographie et d’autres formes d’art visuel.'),
+('acc63b80-b9f7-4fb8-8e8a-66582eabb203', 'Conférence', 'Conférences et séminaires sur divers sujets, allant de la science à la culture.');
 
 -- 9) Insertion des événements
 INSERT INTO `events` (`id`, `title`, `description`, `price`, `start_date`, `end_date`, `time`, `category_id`, `created_by`, `created_at`) VALUES
