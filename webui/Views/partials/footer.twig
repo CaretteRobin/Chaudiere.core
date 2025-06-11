@@ -1,12 +1,11 @@
-{# src/Views/templates/partials/footer.twig #}
-<div class="p-8">
-    <div class="flex justify-between items-center w-full">
-        <div class="col-md-6">
-            <h5>LaChaudiere App</h5>
-            <p>Une application pour gérer vos cadeaux préférés.</p>
+<footer class="bg-gray-100 mt-16">
+    <div class="container mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-600">
+        <div class="mb-4 md:mb-0">
+            <h5 class="text-lg font-semibold text-purple-700">LaChaudière Agenda</h5>
+            <p>Plateforme de gestion des événements culturels — Projet SAE S4</p>
         </div>
-        <div class="col-md-6 text-md-end">
-            <p>&copy; {{ "now"|date("Y") }} Gift App. Tous droits réservés.</p>
+        <div class="text-center md:text-right">
+            <p>&copy; {{ "now"|date("Y") }} LaChaudière. Tous droits réservés.</p>
         </div>
     </div>
-</div>
+</footer>
