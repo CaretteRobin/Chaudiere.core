@@ -13,7 +13,7 @@ use LaChaudiere\webui\actions\Auth\UpdateUserAction;
 use LaChaudiere\webui\actions\Event\ListEventAction;
 use LaChaudiere\webui\actions\Category\CreateCategoryAction;
 use LaChaudiere\webui\actions\Category\DeleteCategoryAction;
-use LaChaudiere\webui\actions\Category\GetCategoriesAction;
+use LaChaudiere\webui\actions\Category\GetCategoryAction;
 use LaChaudiere\webui\actions\Category\ShowCreateCategoryFormAction;
 use LaChaudiere\webui\actions\HomePageAction;
 use LaChaudiere\webui\actions\Event\CreateEventFormAction;
@@ -52,7 +52,7 @@ return function (App $app) {
 
         // Routes catégories
         $group->group('/categories', function (RouteCollectorProxy $group) {
-            $group->get('', GetCategoriesAction::class);
+            $group->get('', GetCategoryAction::class);
             $group->get('/create', ShowCreateCategoryFormAction::class);
             $group->post('/create', CreateCategoryAction::class);
             $group->delete('/{id}', DeleteCategoryAction::class);

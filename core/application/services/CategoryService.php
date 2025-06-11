@@ -32,7 +32,7 @@ class CategoryService
         return $this->getAllCategories->execute();
     }
 
-    public function getById(int $id): ?Category
+    public function getById(string $id): ?Category
     {
         return $this->getCategoryById->execute($id);
     }
@@ -42,12 +42,12 @@ class CategoryService
         return $this->createCategory->execute($data);
     }
 
-    public function update(int $id, array $data): ?Category
+    public function update(string $id, array $data): ?Category
     {
         return $this->updateCategory->execute($id, $data);
     }
 
-    public function delete(int $id): bool
+    public function delete(string $id): bool
     {
         return $this->deleteCategory->execute($id);
     }

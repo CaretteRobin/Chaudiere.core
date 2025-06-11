@@ -12,7 +12,7 @@ class ImageService
         private GetImagesByEventId $getImagesByEventId
     ) {}
 
-    public function addImage(int $eventId, string $imagePath): void
+    public function addImage(string $eventId, string $imagePath): void
     {
         $this->addImageToEvent->execute($eventId, $imagePath);
     }

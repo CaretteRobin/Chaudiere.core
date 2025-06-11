@@ -14,7 +14,7 @@ class GetCategoryById
         $this->repository = $repository;
     }
 
-    public function execute(int $id): ?Category
+    public function execute(string $id): ?Category
     {
         return $this->repository->findById($id);
     }

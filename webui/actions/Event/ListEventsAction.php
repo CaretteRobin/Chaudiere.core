@@ -32,7 +32,7 @@ class ListEventsAction
         $categories = $this->categoryService->getAll();
 
         if ($categoryId) {
-            $events = $this->eventService->getEventsByCategorySortedByDateAsc((int)$categoryId);
+            $events = $this->eventService->getEventsByCategorySortedByDateAsc($categoryId); 
         } else {
             $events = $this->eventService->getAllEventsSortedByDateAsc();
         }

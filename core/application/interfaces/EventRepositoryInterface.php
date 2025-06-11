@@ -9,16 +9,16 @@ interface EventRepositoryInterface
 {
     public function getAll(): \Illuminate\Database\Eloquent\Collection;
 
-    public function getById(int $id): ?Event;
+    public function getById(string $id): ?Event;
 
     public function create(array $data): Event;
 
-    public function update(int $id, array $data): ?Event;
+    public function update(string $id, array $data): ?Event;
 
-    public function delete(int $id): bool;
+    public function delete(string $id): bool;
 
     public function getEventByPeriodFilter(string $startDate, string $endDate): Collection;
 
-    public function getEventByCateg(int $categoryId): array;
+    public function getEventByCateg(string $categoryId): array;
 
 }
