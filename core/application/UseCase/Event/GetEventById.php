@@ -9,7 +9,7 @@ class GetEventById
 {
     public function __construct(private EventRepositoryInterface $eventRepository) {}
 
-    public function execute(int $id)
+    public function execute(string $id)
     {
         $event = $this->eventRepository->findById($id);
 

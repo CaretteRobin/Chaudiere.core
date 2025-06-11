@@ -60,7 +60,7 @@ class EventService
         return $this->getPublishedEvent->execute();
     }
 
-    public function getEventById(int $id): Event
+    public function getEventById(string $id): Event
     {
         return $this->getEventById->execute($id);
     }
