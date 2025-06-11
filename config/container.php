@@ -23,6 +23,7 @@ use LaChaudiere\core\application\UseCase\Event\GetEventByTitle;
 use LaChaudiere\core\application\UseCase\Event\GetEventsByCategoryName;
 use LaChaudiere\core\application\UseCase\Event\GetEventsByPeriod;
 use LaChaudiere\core\application\UseCase\Event\GetAllEventsSortedByDateAsc;
+use LaChaudiere\core\application\UseCase\Event\GetPublishedAndSortedEvents;
 use LaChaudiere\core\application\interfaces\CategoryRepositoryInterface;
 use LaChaudiere\infra\persistence\Eloquent\CategoryRepository;
 use LaChaudiere\webui\actions\Event\CreateEventFormAction;
@@ -77,7 +78,8 @@ $container->set(EventService::class, fn() => new EventService(
     $container->get(GetEventByTitle::class),
     $container->get(GetEventsByCategoryName::class),
     $container->get(GetEventsByPeriod::class),
-    $container->get(GetAllEventsSortedByDateAsc::class)
+    $container->get(GetAllEventsSortedByDateAsc::class),
+    $container->get(GetPublishedAndSortedEvents::class)
 
 ));
 
