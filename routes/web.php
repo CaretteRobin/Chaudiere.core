@@ -28,6 +28,7 @@ return function (App $app) {
     // Routes publiques
     $app->get('/auth', ShowAuthPageAction::class)->setName('auth_page');
     $app->post('/login', LoginAction::class)->setName('auth_login');
+    $app->post('/admin/evenements/{id}/toggle-publish', \LaChaudiere\webui\actions\Event\TogglePublishEventAction::class);
 
     // Routes protégées par authentification
     $app->group('', function (RouteCollectorProxy $group) {
