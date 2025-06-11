@@ -23,19 +23,15 @@ class ListEventsAction
 
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
-
         $view = Twig::fromRequest($request);
-
         $queryParams = $request->getQueryParams();
         $categoryId = $queryParams['category'] ?? null;
 
         $categories = $this->categoryService->getAll();
 
-        if ($categoryId) {
-            $events = $this->eventService->getEventsByCategorySortedByDateAsc($categoryId); 
-        } else {
-            $events = $this->eventService->getAllEventsSortedByDateAsc();
-        }
+        $events = $categoryId
+            ? $this->eventService->getEventsByCategorySortedByDateAsc($categoryId)
+            : $this->eventService->getAllEventsSortedByDateAsc();
 
         return $view->render($response, 'events/list.twig', [
             'events' => $events,

@@ -1,68 +1,46 @@
 <?php
 
-declare(strict_types=1);
-
 namespace LaChaudiere\webui\actions\Event;
 
+use LaChaudiere\core\application\services\CategoryService;
 use LaChaudiere\core\application\services\EventService;
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Slim\Views\Twig;
 
-class GetAllEventsAction
+class ListEventsAction
 {
     private EventService $eventService;
+    private CategoryService $categoryService;
+    private Twig $view;
 
-    public function __construct(EventService $eventService)
+    public function __construct(EventService $eventService, CategoryService $categoryService, Twig $view)
     {
         $this->eventService = $eventService;
+        $this->categoryService = $categoryService;
+        $this->view = $view;
     }
 
-    public function __invoke(Request $request, Response $response): Response
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
+
+        $view = Twig::fromRequest($request);
+
         $queryParams = $request->getQueryParams();
-        $periodeParam = $queryParams['periode'] ?? null;
+        $categoryId = $queryParams['category'] ?? null;
 
-        $events = $this->eventService->getAllEvent();
+        $categories = $this->categoryService->getAllEventS();
 
-        // S'il y a un filtre de période, on applique le filtrage
-        if ($periodeParam) {
-            $periods = array_map('trim', explode(',', $periodeParam));
-            $today = new \DateTimeImmutable();
-            $currentMonth = (int) $today->format('n');
-            $currentYear = (int) $today->format('Y');
-
-            $events = $events->filter(function ($event) use ($periods, $currentMonth, $currentYear) {
-                $eventDate = \DateTimeImmutable::createFromFormat('Y-m-d', $event->start_date->format('Y-m-d'));
-                $eventMonth = (int) $eventDate->format('n');
-                $eventYear = (int) $eventDate->format('Y');
-
-                return
-                    (in_array('passee', $periods) &&
-                        ($eventYear < $currentYear || ($eventYear === $currentYear && $eventMonth < $currentMonth)))
-                    || (in_array('courante', $periods) &&
-                        ($eventYear === $currentYear && $eventMonth === $currentMonth))
-                    || (in_array('futur', $periods) &&
-                        ($eventYear > $currentYear || ($eventYear === $currentYear && $eventMonth > $currentMonth)));
-            });
+        if ($categoryId) {
+            $events = $this->eventService->getEventsByCategorySortedByDateAsc($categoryId); 
+        } else {
+            $events = $this->eventService->getAllEventsSortedByDateAsc();
         }
 
-        // Formatage final trié par date
-        $formatted = $events
-            ->sortBy('start_date')
-            ->map(function ($event) {
-                return [
-                    'title'     => $event->title,
-                    'date'      => $event->start_date,
-                    'category'  => $event->category->name ?? null,
-                    'url'       => "/api/evenements/{$event->id}",
-                ];
-            })
-            ->values();
-
-        $response->getBody()->write($formatted->toJson());
-
-        return $response
-            ->withHeader('Content-Type', 'application/json')
-            ->withStatus(200);
+        return $view->render($response, 'events/list.twig', [
+            'events' => $events,
+            'categories' => $categories,
+            'selectedCategory' => $categoryId
+        ]);
     }
 }

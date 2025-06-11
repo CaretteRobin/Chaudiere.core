@@ -31,7 +31,6 @@ return function (App $app) {
             $group->get('/create/{id}', CreateCategoryAction::class);
             $group->get('/delete/{id}', DeleteCategoryAction::class);
             $group->get('/{id}', GetEventsByCategoryIdAction::class);
-            $group->get('/{id}/evenements', GetEventsByCategAction::class);
         });
 
     });

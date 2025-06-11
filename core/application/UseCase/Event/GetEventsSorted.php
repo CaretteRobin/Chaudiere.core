@@ -2,11 +2,12 @@
 
 namespace LaChaudiere\core\application\UseCase\Event;
 
+use Illuminate\Support\Collection;
 use LaChaudiere\core\domain\entities\Event;
 
 class GetEventsSorted
 {
-    public function execute(?string $sort): \Illuminate\Database\Eloquent\Collection
+    public function execute(?string $sort): Collection
     {
         $query = Event::query();
 

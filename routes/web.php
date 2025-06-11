@@ -44,7 +44,6 @@ return function (App $app) {
         // Routes événements
         $group->group('/evenements', function (RouteCollectorProxy $group) {
             $group->get('', ListEventsAction::class)->setName('event.list');
-            $group->get('/events[/{categoryId}]', ListEventsAction::class)->setName('event.list');
             $group->get('/create', CreateEventFormAction::class)->setName('events.create.form');
             $group->post('/create', HandleCreateEventAction::class)->setName('events.create.handle');
             $group->get('/{categoryId}', ListEventsAction::class)->setName('event.list');
