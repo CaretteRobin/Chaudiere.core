@@ -8,8 +8,8 @@
     <link type="text/tailwindcss" href="{{ base_url() }}/styles/main.css"/>
     {% block styles %}{% endblock %}
 </head>
-<body class="bg-gray-100 min-h-screen">
-<header class="bg-gray-800 text-white shadow-md">
+<body class="bg-gray-50 min-h-screen">
+<header>
     {% include 'partials/header.twig' %}
 </header>
 
@@ -45,7 +45,7 @@
     {% block content %}{% endblock %}
 </main>
 
-<footer class="bg-gray-800 text-white">
+<footer>
     {% include 'partials/footer.twig' %}
 </footer>
 

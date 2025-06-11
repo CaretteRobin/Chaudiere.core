@@ -10,7 +10,7 @@
         {% if categories is not empty %}
             <ul class="space-y-4">
                 {% for cat in categories %}
-                    <li class="border rounded-lg p-4 hover:shadow transition">
+                    <li class="flex flex-col items-start m-4 border-[1px] border-gray-200 rounded-lg p-6 shadow-md">
                         <div class="text-lg font-semibold text-purple-800">{{ cat.name|e }}</div>
                         {% if cat.description %}
                             <div class="text-sm text-gray-600 mt-1 whitespace-pre-line">{{ cat.description|e }}</div>

@@ -6,11 +6,14 @@
 
         <nav>
             <ul class="flex space-x-6 text-gray-700 font-medium">
-                <li><a href="{{ url_for('home') }}" class="hover:text-purple-600 transition">Accueil</a></li>
-                <li><a href="/categories" class="hover:text-purple-600 transition">Catégories</a></li>
-                <li><a href="/evenements" class="hover:text-purple-600 transition">Événements</a></li>
 
                 {% if user %}
+                    <li><a href="{{ url_for('home') }}" class="hover:text-purple-600 transition">Accueil</a></li>
+                    <li><a href="/categories" class="hover:text-purple-600 transition">Catégories</a></li>
+                    <li><a href="/evenements" class="hover:text-purple-600 transition">Événements</a></li>
+                    {% if user.role == 'super-admin' %}
+                        <li><a href="/users" class="text-pink-400 hover:text-pink-600 transition">Administration</a></li>
+                    {% endif %}
                     <li>
                         <a href="{{ url_for('logout') }}" class="text-red-500 hover:text-red-700 transition">
                             Déconnexion
