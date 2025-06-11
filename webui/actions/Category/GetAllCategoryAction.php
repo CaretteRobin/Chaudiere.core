@@ -21,9 +21,7 @@ class GetAllCategoryAction
     {
         $categories = $this->categoryService->getAll();
 
-        $response->getBody()->write(json_encode([
-            'data' => $categories,
-        ]));
+        $response->getBody()->write(json_encode($categories));
 
         return $response
             ->withHeader('Content-Type', 'application/json')
