@@ -31,19 +31,19 @@ class GetEventsByCategoryIdAction
      */
     public function __invoke(Request $request, Response $response, array $args): Response
     {
-        // Récupération de l'ID de la catégorie depuis les arguments de la route
         $categoryId = $args['id'] ?? null;
 
-        // Vérification de la présence de l'ID de catégorie
         if (!$categoryId) {
             throw new HttpBadRequestException($request, "L'ID de la catégorie est requis");
         }
 
-        // Récupération des événements via le service
-        $events = $this->eventService->getEventsByCategory($categoryId);
+        // On récupère TOUS les événements de la catégorie
+        $allEvents = $this->eventService->getEventsByCategory($categoryId);
 
-        // Préparation et envoi de la réponse au format JSON
-        $response->getBody()->write(json_encode($events));
+        // On filtre pour ne garder que ceux publiés
+        $publishedEvents = $allEvents->filter(fn($event) => $event->is_published);
+
+        $response->getBody()->write(json_encode($publishedEvents->values())); // reset des clés JSON
 
         return $response->withHeader('Content-Type', 'application/json');
     }
