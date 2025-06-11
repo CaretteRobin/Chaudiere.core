@@ -15,6 +15,7 @@ use LaChaudiere\core\application\UseCase\Event\GetEventByTitle;
 use LaChaudiere\core\application\UseCase\Event\GetEventsByCategoryName;
 use LaChaudiere\core\application\UseCase\Event\GetEventsByPeriod;
 use LaChaudiere\core\application\UseCase\Event\GetAllEventsSortedByDateAsc;
+use LaChaudiere\core\application\UseCase\Event\GetPublishedAndSortedEvents;
 
 class EventService
 {
@@ -29,6 +30,7 @@ class EventService
     private GetEventsByCategoryName $getEventsByCategoryName;
     private GetEventsByPeriod $getEventsByPeriod;
     private GetAllEventsSortedByDateAsc $getAllEventsSortedByDateAsc;
+    private GetPublishedAndSortedEvents $getPublishedAndSortedEvents;
 
 
     public function __construct(
@@ -43,6 +45,7 @@ class EventService
         GetEventsByCategoryName $getEventsByCategoryName,
         GetEventsByPeriod $getEventsByPeriod,
         GetAllEventsSortedByDateAsc $getAllEventsSortedByDateAsc,
+        GetPublishedAndSortedEvents $getPublishedAndSortedEvents
 
     ) {
         $this->getAllEvent = $getAllEvent;
@@ -56,6 +59,7 @@ class EventService
         $this->getEventsByCategoryName = $getEventsByCategoryName;
         $this->getEventsByPeriod = $getEventsByPeriod;
         $this->getAllEventsSortedByDateAsc = $getAllEventsSortedByDateAsc;
+        $this->getPublishedAndSortedEvents = $getPublishedAndSortedEvents;
 
     }
 
@@ -119,5 +123,10 @@ class EventService
     public function getEventsByPeriod(string $periode): Collection
     {
         return $this->getEventsByPeriod->execute($periode);
+    }
+
+    public function getPublishedAndSorted(?string $sort): Collection
+    {
+        return $this->getPublishedAndSortedEvents->execute($sort);
     }
 }
