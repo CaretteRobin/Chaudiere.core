@@ -2,7 +2,7 @@
 
 namespace LaChaudiere\core\application\services;
 
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 use LaChaudiere\core\application\UseCase\Event\GetEventsByCategory;
 use LaChaudiere\core\application\UseCase\Event\GetEventsSorted;
 use LaChaudiere\core\domain\entities\Event;
@@ -80,12 +80,12 @@ class EventService
     {
         return $this->getEventByPeriodFilter->execute($startDate, $endDate);
     }
-    public function getEventsByCategory(string $categoryId): array
+    public function getEventsByCategory(string $categoryId): Collection
     {
         return $this->getEventsByCategory->execute($categoryId);
     }
 
-    public function getSorted(?string $sort): \Illuminate\Database\Eloquent\Collection
+    public function getSorted(?string $sort): Collection
     {
         return $this->getEventsSorted->execute($sort);
     }
