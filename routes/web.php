@@ -40,7 +40,7 @@ return function (App $app) {
         $group->group('/register', function (RouteCollectorProxy $group) {
             $group->get('', ShowRegisterPageAction::class)->setName('auth_register_page');
             $group->post('', RegisterAction::class)->setName('auth_register');
-        });
+        })->add(AuthzMiddleware::class);
 
         // Routes événements
         $group->group('/evenements', function (RouteCollectorProxy $group) {

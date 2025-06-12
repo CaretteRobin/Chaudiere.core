@@ -29,7 +29,7 @@ class AuthProvider implements AuthProviderInterface
     public function register(string $email, string $password): User
     {
         $user = $this->authnService->register($email, $password);
-        $this->store($user);
+//        $this->store($user);
         return $user;
     }
 

@@ -10,6 +10,8 @@ use LaChaudiere\core\application\services\AuthnService;
 use LaChaudiere\core\application\services\EventService;
 use LaChaudiere\core\application\UseCase\Event\GetEventsByCategory;
 use LaChaudiere\core\application\UseCase\Event\GetEventsSorted;
+use LaChaudiere\core\application\UseCase\User\LoginUser;
+use LaChaudiere\core\application\UseCase\User\RegisterUser;
 use LaChaudiere\infra\persistence\Eloquent\EventRepository;
 use LaChaudiere\infra\persistence\Eloquent\UserRepository;
 use LaChaudiere\infra\providers\AuthProvider;
@@ -49,7 +51,12 @@ $container->set(AuthProviderInterface::class, function (Container $container) {
         $container->get(AuthnServiceInterface::class)
     );
 });
-$container->set(AuthnServiceInterface::class, fn () => new AuthnService());
+$container->set(AuthnServiceInterface::class, function (Container $container) {
+    return new AuthnService(
+        $container->get(RegisterUser::class),
+        $container->get(LoginUser::class)
+    );
+});
 // Bind des use cases
 $container->set(GetAllEvent::class, fn() => new GetAllEvent($container->get(EventRepositoryInterface::class)));
 $container->set(GetEventById::class, fn() => new GetEventById($container->get(EventRepositoryInterface::class)));
@@ -62,9 +69,9 @@ $container->set(CreateEvent::class, function () use ($container) {
 });
 
 $container->set(DeleteEvent::class, fn() => new DeleteEvent($container->get(EventRepositoryInterface::class)));
-$container->set(GetEventByPeriodFilter::class, function () use ($container) {
-    return new GetEventByPeriodFilter($container->get(EventRepositoryInterface::class));
-});
+//$container->set(GetEventByPeriodFilter::class, function () use ($container) {
+//    return new GetEventByPeriodFilter($container->get(EventRepositoryInterface::class));
+//});
 
 
 // Bind du service                                                                                                                                                                                                                                                                                                                  

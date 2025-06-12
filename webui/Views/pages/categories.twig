@@ -3,24 +3,22 @@
 {% block title %}Catégories – LaChaudière Agenda{% endblock %}
 
 {% block content %}
-<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 font-sans">
-    <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-xl p-8">
-        <h1 class="text-3xl font-bold text-purple-700 mb-6 text-center">Liste des catégories</h1>
+<div class="max-w-4xl m-auto mt-12">
+    <h1 class="text-3xl font-bold text-purple-700 mb-6 text-center">Liste des catégories</h1>
 
-        {% if categories is not empty %}
-            <ul class="space-y-4">
-                {% for cat in categories %}
-                    <li class="flex flex-col items-start m-4 border-[1px] border-gray-200 rounded-lg p-6 shadow-md">
-                        <div class="text-lg font-semibold text-purple-800">{{ cat.name|e }}</div>
-                        {% if cat.description %}
-                            <div class="text-sm text-gray-600 mt-1 whitespace-pre-line">{{ cat.description|e }}</div>
-                        {% endif %}
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p class="text-gray-500 text-center">Aucune catégorie enregistrée.</p>
-        {% endif %}
-    </div>
+    {% if categories is not empty %}
+        <ul class="space-y-4">
+            {% for cat in categories %}
+                <li class="flex flex-col items-start m-4 border-[1px] border-gray-200 rounded-lg p-6 shadow-md bg-white">
+                    <div class="text-lg font-semibold text-purple-800">{{ cat.name|e }}</div>
+                    {% if cat.description %}
+                        <div class="text-sm text-gray-600 mt-1 whitespace-pre-line">{{ cat.description|e }}</div>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="text-gray-500 text-center">Aucune catégorie enregistrée.</p>
+    {% endif %}
 </div>
 {% endblock %}

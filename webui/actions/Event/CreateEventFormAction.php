@@ -27,7 +27,7 @@ class CreateEventFormAction
         $user = $request->getAttribute('user');
 
 
-        return $view->render($response, 'events/create.twig', [
+        return $view->render($response, 'pages/events/create.twig', [
             'categories' => $categories,
             'csrf_token' => $csrf,
             'user'   => $user,

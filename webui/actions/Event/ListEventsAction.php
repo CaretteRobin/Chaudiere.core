@@ -37,7 +37,7 @@ class ListEventsAction
         $csrf = CsrfTokenProvider::generate();
         $user = $request->getAttribute('user');
 
-        return $view->render($response, 'events/list.twig', [
+        return $view->render($response, 'pages/events/list.twig', [
             'events' => $events,
             'categories' => $categories,
             'selectedCategory' => $categoryId,
