@@ -30,11 +30,11 @@ class HandleCreateEventAction
             'title'        => $data['title'] ?? '',
             'description'  => $data['description'] ?? '',
             'price'        => (float)($data['price'] ?? 0),
-            'start_date'   => $data['start_date'] ?? null,
-            'end_date'     => $data['end_date'] ?? null,
-            'time'         => $data['time'] ?? null,
+            'start_date'   => !empty($data['start_date']) ? $data['start_date'] : null,
+            'end_date'     => !empty($data['end_date']) ? $data['end_date'] : null,
+            'time'         => !empty($data['time']) ? $data['time'] : null,
             'category_id'  => $data['category_id'] ?? null,
-            'created_by'   => $user->id,  // Utilisation de l'utilisateur injecté
+            'created_by'   => $user->id,
             'is_published' => false,
         ];
 
@@ -42,7 +42,7 @@ class HandleCreateEventAction
 
         $routeParser = RouteContext::fromRequest($request)->getRouteParser();
             return $response
-                ->withHeader('Location', $routeParser->urlFor('evenements.list'))
+                ->withHeader('Location', $routeParser->urlFor('event.list'))
                 ->withStatus(302);
     }
 }
