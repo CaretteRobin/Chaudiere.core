@@ -50,7 +50,7 @@
                             {% endif %}
                         </td>
                         <td class="px-4 py-3 text-center">
-                            <form method="POST" action="/admin/evenements/{{ event.id }}/toggle-publish">
+                            <form method="POST" action="/evenements/{{ event.id }}/toggle-publish">
                                 <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
                                 <button type="submit"
                                     class="inline-block bg-purple-600 hover:bg-purple-700 text-white text-xs font-medium px-3 py-1 rounded shadow transition">

@@ -59,7 +59,7 @@ class EventRepository implements EventRepositoryInterface
 
     public function getEventByCateg(string $categoryId): Collection
     {
-        return Event::with(['category'])
+        return Event::with(['category', 'author', 'images'])
             ->where('category_id', $categoryId)
             ->orderBy('start_date')
             ->get();

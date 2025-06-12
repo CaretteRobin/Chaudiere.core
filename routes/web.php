@@ -15,6 +15,7 @@ use LaChaudiere\webui\actions\Category\CreateCategoryAction;
 use LaChaudiere\webui\actions\Category\DeleteCategoryAction;
 use LaChaudiere\webui\actions\Category\GetCategoryAction;
 use LaChaudiere\webui\actions\Category\ShowCreateCategoryFormAction;
+use LaChaudiere\webui\actions\Event\TogglePublishEventAction;
 use LaChaudiere\webui\actions\HomePageAction;
 use LaChaudiere\webui\actions\Event\CreateEventFormAction;
 use LaChaudiere\webui\actions\Event\HandleCreateEventAction;
@@ -28,7 +29,7 @@ return function (App $app) {
     // Routes publiques
     $app->get('/auth', ShowAuthPageAction::class)->setName('auth_page');
     $app->post('/login', LoginAction::class)->setName('auth_login');
-    $app->post('/admin/evenements/{id}/toggle-publish', \LaChaudiere\webui\actions\Event\TogglePublishEventAction::class);
+
 
     // Routes protégées par authentification
     $app->group('', function (RouteCollectorProxy $group) {
@@ -48,6 +49,7 @@ return function (App $app) {
             $group->get('/create', CreateEventFormAction::class)->setName('events.create.form');
             $group->post('/create', HandleCreateEventAction::class)->setName('events.create.handle');
             $group->get('/{categoryId}', ListEventsAction::class)->setName('event.list');
+            $group->post('/{id}/toggle-publish', TogglePublishEventAction::class);
         });
 
         // Routes catégories
