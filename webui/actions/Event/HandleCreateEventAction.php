@@ -33,10 +33,13 @@ class HandleCreateEventAction
             'start_date'   => !empty($data['start_date']) ? $data['start_date'] : null,
             'end_date'     => !empty($data['end_date']) ? $data['end_date'] : null,
             'time'         => !empty($data['time']) ? $data['time'] : null,
+            'image_url'    => !empty($data['image_url']) ? $data['image_url'] : null, 
             'category_id'  => $data['category_id'] ?? null,
             'created_by'   => $user->id,
             'is_published' => false,
         ];
+
+        error_log("Image URL soumise: " . ($data['image_url'] ?? 'null'));
 
         $this->eventService->createEvent($eventData);
 
