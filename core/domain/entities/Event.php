@@ -25,6 +25,7 @@ class Event extends Model
         'created_by',
         'created_at',
         'is_published',
+        'image_url',
     ];
 
     protected $casts = [
