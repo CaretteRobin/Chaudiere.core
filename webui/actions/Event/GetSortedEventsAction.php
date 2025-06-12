@@ -74,6 +74,7 @@ class GetSortedEventsAction
             'start_date' => $event->start_date->format('Y-m-d'),
             'category'   => $event->category->name ?? null,
             'url'        => '/api/evenements/' . $event->id,
+            'image_url'  => $event->images->url ?? null,
         ];
     }
 

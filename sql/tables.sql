@@ -95,3 +95,14 @@ INSERT INTO `events` (`id`, `title`, `description`, `price`, `start_date`, `end_
 ('3be96e74-87b9-4afe-afd1-1e5af8c0d6c3', 'Praesentium eum exercitationem exercitationem.', 'Laudantium eveniet quo nemo.', 28.41, '1991-09-21', '1976-08-17', NULL, '61392df6-6bd1-4d7b-aeda-520b55171c53', '7518ff26-e3c3-42a6-9e55-a732a5e6d3aa', '2025-06-06 09:07:43'),
 ('2f4b6c03-6a38-42e2-815b-ad8f6aee2a79', 'Mollitia quia natus.', 'Quisquam nihil temporibus neque cum.', 26.74, '1972-05-23', '1972-04-10', NULL, 'acc63b80-b9f7-4fb8-8e8a-66582eabb203', '7518ff26-e3c3-42a6-9e55-a732a5e6d3aa', '2025-06-06 09:07:43'),
 ('5ebfaec7-b1cd-4f7e-bf97-d8f4716c9c76', 'Itaque aut quo.', 'Rem adipisci tempore asperiores maxime.', 21.01, '1995-10-07', '1971-07-23', NULL, 'acc63b80-b9f7-4fb8-8e8a-66582eabb203', 'd4447e5d-ab66-4dfc-9c52-89cd383816bc', '2025-06-06 09:07:43');
+
+-- 10) Insertion des images liées aux événements
+INSERT INTO `images` (`id`, `url`, `event_id`) VALUES
+                                                   ('1f8b6d65-27e9-4f83-9be5-ec65e85b437a', 'public/assets/images/nemo--m9n5yMcKWg-unsplash.jpg', 'd2b7f1e8-222e-4f90-9c4d-8b0f90fe15f1'),
+                                                   ('3d81e9f5-2c1a-4f04-8920-df80a54b7f87', 'public/assets/images/pavel-marianov-0TVrZ5I0Et8-unsplash.jpg', '45ea2b4f-201e-48b0-9b7a-9102f89f4bd2'),
+                                                   ('9b88d7c9-7549-4960-9dd8-8ec4aa3cf3c2', 'public/assets/images/nemo--m9n5yMcKWg-unsplash.jpg', 'e5f7c3be-c43a-4d7a-8f69-d56db3f9d063'),
+                                                   ('aa105a8d-68b7-4a37-b3fc-8b229504b927', 'public/assets/images/pavel-marianov-0TVrZ5I0Et8-unsplash.jpg', '3ab4ede8-3d39-4d29-91f7-662ee3b4e150'),
+                                                   ('cd501a19-d253-46c9-84f7-861dc0f267be', 'public/assets/images/nemo--m9n5yMcKWg-unsplash.jpg', 'a94e90a3-62b3-404f-9a64-d4c8f9e6b1b4'),
+                                                   ('7c5899ef-d64f-41d1-9db0-3fd99a83c261', 'public/assets/images/pavel-marianov-0TVrZ5I0Et8-unsplash.jpg', '1bf3a4e2-66a9-4c24-9a4b-cf34bf5afe1c'),
+                                                   ('ef45d1ad-c3d7-4ec5-bef2-17701b917b60', 'public/assets/images/nemo--m9n5yMcKWg-unsplash.jpg', '9dcd10a2-2fa5-447a-a3c8-df4e84dfcdfe'),
+                                                   ('b1b3820e-f8b7-4025-80f3-b59cd134b048', 'public/assets/images/pavel-marianov-0TVrZ5I0Et8-unsplash.jpg', 'f51c586b-1345-48c1-8fa2-5e8c5b2c0b48');

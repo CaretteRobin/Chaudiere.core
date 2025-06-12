@@ -24,7 +24,7 @@ class Event extends Model
         'category_id',
         'created_by',
         'created_at',
-        'is_published', 
+        'is_published',
     ];
 
     protected $casts = [
@@ -33,7 +33,7 @@ class Event extends Model
         'created_at'    => 'datetime',
         'price'         => 'decimal:2',
         'time'          => 'string',
-        'is_published'  => 'boolean', 
+        'is_published'  => 'boolean',
     ];
 
     public function category(): BelongsTo
@@ -46,8 +46,8 @@ class Event extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    public function images(): HasMany
+    public function images(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
-        return $this->hasMany(Image::class, 'event_id');
+        return $this->hasOne(Image::class, 'event_id');
     }
 }
