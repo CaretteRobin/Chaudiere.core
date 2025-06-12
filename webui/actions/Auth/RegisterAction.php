@@ -43,8 +43,8 @@ class RegisterAction
 
             return $this->redirectWithFlash(
                 $response,
-                '/',
-                'Inscription réussie ! Bienvenue.',
+                '/users',
+                'Administrateur enregistré avec succès.',
                 'success'
             );
 

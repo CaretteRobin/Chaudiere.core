@@ -10,10 +10,10 @@
             <table class="min-w-full bg-white border border-gray-200 rounded-lg">
                 <thead class="bg-purple-50 text-purple-800 text-sm">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium  tracking-wider">ID</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium  tracking-wider">Email</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium  tracking-wider">Rôle</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium  tracking-wider">Actions</th>
+                        <th class="px-6 py-3 text-left text-xs tracking-wider">ID</th>
+                        <th class="px-6 py-3 text-left text-xs tracking-wider">Email</th>
+                        <th class="px-6 py-3 text-left text-xs tracking-wider">Rôle</th>
+                        <th class="px-6 py-3 text-left text-xs tracking-wider">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
@@ -48,6 +48,14 @@
                             </td>
                         </tr>
                     {% endfor %}
+                        <tr>
+                            <td colspan="4" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                                <a href="{{ url_for('auth_register_page') }}"
+                                   class="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-lg text-center shadow transition">
+                                    Ajouter un nouvel administrateur
+                                </a>
+                            </td>
+                        </tr>
                 </tbody>
             </table>
         </div>
