@@ -8,9 +8,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Image extends Model
 {
     protected $table = 'images';
+    public $incrementing = false;
+    protected $keyType = 'string';
+    protected $fillable = ['id', 'url', 'event_id'];
     public $timestamps = false;
-
-    protected $fillable = ['url', 'event_id'];
 
     public function event(): BelongsTo
     {
