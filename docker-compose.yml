@@ -42,3 +42,9 @@ services:
     networks:
       - chaudiere.net
 
+networks:
+  chaudiere.net:
+    driver: bridge
+
+volumes:
+  db_data:
