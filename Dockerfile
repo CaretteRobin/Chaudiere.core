@@ -1,22 +1,22 @@
 FROM php:8.2-apache
 
-# Active mod_rewrite pour les routes (Slim/Twig)
-RUN a2enmod rewrite
+# 1. Activer les modules Apache
+RUN a2enmod rewrite headers
 
-# Installe les extensions nécessaires
+# 2. Installer les extensions nécessaires
 RUN apt-get update && apt-get install -y \
     unzip \
     zip \
     git \
     curl \
+    nano \
+    vim \
     libzip-dev \
-    libonig-dev \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
+    libonig-dev \
     libxml2-dev \
-    nano \
-    vim \
     && docker-php-ext-configure zip \
     && docker-php-ext-install \
         pdo \
@@ -29,37 +29,35 @@ RUN apt-get update && apt-get install -y \
         xml \
     && rm -rf /var/lib/apt/lists/*
 
-# Installe Composer depuis l'image officielle
+# 3. Installer Composer depuis l'image officielle
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Autoriser composer à tourner en root (docker)
+# 4. Autoriser Composer en root
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
-# Définit le document root Apache
+# 5. Configurer le document root
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 
-# Applique la config du nouveau document root à Apache
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/000-default.conf && \
     sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}/!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
-# Copie le code source dans le conteneur
+# 6. Copier les sources
 COPY . /var/www/html
 
-# Copie le .htaccess si besoin
+# 7. Copier .htaccess (optionnel si déjà inclus)
 COPY ./public/.htaccess /var/www/html/public/.htaccess
 
-# Donne les bons droits à Apache
+# 8. Droits corrects
 RUN chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html
 
-# Travaille dans le dossier projet
+# 9. Définir le working dir
 WORKDIR /var/www/html
 
-# Installe les dépendances PHP via Composer
-RUN if [ -f composer.json ]; then composer install --no-interaction --no-scripts --no-dev; fi
+# 10. Installer les dépendances PHP (si composer.json présent)
+RUN if [ -f composer.json ]; then composer install --no-interaction --no-scripts; fi
 
-# Ajoute les headers CORS par défaut dans toutes les réponses
-# (à compléter par middleware si tu veux du contrôle fin)
+# 11. Ajouter les headers CORS (Header maintenant actif grâce à a2enmod headers)
 RUN echo 'Header set Access-Control-Allow-Origin "*"' >> /etc/apache2/apache2.conf
 
-# Expose le port
+# 12. Exposer le port
 EXPOSE 80
