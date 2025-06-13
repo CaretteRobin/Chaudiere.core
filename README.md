@@ -154,5 +154,4 @@ http://localhost:8000/api/evenements
 
 ## Auteur
 
-Projet réalisé par un groupe d'étudiants de BUT Informatique - Parcours DWM, dans le cadre de la SAE S4.
-
+Valentino Lambert
