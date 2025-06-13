@@ -1,9 +1,9 @@
 <?php
 
-namespace LaChaudiere\core\application\UseCase;
+namespace LaChaudiere\core\application\UseCase\Image;
 
 use LaChaudiere\core\application\interfaces\ImageRepositoryInterface;
-use LaChaudiereAgenda\core\application\exceptions\ImageExceptions\AddImageToEventFailedException;
+use LaChaudiere\core\application\exceptions\ImageExceptions\AddImageToEventFailedException;
 
 class AddImageToEvent
 {
