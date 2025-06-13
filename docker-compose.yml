@@ -10,6 +10,7 @@ services:
     working_dir: /var/www/html
     depends_on:
       - chaudiere-db
+    restart: unless-stopped
     networks:
       - chaudiere.net
 
@@ -23,6 +24,7 @@ services:
       MARIADB_DATABASE: ${DB_DATABASE}
     volumes:
       - db_data:/bitnami/mariadb
+    restart: unless-stopped
     networks:
       - chaudiere.net
 
@@ -36,12 +38,7 @@ services:
       PMA_PASSWORD: ${DB_PASSWORD}
     ports:
       - "8085:80"
+    restart: unless-stopped
     networks:
       - chaudiere.net
 
-networks:
-  chaudiere.net:
-    driver: bridge
-
-volumes:
-  db_data:
