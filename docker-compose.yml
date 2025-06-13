@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "12613:80"
+      - "59101:80"
     volumes:
       - ./:/var/www/html         
     working_dir: /var/www/html
