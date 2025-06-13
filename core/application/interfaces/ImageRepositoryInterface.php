@@ -11,7 +11,7 @@ interface ImageRepositoryInterface
      * @param string $imagePath The path to the image file.
      * @return void
      */
-    public function addImageToEvent(int $eventId, string $imagePath): void;
+    public function addImageToEvent(string $eventId, string $imagePath): void;
 
     /**
      * Retrieves images associated with a specific event.
@@ -19,5 +19,5 @@ interface ImageRepositoryInterface
      * @param int $eventId The ID of the event.
      * @return array An array of images associated with the event.
      */
-    public function getImagesByEventId(int $eventId): array;
+    public function getImagesByEventId(string $eventId): array;
 }

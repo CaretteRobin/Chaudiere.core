@@ -4,13 +4,9 @@ namespace LaChaudiere\core\application\exceptions\ImageExceptions;
 
 use LaChaudiere\core\application\exceptions\ApplicationException;
 
-/**
- * Levée si l’ajout d’une image à un événement échoue
- * (DB, événement introuvable, etc.).
- */
 class AddImageToEventFailedException extends ApplicationException
 {
-    public function __construct(int $eventId, string $message = "")
+    public function __construct(string $eventId, string $message = "")
     {
         $msg = $message !== ""
             ? $message

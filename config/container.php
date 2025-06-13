@@ -31,6 +31,11 @@ use LaChaudiere\core\application\interfaces\CategoryRepositoryInterface;
 use LaChaudiere\infra\persistence\Eloquent\CategoryRepository;
 use LaChaudiere\webui\actions\Event\CreateEventFormAction;
 use LaChaudiere\core\application\services\CategoryService;
+use LaChaudiere\core\application\UseCase\Image\AddImageToEvent;
+use LaChaudiere\core\application\UseCase\Image\GetImagesByEventId;
+use LaChaudiere\core\application\services\ImageService;
+use LaChaudiere\core\application\interfaces\ImageRepositoryInterface;
+use LaChaudiere\infra\persistence\Eloquent\ImageRepository;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
 use Slim\Routing\RouteContext;
@@ -103,6 +108,19 @@ $container->set(Twig::class, fn() => Twig::create(__DIR__ . '/../webui/Views', [
 // Bind de CreateEventFormAction
 $container->set(CreateEventFormAction::class, fn() => new CreateEventFormAction(
     $container->get(CategoryService::class)
+));
+
+// Bind des Use Cases
+$container->set(AddImageToEvent::class, fn() => new AddImageToEvent($container->get(ImageRepositoryInterface::class)));
+$container->set(GetImagesByEventId::class, fn() => new GetImagesByEventId($container->get(ImageRepositoryInterface::class)));
+
+// Bind du Repository
+$container->set(ImageRepositoryInterface::class, fn() => new ImageRepository());
+
+// Bind du Service
+$container->set(ImageService::class, fn() => new ImageService(
+    $container->get(AddImageToEvent::class),
+    $container->get(GetImagesByEventId::class)
 ));
 
 return $container;

@@ -1,6 +1,6 @@
 <?php
 
-namespace LaChaudiere\core\application\UseCase;
+namespace LaChaudiere\core\application\UseCase\Image;
 
 use LaChaudiere\core\application\interfaces\ImageRepositoryInterface;
 use LaChaudiereAgenda\core\application\exceptions\ImageExceptions\GetImagesByEventIdFailedException;
