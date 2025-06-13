@@ -29,7 +29,7 @@ class CreateCategoryAction
         $name = trim($data['name'] ?? '');
         $description = trim($data['description'] ?? '');
 
-        $filteredName = filter_var($name, FILTER_SANITIZE_STRING);
+        $filteredName = filter_var($name, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         if ($name !== $filteredName) {
             return $this->redirectWithFlash(
                 $response,
@@ -39,7 +39,7 @@ class CreateCategoryAction
             );
         }
 
-        $filteredDescription = filter_var($description, FILTER_SANITIZE_STRING);
+        $filteredDescription = filter_var($description, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         if ($description !== $filteredDescription) {
             return $this->redirectWithFlash(
                 $response,
