@@ -28,6 +28,16 @@ class RegisterAction
             $email = $data['email'] ?? '';
             $password = $data['password'] ?? '';
 
+            $filteredEmail = filter_var($email, FILTER_SANITIZE_EMAIL);
+            if ($email !== $filteredEmail) {
+                return $this->redirectWithFlash(
+                    $response,
+                    '/auth',
+                    'Adresse e-mail invalide.',
+                    'error'
+                );
+            }
+
             if (empty($email) || empty($password)) {
                 return $this->redirectWithFlash(
                     $response,

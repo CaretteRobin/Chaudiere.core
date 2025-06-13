@@ -27,6 +27,27 @@ class CreateCategoryAction
         $data = $request->getParsedBody();
 
         $name = trim($data['name'] ?? '');
+        $description = trim($data['description'] ?? '');
+
+        $filteredName = filter_var($name, FILTER_SANITIZE_STRING);
+        if ($name !== $filteredName) {
+            return $this->redirectWithFlash(
+                $response,
+                '',
+                'Le nom de la catégorie contient des caractères invalides.',
+                'error'
+            );
+        }
+
+        $filteredDescription = filter_var($description, FILTER_SANITIZE_STRING);
+        if ($description !== $filteredDescription) {
+            return $this->redirectWithFlash(
+                $response,
+                '',
+                'La description de la catégorie contient des caractères invalides.',
+                'error'
+            );
+        }
 
         $categoryData = [
             'id' => Str::uuid()->toString(),
